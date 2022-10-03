@@ -6,13 +6,11 @@
     <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">首頁</h4>
-          <CreateTweet/>
-        <!--Comments
-              <Comments/>
-              -->
+        <CreateTweet />
+        <TweetList />
       </div>
     </div>
-    <div  class="test"></div>
+    <div class="test"></div>
     <!--PopularList
               <PopularList/>
               -->
@@ -21,17 +19,16 @@
 
 <script>
 import Navbar from "./../components/Navbar.vue";
-//import Comments from "./../components/Comments.vue";
+import TweetList from "./../components/TweetList.vue";
 //import PopularList from "./../components/Recommendation.vue";
-//import NewTweet from './../components/NewTweet.vue'
 import CreateTweet from '../components/CreateTweet.vue'
 
 export default {
   components: {
     Navbar,
-    CreateTweet
+    CreateTweet,
     //PopularList,
-    //Comments,
+    TweetList,
     //NewTweet
   },
 };
@@ -39,9 +36,6 @@ export default {
 
 
 <style lang="scss" scoped>
-
-
-
 .section {
   border: 1px solid #e6ecf0;
   margin-left: 24px;
@@ -66,7 +60,7 @@ export default {
 
 .title {
   padding: 24px 0 24px 24px;
-  font-weight:700;
+  font-weight: 700;
 }
 
 .tweet-card__panel {
@@ -76,10 +70,9 @@ export default {
     margin-left: 8px;
   }
 }
-.test{
-width:273px; 
-background:red; 
-margin-left:24px
+.test {
+  width: 273px;
+  background: red;
+  margin-left: 24px;
 }
-
 </style>

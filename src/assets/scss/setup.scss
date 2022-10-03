@@ -3,7 +3,7 @@
 a,
 a:hover,
 a:focus {
-  color: black;
+  color: var(--8-gray);
 }
 
 $sizes: (
@@ -128,7 +128,9 @@ body {
 .flex-column {
   flex-direction: column;
 }
-
+.flex-row-reverse{
+  flex-direction: row-reverse;
+}
 .justify-content-start {
   justify-content: flex-start;
 }
@@ -220,4 +222,47 @@ h5{
 
 .fs-12{
     font-size:12px;
+}
+
+textarea{
+  resize:none;
+}
+
+
+.btn-main {
+  background-color: var(--brand-color);
+  color: white;
+  border-radius: 50px;
+  height: 46px;
+
+}
+
+.btn-main:hover {
+  background-color: rgb(227, 85, 20);
+  color: white;
+}
+
+.btn-main:active {
+  background-color: rgb(227, 85, 20);
+  color: white;
+}
+
+.btn-white {
+  background-color: white;
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+  border-radius: 50px;
+  width: 64px;
+  height: 46px;
+}
+
+
+.btn-white:hover {
+  background-color: rgb(240, 90, 20);
+  color: white;
+}
+
+.btn-white:active {
+  background-color: rgb(240, 90, 20);
+  color: white;
 }

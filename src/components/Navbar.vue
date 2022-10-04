@@ -5,7 +5,7 @@
         <img src="./../assets/logo.png" alt="" class="menu__logo" />
       </div>
       <div class="menu__function">
-        <router-link to="/" class="text-center d-flex link align-items-center">
+        <router-link to="/main" class="text-center d-flex link align-items-center">
           <img
             src="./../assets/icon/home.png"
             alt=""

@@ -21,10 +21,7 @@
               deserunt reprehenderit elit laborum.
             </div>
           </router-link>
-          <div
-            class="tweet-card__panel__content__icons-panel d-flex"
-            @click="callReplyModal"
-          >
+          <div class="tweet-card__panel__content__icons-panel d-flex">
             <div
               class="
                 tweet-card__panel__content__icons-panel__icon
@@ -32,6 +29,7 @@
                 align-items-center
                 cursor-pointer
               "
+              @click="callReplyModal"
             >
               <img src="./../assets/icon/comments.png" alt="" class="icon" />
               <span class="tweet-card__panel__content__icons-panel__icon__num"
@@ -66,8 +64,8 @@
           </div>
         </div>
       </div>
-      <ReplyModal @closeReplyModal="handleCloseReplyModal" v-if="isReplying" />
     </div>
+    <ReplyModal @closeReplyModal="handleCloseReplyModal" v-if="isReplying" />
     <div class="modal-bg" :class="{ active: isReplying }"></div>
   </section>
 </template>
@@ -119,7 +117,7 @@
   margin-right: 8px;
 }
 .modal-bg {
-  position: absolute;
+  position: fixed;
   background-color: rgba(0, 0, 0, 0.4);
   width: 100vw;
   height: 100vh;

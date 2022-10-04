@@ -5,51 +5,58 @@
     </div>
     <div class="container__right d-flex">
       <div class="section">
-        <h4 class="title">首頁</h4>
-        <CreateTweet />
-        <TweetList />
+        <UserInfo />
+        <NavTab
+        @afterPage="handleAfterPage"
+        />
+        <TweetList v-if="page ==='tweet'"/>
+        <ReplyList v-else-if="page ==='reply'"/>
+        <TweetList v-if="page ==='like'"/>
       </div>
     </div>
     <div class="test"></div>
     <!--PopularList
               <PopularList/>
               -->
-
   </main>
-  
 </template>
 
 <script>
 import Navbar from "./../components/Navbar.vue";
 import TweetList from "./../components/TweetList.vue";
 //import PopularList from "./../components/Recommendation.vue";
-import CreateTweet from '../components/CreateTweet.vue'
+import UserInfo from '../components/UserInfo.vue'
+import NavTab from '../components/NavTab.vue'
+import ReplyList from '../components/ReplyList.vue'
 
 export default {
-  data(){
-    return {
-        isActive:false
-    }
-  },
+    data(){
+        return{
+            page:'tweet'
+        }
+    },
+    methods:{
+        handleAfterPage(playLoad){
+            console.log(playLoad)
+            this.page = playLoad
+        }
+    },
   components: {
     Navbar,
-    CreateTweet,
+    UserInfo,
     //PopularList,
     TweetList,
+    NavTab,
+    ReplyList
 
   },
-  methods:{
-    handleCallModalBg(){
-      this.isActive = true
-    }
-  }
 };
 </script>
 
 
 <style lang="scss" scoped>
 .section {
-  position: relative;
+position: relative;
   border: 1px solid #e6ecf0;
   margin-left: 24px;
 }
@@ -88,5 +95,4 @@ export default {
   background: red;
   margin-left: 24px;
 }
-
 </style>

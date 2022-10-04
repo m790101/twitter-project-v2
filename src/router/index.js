@@ -15,6 +15,11 @@ const routes = [
     path: '/main',
     name:'home',
     component:() => import('../views/Home')
+  },
+  {
+  path: '/user/self',
+  name:'user-slef',
+  component:() => import('../views/UserInformation')
   }
 ]
 

@@ -1,4 +1,5 @@
 <template>
+<section>
   <div class="create-tweet">
     <div class="create-tweet__body">
       <div class="d-flex align-items-center">
@@ -46,26 +47,27 @@
                 class="modal-body__textarea pt-2"
               >
               </textarea>
-              <div class="error-handler">
-                字數超出上限!
-              </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer d-flex flex-row-reverse">
-          <button type="button" class="btn-main" style="width: 64px">
+        <div class="modal-footer d-flex justify-content-end align-items-center">
+          <div class="error-handler">字數不可超過140字!</div>
+          <button type="button" class="btn-main" style="width: 66px">
             推文
           </button>
         </div>
       </div>
     </div>
   </div>
+  <div class="modal-bg" :class="{ active: isEditing }"></div>
+</section>
 </template>
 
 
 <style lang="scss" scoped>
 .create-tweet {
-  width: 641px;
+  position:relative;
+  width: 634px;
   & &__body {
     border: 0;
     padding: 16px 25px 16px 24px;
@@ -99,22 +101,22 @@
   }
 }
 .modal {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
   display: none;
+  z-index:999;
   &.active {
     display: initial;
-    background-color: rgba(0, 0, 0, 0.4);
+  
   }
 
   & .modal-content {
     border-radius: 14px;
     width: 634px;
     height: 300px;
-    margin: 56px 30%;
     background-color: var(--white);
     & .modal-header {
       padding: 20px;
@@ -140,7 +142,7 @@
   &__textarea {
     width: 100%;
     font-size: 18px;
-    margin-left:8px;
+    margin-left: 8px;
     border: 0;
     outline: none;
   }
@@ -152,9 +154,23 @@
 }
 
 .error-handler {
-  border-top: 1px solid red;
-  font-size:12px;
-  color: var(--error-color)
+  margin-right:20px;
+  font-size: 12px;
+  color: var(--error-color);
+}
+
+.modal-bg{
+  position: absolute;
+  background-color:rgba(0,0,0,0.4);
+  width:100vw;
+  height:100vh;
+  top:0;
+  left:0;
+  display:none;
+  &.active {
+    display: initial;
+  
+  }
 }
 </style>
 

@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-end align-items-center">
-          <div class="error-handler">字數不可超過140字!</div>
+          <div class="error-handler">內容不可為空白!</div>
           <button type="button" class="btn-main" style="width: 66px">
             推文
           </button>
@@ -113,7 +113,7 @@
           left:25px;
           width:2px;
           height:86px;
-          background-color:gray;
+          background-color:#CCD6DD;
       }
     &__avatar {
       width: 50px;

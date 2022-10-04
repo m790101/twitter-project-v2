@@ -142,6 +142,7 @@
   &__textarea {
     width: 100%;
     font-size: 18px;
+    font-weight:700;
     margin-left: 8px;
     border: 0;
     outline: none;

@@ -29,7 +29,7 @@ export default {
     CreateTweet,
     //PopularList,
     TweetList,
-    //NewTweet
+
   },
 };
 </script>

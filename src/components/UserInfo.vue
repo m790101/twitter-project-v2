@@ -25,6 +25,7 @@
             <button
               class="btn-white"
               style="width: 128px"
+              @click="callModal"
             >
               編輯個人資料
             </button>
@@ -122,3 +123,13 @@
   margin-left: 134px;
 }
 </style>
+
+<script>
+export default {
+  methods:{
+    callModal(){
+      this.$emit('afterCallModal')
+    }
+  }
+}
+</script>

@@ -21,7 +21,7 @@
               deserunt reprehenderit elit laborum.
             </div>
           </router-link>
-          <div class="tweet-card__panel__content__icons-panel d-flex">
+          <div class="tweet-card__panel__content__icons-panel d-flex align-items-center">
             <div
               class="
                 tweet-card__panel__content__icons-panel__icon
@@ -75,7 +75,7 @@
 <style lang="scss" scoped>
 .tweet-card {
   position: relative;
-  width: 600px;
+  width: 634px;
   height: 136px;
   margin-top: 10px;
   font-size: 15px;

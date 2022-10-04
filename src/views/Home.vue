@@ -10,39 +10,34 @@
         <TweetList />
       </div>
     </div>
-    <div class="test"></div>
-    <!--PopularList
-              <PopularList/>
-              -->
-
+    <div class=""></div>
+    <PopularList />
   </main>
-  
 </template>
 
 <script>
 import Navbar from "./../components/Navbar.vue";
 import TweetList from "./../components/TweetList.vue";
-//import PopularList from "./../components/Recommendation.vue";
-import CreateTweet from '../components/CreateTweet.vue'
+import PopularList from "./../components/PopularList.vue";
+import CreateTweet from "../components/CreateTweet.vue";
 
 export default {
-  data(){
+  data() {
     return {
-        isActive:false
-    }
+      isActive: false,
+    };
   },
   components: {
     Navbar,
     CreateTweet,
-    //PopularList,
+    PopularList,
     TweetList,
-
   },
-  methods:{
-    handleCallModalBg(){
-      this.isActive = true
-    }
-  }
+  methods: {
+    handleCallModalBg() {
+      this.isActive = true;
+    },
+  },
 };
 </script>
 
@@ -83,10 +78,4 @@ export default {
     margin-left: 8px;
   }
 }
-.test {
-  width: 273px;
-  background: red;
-  margin-left: 24px;
-}
-
 </style>

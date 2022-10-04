@@ -27,7 +27,7 @@
 
 <style scoped lang="scss">
 .tweet-card{
-  width:600px;
+  width:634px;
   height:121px;
   font-size:15px;
   margin-top:10px;
@@ -35,6 +35,7 @@
 
 .tweet-card__panel__content__text{
   &__reply{
+    margin-top:8px;
     color: var(--secondary-color);
   }
   &__reply-to{

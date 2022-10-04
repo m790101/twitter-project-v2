@@ -1,8 +1,8 @@
 <template>
   <ul class="d-flex nav-pill">
-      <li class="nav-item" :class="{active:linkActive === 'tweet'}" @click="setPage('tweet')">推文</li>
-      <li class="nav-item" @click="setPage('reply')" :class="{ active:linkActive === 'reply' }">回覆</li>
-      <li class="nav-item" @click="setPage('like')" :class="{ active:linkActive === 'like' }">喜歡的內容</li>
+      <li class="nav-item cursor-pointer" :class="{active:linkActive === 'tweet'}" @click="setPage('tweet')">推文</li>
+      <li class="nav-item cursor-pointer" @click="setPage('reply')" :class="{ active:linkActive === 'reply' }">回覆</li>
+      <li class="nav-item cursor-pointer" @click="setPage('like')" :class="{ active:linkActive === 'like' }">喜歡的內容</li>
   </ul>
 </template>
 

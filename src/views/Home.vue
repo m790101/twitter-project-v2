@@ -39,12 +39,6 @@ export default {
     TweetList,
   },
   methods: {
-    handleAfterNewTweet(){
-      this.isEditing = true
-    },
-      handleAfterCloseModal(){
-    this.isEditing = false
-  }
   },
 
 };

@@ -2,11 +2,14 @@
   <section>
     <div class="tweet-card">
       <div class="tweet-card__panel d-flex">
-        <img
-          src="./../assets/icon/user-none.png"
-          alt=""
-          class="tweet-card__panel__avatar"
-        />
+        <router-link to="/user/other/1">
+          <img
+            src="./../assets/icon/user-none.png"
+            alt=""
+            class="tweet-card__panel__avatar"
+          />
+        </router-link>
+
         <div class="tweet-card__panel__content">
           <div class="tweet-card__panel__content__title d-flex">
             <p class="tweet-card__panel__content__title__name">Apple</p>
@@ -21,7 +24,13 @@
               deserunt reprehenderit elit laborum.
             </div>
           </router-link>
-          <div class="tweet-card__panel__content__icons-panel d-flex align-items-center">
+          <div
+            class="
+              tweet-card__panel__content__icons-panel
+              d-flex
+              align-items-center
+            "
+          >
             <div
               class="
                 tweet-card__panel__content__icons-panel__icon
@@ -49,12 +58,14 @@
                   alt=""
                   class="icon"
                   v-if="!isLiked"
+                  @click="toggleLike"
                 />
                 <img
                   src="./../assets/icon/like-active.png"
                   alt=""
                   class="icon"
                   v-else
+                  @click="toggleLike"
                 />
                 <span class="tweet-card__panel__content__icons-panel__icon__num"
                   >13</span
@@ -75,7 +86,7 @@
 <style lang="scss" scoped>
 .tweet-card {
   position: relative;
-  width: 634px;
+  width: 639px;
   height: 136px;
   margin-top: 10px;
   font-size: 15px;
@@ -150,6 +161,9 @@ export default {
     handleCloseReplyModal() {
       this.isReplying = false;
     },
+    toggleLike(){
+      this.isLiked = !this.isLiked
+    }
   },
 };
 </script>

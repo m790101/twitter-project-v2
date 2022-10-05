@@ -177,7 +177,6 @@ export default {
   methods: {
     callModal() {
       this.isEditing = true;
-      console.log("hi");
     },
     closeModal() {
       this.$emit("closeReplyModal");

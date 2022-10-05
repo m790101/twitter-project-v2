@@ -1,11 +1,13 @@
 <template>
   <div class="tweet-card">
     <div class="tweet-card__panel d-flex">
+      <router-link to="/user/other/1">
         <img
           src="./../assets/icon/user-none.png"
           alt=""
           class="tweet-card__panel__avatar"
         />
+      </router-link>
       <div class="tweet-card__panel__content">
         <div class="tweet-card__panel__content__title d-flex  d-flex align-items-center">
           <p class="fw-bold fs-16">Apple</p>

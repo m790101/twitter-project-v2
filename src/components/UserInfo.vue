@@ -3,8 +3,10 @@
     <div class="header d-flex align-items-center title">
       <img
         src="./../assets/icon/arrow.png"
+        class="cursor-pointer"
         alt=""
         style="width: 17px; height: 14px"
+        @click="$router.back()"
       />
       <div class="header__text">
         <h5 class="">John Doe</h5>
@@ -20,15 +22,24 @@
             class="card__profile-pic-section_avatar"
           />
         </div>
+
         <div class="card__body pb-2 mx-3">
-          <div class="d-flex justify-content-end">
+          <div class="d-flex justify-content-end card__body__function-self" v-if="user.id === 2">
             <button
               class="btn-white"
               style="width: 128px"
               @click="callModal"
+              
             >
               編輯個人資料
             </button>
+          </div>
+          <div class="d-flex justify-content-end align-items-center card__body__function-other" v-else>
+              <img src="./../assets/icon/btn-msg.png"  class="icon cursor-pointer">
+              <img src="./../assets/icon/btn-notfi.png"  v-if="!user.isNotificated" class="icon cursor-pointer" @click="toggleNoti">
+              <img src="./../assets/icon/btn-notfi-active.png" v-else class="icon cursor-pointer" @click="toggleNoti">
+            <button class="btn-main" style="width:96px;" v-if="user.isfollowed">正在跟隨</button>
+            <button class="btn-white" style="width:96px;" v-else>跟隨</button>
           </div>
           <div class="card__body__text">
             <h5 class="">John Doe</h5>
@@ -105,6 +116,11 @@
       border-radius: 70%;
     }
   }
+  &__body{
+    &__function-other{
+      gap:16px;
+    }
+  }
   &__body__text{
       margin-top:8px;
       &__account{
@@ -118,17 +134,32 @@
     }
   }
 }
-
-.card__like-icon {
-  margin-left: 134px;
+.icon{
+  width:40px;
+  height:40px;
 }
+
+
 </style>
 
 <script>
 export default {
+  data(){
+    return {
+      user:{
+        id:1,
+        isNotificated:false,
+        isfollowed:true
+
+      }
+    }
+  },
   methods:{
     callModal(){
       this.$emit('afterCallModal')
+    },
+    toggleNoti(){
+      this.user.isNotificated = !this.user.isNotificated
     }
   }
 }

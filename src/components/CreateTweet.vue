@@ -177,19 +177,30 @@
 
 <script>
 export default {
+  props:{
+    navIsEditing:{
+      type:Boolean,
+      require:true
+    }
+  },
   data() {
     return {
-      isEditing: false,
+      isEditing: this.navIsEditing,
     };
   },
   methods: {
     callModal() {
       this.isEditing = true;
-      console.log("hi");
     },
     closeModal() {
       this.isEditing = false;
+      this.$emit('afterCloseModal')
     },
   },
+  watch:{
+      navIsEditing(newValue){
+        this.isEditing = newValue
+      }
+  }
 };
 </script>

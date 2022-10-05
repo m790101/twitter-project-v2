@@ -49,7 +49,7 @@
           <span>設定</span>
         </router-link>
       </div>
-      <button class="btn-main">推文</button>
+      <button class="btn-main" @click="newTweet">推文</button>
     </div>
 
     <div class="logout d-flex flex-column justify-contnet-center ">
@@ -129,3 +129,13 @@ nav {
   }
 }
 </style>
+
+<script>
+export default {
+  methods:{
+    newTweet(){
+      this.$emit('afterNewTweet')
+    }
+  }
+}
+</script>

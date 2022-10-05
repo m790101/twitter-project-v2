@@ -1,12 +1,17 @@
 <template>
   <main class="container d-flex">
     <div class="container__left">
-      <Navbar />
+      <Navbar
+      @afterNewTweet="handleAfterNewTweet"
+      />
     </div>
     <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">首頁</h4>
-        <CreateTweet />
+        <CreateTweet 
+        :navIsEditing="isEditing"
+        @afterCloseModal="handleAfterCloseModal"
+        />
         <TweetList />
       </div>
     </div>
@@ -24,7 +29,7 @@ import CreateTweet from "../components/CreateTweet.vue";
 export default {
   data() {
     return {
-      isActive: false,
+      isEditing:false
     };
   },
   components: {
@@ -34,10 +39,14 @@ export default {
     TweetList,
   },
   methods: {
-    handleCallModalBg() {
-      this.isActive = true;
+    handleAfterNewTweet(){
+      this.isEditing = true
     },
+      handleAfterCloseModal(){
+    this.isEditing = false
+  }
   },
+
 };
 </script>
 

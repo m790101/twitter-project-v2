@@ -46,7 +46,7 @@
                 id="name"
                 name="name"
                 type="type"
-                class="font-16"
+                class="fs-16"
                 autocomplete="current-password"
                 required
                 v-model="name"
@@ -54,7 +54,7 @@
             </div>
             <p class="modal-body__form__letter-num mb-2">{{nameLength}}/50</p>
             <div class="form-label-group__text">
-              <label for="introduction" class="modal-body__form__name__introduction"
+              <label for="introduction" class="modal-body__form__introduction"
                 >自我介紹</label
               >
               <textarea
@@ -62,7 +62,7 @@
                 id="introduction"
                 cols="70"
                 rows="2"
-                class="modal-body__text__text-area ms-2 "
+                class="modal-body__text__text-area ms-2 fs-16"
                 v-model="introduction"
               >
               </textarea>
@@ -152,19 +152,6 @@
     }
   }
 }
-.modal-body__form {
-    &__introduction{
-        color:var(--7-color);
-    }
-    &__name{
-         color:var(--7-color);
-    }
-  &__letter-num {
-    text-align: end;
-    font-size: 12px;
-    
-  }
-}
 
 //form
 
@@ -215,10 +202,25 @@
     background-color: #f5f8fa;
   }
 }
+.modal-body__form {
+    &__introduction{
+        color:var(--7-gray);
+        font-size: 14px;
+    }
+    &__name{
+         color:var(--7-gray);
+         font-size: 14px;
+    }
+  &__letter-num {
+    text-align: end;
+    font-size: 12px;
+    
+  }
+}
+
 </style>
 
 <script>
-import { computed } from 'vue';
 export default {
     data(){
         return {

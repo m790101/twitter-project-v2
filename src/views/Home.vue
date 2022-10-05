@@ -51,34 +51,9 @@ export default {
   border: 1px solid #e6ecf0;
   margin-left: 24px;
 }
-.new-tweet {
-  & &__body {
-    border: 0;
-    padding: 16px 25px 16px 24px;
-    border-top: 1px solid #e6ecf0;
-    border-bottom: 10px solid #e6ecf0;
-  }
-}
-.new-tweet__body__btn-tweet {
-  width: 64px;
-}
-
-.card-title {
-  margin-left: 8px;
-  color: #6c757d;
-  font-weight: 400;
-}
 
 .title {
   padding: 24px 0 24px 24px;
   font-weight: 700;
-}
-
-.tweet-card__panel {
-  padding: 16px 0 17px 24px;
-  border-bottom: 1px solid #e6ecf0;
-  & &__content {
-    margin-left: 8px;
-  }
 }
 </style>

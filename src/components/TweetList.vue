@@ -17,7 +17,7 @@
               @apple．<span>3小時</span>
             </p>
           </div>
-          <router-link to="">
+          <router-link to="/tweets/1">
             <div class="tweet-card__panel__content__text">
               Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
               ullamco cillum dolor. Voluptate exercitation incididunt aliquip
@@ -50,27 +50,25 @@
                 tweet-card__panel__content__icons-panel__icon
                 d-flex
                 align-items-center
+                cursor-pointer
               "
+              @click="toggleLike"
             >
-              <router-link to="" class="d-flex align-items-center">
                 <img
                   src="./../assets/icon/like.png"
                   alt=""
                   class="icon"
                   v-if="!isLiked"
-                  @click="toggleLike"
                 />
                 <img
                   src="./../assets/icon/like-active.png"
                   alt=""
-                  class="icon"
+                  class="icon "
                   v-else
-                  @click="toggleLike"
                 />
                 <span class="tweet-card__panel__content__icons-panel__icon__num"
                   >13</span
                 >
-              </router-link>
             </div>
           </div>
         </div>

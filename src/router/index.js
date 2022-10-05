@@ -23,6 +23,11 @@ const routes = [
   component:() => import('../views/UserOther')
   },
   {
+    path: '/tweets/:id',
+    name:'replyList',
+    component:() => import('../views/ReplyList')
+    },
+  {
     path: '*',
     name: 'NotFound',
     component: NotFound

@@ -28,6 +28,11 @@ const routes = [
     name:'replyList',
     component:() => import('../views/ReplyList')
     },
+    {
+      path: '/admin/users',
+      name: 'admin-users',
+      component:() => import('../views/AdminUserList')
+    },
   {
     path: '/logIn',
     name: 'logIn',

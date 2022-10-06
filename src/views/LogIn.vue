@@ -5,28 +5,28 @@
       <h3 class="title__word  ">登入Alphitter</h3>
     </div>
 
-    <form class="form d-flex flex-column align-items-center" autocomplete="off" >
+    <form class="form d-flex flex-column align-items-center" autocomplete="off" v-on:submit.prevent="handleSubmit" >
       <div class="form__control d-flex flex-column">
         <label for="account" class="form__label ">帳號</label>
         <input id="account" name="account" type="text" class="form__input " placeholder="請輸入帳號" autocomplete="username"
-          required autofocus v-model="text" />
+          required autofocus v-model="account" />
       </div>
 
       <div class="form__control  d-flex flex-column">
         <label for="password" class="form__label ">密碼</label>
         <input id="password" name="password" type="password" class="form__input " placeholder="請輸入密碼"
-          autocomplete="current-password" required  />
+          autocomplete="current-password" required v-model="password" />
       </div>
     </form>
 
-    <button class="btn  " type="submit" >
+    <button class="btn btn-main btn-main:hover btn-main:active" type="submit" >
       登入
     </button>
 
     <div class="footer  d-flex justify-content-end">
-      <a href="#" class="footer__connect ">
+      <router-link to="/signup" class="footer__connect ">
         <span>註冊 </span>
-      </a>
+      </router-link>
       <span class="footer__dot">•</span>
       <a href="#" class="footer__connect ">
         <span>後台登入</span>
@@ -34,6 +34,27 @@
     </div>
   </div>
 </template>
+
+<script>
+
+
+export default {
+  data() {
+    return {
+      account: "",
+      password: "",
+      
+    };
+  },
+  methods:{
+    handleSubmit (){
+      //等待API -->要記得做提示文字toast
+    }
+  }
+
+}
+</script>
+
 
 <style lang="scss" scoped>
   
@@ -54,8 +75,6 @@
 }
 
 .form {
- 
-  
   &__control {
     width: 356px;
     border-bottom: 2px solid var(--formline-gray);
@@ -71,29 +90,32 @@
   }
 
   &__input {
-    border: 0px;
-    color: var(--5-gray);       
-    background-color: var(--formbg-gray);
+   border: 0px;      
+   background-color: var(--formbg-gray);   
+
+   //更改input自動填入時的背景色
+   &:-webkit-autofill {
+     -webkit-box-shadow: 0 0 0px 1000px var(--formbg-gray) inset;
+   }
+  //預設文字樣式
+  &::placeholder{
+    color: var(--5-gray);
     line-height: 26px;
-    font-size: 16px;    
-
-    //更改input自動填入時的背景色
-    &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px var(--formbg-gray) inset;
-    }
+    font-size: 16px; 
   }
 
-  &__input[placeholder] {
-    color: var(--8-gray);    
-    font-size: 16px;    
-  }
+  //輸入文字樣式
+  &[placeholder] {
+   color: var(--8-gray);      
+   line-height: 26px;
+   font-size: 16px;    
+ }
+
+ }
 
 }
 
 .btn {
-  background: var(--brand-color);
-  color: var(--white);
-  border-radius: 50px;
   text-align: center;
   margin-top: 8px;
   font-size: 20px;
@@ -110,12 +132,14 @@
     line-height: 18px;
     color: var(--primary-color);       
     border-bottom: 1px solid var(--primary-color);
-  }
-
-  &__connect:hover {
+&:hover {
     color: var(--brand-color);
     border-bottom: 1px solid var(--brand-color);
   }
+
+  }
+
+  
   &__dot{
     margin:0px 12px
   }

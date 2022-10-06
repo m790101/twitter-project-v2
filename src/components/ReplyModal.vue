@@ -77,7 +77,7 @@
   height: 100vh;
   position: absolute;
   left: 0;
-  top: -146px;
+  top: 74px;
   z-index: 999;
   &.active {
     display: initial;
@@ -177,7 +177,6 @@ export default {
   methods: {
     callModal() {
       this.isEditing = true;
-      console.log("hi");
     },
     closeModal() {
       this.$emit("closeReplyModal");

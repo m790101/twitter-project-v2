@@ -1,17 +1,25 @@
 <template>
   <nav class="d-flex flex-column justify-content-between">
+    <div  class="nav-tweet-modal">
+        <NewTweetModal  v-if="isEditing" @afterCloseModal="handleAfterCloseModal" />
+    <div class="modal-bg" :class="{ active: isEditing }"></div>
+    </div>
+
     <div class="menu d-flex flex-column">
       <div>
         <img src="./../assets/logo.png" alt="" class="menu__logo" />
       </div>
       <div class="menu__function">
-        <router-link to="/" class="text-center d-flex link align-items-center">
+        <router-link
+          to="/main"
+          class="text-center d-flex link align-items-center"
+        >
           <img
             src="./../assets/icon/home.png"
             alt=""
             class="menu__function__icon"
           />
-           <img
+          <img
             src="./../assets/icon/home-active.png"
             alt=""
             class="menu__function__icon__active"
@@ -20,13 +28,16 @@
         </router-link>
       </div>
       <div class="menu__function">
-        <router-link to="/user/self" class="text-center d-flex link align-items-center">
+        <router-link
+          to="/user/self"
+          class="text-center d-flex link align-items-center"
+        >
           <img
             src="./../assets/icon/profile.png"
             alt=""
             class="menu__function__icon"
           />
-           <img
+          <img
             src="./../assets/icon/profile-active.png"
             alt=""
             class="menu__function__icon__active"
@@ -35,13 +46,16 @@
         </router-link>
       </div>
       <div class="menu__function">
-        <router-link to="/setting" class="text-center d-flex link align-items-center">
+        <router-link
+          to="/setting"
+          class="text-center d-flex link align-items-center"
+        >
           <img
             src="./../assets/icon/setting.png"
             alt=""
             class="menu__function__icon"
           />
-           <img
+          <img
             src="./../assets/icon/setting-active.png"
             alt=""
             class="menu__function__icon__active"
@@ -49,24 +63,25 @@
           <span>設定</span>
         </router-link>
       </div>
-      <button class="btn-main">推文</button>
+      <button class="btn-main" @click="newTweet">推文</button>
     </div>
 
-    <div class="logout d-flex flex-column justify-contnet-center ">
+    <div class="logout d-flex flex-column justify-contnet-center">
       <router-link to="/logout" class="d-flex link align-items-center">
         <img
           src="./../assets/icon/logout.png"
           alt=""
           class="menu__function__icon"
         />
-         <img
-            src="./../assets/icon/logout-active.png"
-            alt=""
-            class="menu__function__icon__active"
-          />
+        <img
+          src="./../assets/icon/logout-active.png"
+          alt=""
+          class="menu__function__icon__active"
+        />
         <span>登出</span>
       </router-link>
     </div>
+
   </nav>
 </template>
 
@@ -74,6 +89,7 @@
 nav {
   width: 178px;
   height: 100vh;
+  position:relative;
 }
 .menu {
   flex: 1;
@@ -90,12 +106,12 @@ nav {
   max-width: 21px;
   margin-right: 17px;
   margin-left: 18px;
-  
-  &__active{
-  display:none;
-  max-width: 21px;
-  margin-right: 17px;
-  margin-left: 18px;
+
+  &__active {
+    display: none;
+    max-width: 21px;
+    margin-right: 17px;
+    margin-left: 18px;
   }
 }
 
@@ -106,26 +122,69 @@ nav {
 .link {
   color: var(--8-gray);
   font-weight: 700;
-  font-size:18px;
+  font-size: 18px;
   &:hover {
     color: var(--brand-color);
-    .menu__function__icon{
-      display:none;
-      &__active{
-        display:initial
+    .menu__function__icon {
+      display: none;
+      &__active {
+        display: initial;
       }
     }
   }
   &:active {
-  color: var(--brand-color);
-  font-weight: 700;
-  font-size:18px;
-        .menu__function__icon{
-      display:none;
-      &__active{
-        display:initial
+    color: var(--brand-color);
+    font-weight: 700;
+    font-size: 18px;
+    .menu__function__icon {
+      display: none;
+      &__active {
+        display: initial;
       }
     }
   }
 }
+
+.nav-tweet-modal{
+  position: relative;
+  left:calc(178px + 24px);
+  top:74px;
+}
+
+.modal-bg {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: none;
+
+  &.active {
+    display: initial;
+    z-index:2;
+  }
+}
 </style>
+
+<script>
+import NewTweetModal from '../components/NewTweetModal.vue'
+export default {
+  data() {
+    return {
+      isEditing: false,
+    };
+  },
+  methods: {
+    newTweet() {
+      this.isEditing = true;
+    },
+    handleAfterCloseModal(){
+      this.isEditing = false;
+    }
+  },
+  components:{
+    NewTweetModal
+  }
+};
+</script>

@@ -7,6 +7,27 @@ import LogIn from '../views/LogIn.vue'
 Vue.use(VueRouter)
 
 const routes = [
+
+  {
+    path: '/main',
+    name:'home',
+    component:() => import('../views/Home')
+  },
+  {
+  path: '/user/self',
+  name:'user-self',
+  component:() => import('../views/UserInformation')
+  },
+  {
+  path: '/user/other/:id',
+  name:'user-other',
+  component:() => import('../views/UserOther')
+  },
+  {
+    path: '/tweets/:id',
+    name:'replyList',
+    component:() => import('../views/ReplyList')
+    },
   {
     path: '/logIn',
     name: 'logIn',
@@ -17,11 +38,6 @@ const routes = [
     name: 'NotFound',
     component: NotFound
   },
-  {
-    path: '/main',
-    name:'home',
-    component:() => import('../views/Home')
-  }
 ]
 
 const router = new VueRouter({

@@ -50,7 +50,7 @@ export default {
     //子元件傳入
     handleAfterSubmit(formData) {
       this.userData = { ...formData };
-      console.log(this.userData)
+      
     },
     // -->待傳入API
   },

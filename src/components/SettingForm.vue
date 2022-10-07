@@ -53,15 +53,16 @@ export default {
             UserData:{...this.initialUserSetting}
         }
     },
-    handleForm (event) {
-        console.log('btn')
-         const form = event.target
-         const formData = new FormData(form)
-         //將表單資料傳到父層 ，由父層傳到API
-         this.$emit('after-submit',formData)
-         
+    methods:{
+      handleForm () {       
+        const formData = this.UserData      
+        //將表單資料傳到父層 ，由父層傳到API
+         this.$emit('afterSubmit',formData)         
         }
-    //目前Form元件中沒有button 可以執行submit動作(button在父層)，再想想看
+    }
+    
+
+    
 }
 </script>
 

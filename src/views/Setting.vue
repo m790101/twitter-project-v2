@@ -49,8 +49,8 @@ export default {
     }
   },
   methods: {
-    handleafterSubmit () {
-        console.log(formData)
+    handleafterSubmit (playLoad) {
+        console.log(playLoad)
     }
   },
 };

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="container d-flex flex-column justify-content-center align-items-center"
-  >
+  <div class="container d-flex flex-column justify-content-center align-items-center">
     <div class="title d-flex flex-column align-items-center mb-6">
       <img class="title__image" src="./../image/logo.png" alt="logo" />
       <h3 class="title__word">登入Alphitter</h3>
@@ -10,39 +8,19 @@
     <form class="form d-flex flex-column align-items-center" autocomplete="off">
       <div class="form-control d-flex flex-column">
         <label for="account" class="form-label">帳號</label>
-        <input
-          id="account"
-          name="account"
-          type="text"
-          class="form-input"
-          placeholder="請輸入帳號"
-          autocomplete="username"
-          required
-          autofocus
-          v-model="account"
-        />
+        <input id="account" name="account" type="text" class="form-input" placeholder="請輸入帳號" autocomplete="username"
+          required autofocus v-model="account" />
       </div>
 
       <div class="form-control d-flex flex-column">
         <label for="password" class="form-label">密碼</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          class="form-input"
-          placeholder="請輸入密碼"
-          autocomplete="current-password"
-          required
-          v-model="password"
-        />
+        <input id="password" name="password" type="password" class="form-input" placeholder="請輸入密碼"
+          autocomplete="current-password" required v-model="password" />
       </div>
     </form>
 
-    <button
-      class="btn btn-main btn-main:hover btn-main:active"
-      type="submit"
-      v-on:click.prevent="handleSubmit"
-    >
+    <button class="btn btn-main btn-main:hover btn-main:active" type="submit" v-on:click.prevent="handleSubmit"
+      :disabled="isProcessing">
       登入
     </button>
 
@@ -70,19 +48,45 @@ export default {
     };
   },
   methods: {
-    handleSubmit (e) {
-      const data =JSON.stringify({
-        account:this.account,
-        password:this.password
-      })
+    async handleSubmit(e) {
+      try{
 
-      console.log(data)
-      authorizationAPI.signIn({
-        account:this.account,
-        password:this.password
-    }).then(response=>
-    console.log('response',response))
-    }
+      if (!this.account || !this.password) {
+        Toast.fire({
+          icon: "warning",
+          title: "請填入帳號和密碼",
+        });
+        return;
+      }
+      this.isProcessing = true
+      const response = await authorizationAPI.signIn({
+          account: this.account,
+          password: this.password,
+        })        
+         
+          const { data } = response;
+
+          if (data.status !== "success") {
+            throw new Error(data.message);
+          }else {
+            console.log(response);
+            localStorage.setItem("token", data.data.token);
+            this.$router.push("/main")
+          }
+         
+        
+      } catch(error) {
+          this.account = "";
+          this.password = "";
+          Toast.fire({
+            icon: "warning",
+            title: "請確認您輸入了正確的帳號密碼",
+          });
+          
+          this.isProcessing = false
+          console.log("error", error);
+        };
+    },
   },
 };
 </script>
@@ -91,6 +95,7 @@ export default {
 .title {
   margin-top: 64px;
   margin-bottom: 40px;
+
   &__image {
     width: 50px;
     height: 50px;
@@ -119,11 +124,13 @@ export default {
 .footer {
   width: 356px;
   margin-top: 22px;
+
   &__connect {
     font-size: 16px;
     line-height: 18px;
     color: var(--primary-color);
     border-bottom: 1px solid var(--primary-color);
+
     &:hover {
       color: var(--brand-color);
       border-bottom: 1px solid var(--brand-color);

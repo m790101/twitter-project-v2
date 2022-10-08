@@ -51,22 +51,30 @@ export default {
       this.$refs.formRef.handleForm();
     },
     //子元件傳入
-    async handleAfterSubmit(formData) {      
-    console.log(formData)
-      try {  
-       const { data } = await signUpAPI.register.create({
-          formData,
+    async handleAfterSubmit() {
+      try {
+        console.log("1");
+        const response = await signUpAPI.register.create({
+          account: this.account,
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          checkPassword: this.checkPassword,
         });
-        console.log(data)
+        const { data } = response;
+        console.log(data.status);
+
         if (data.status !== "success") {
           throw new Error(data.message);
+        } else {
+          console.log(response);
+          // 成功的話則轉址到 登入頁面
+          this.$router.push({ name: "logIn" });
         }
-
-        // STEP 4: 成功的話則轉址到 登入頁面
-        this.$router.push({ name: "logIn" });
-      } catch (error) {}
+      } catch (error) {
+        console.log("error", error);
+      }
     },
-    
   },
 };
 </script>

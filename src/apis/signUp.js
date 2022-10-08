@@ -4,8 +4,14 @@ import { apiHelper } from "@/utils/helpers";
 export default {
 
     register:{
-      create({formData}) {
-        return apiHelper.post('/users',{ formData }
-       ) }
+      create({account, name, email, password, checkPassword }) {
+        return apiHelper.post('/users',{ 
+          account, 
+          name, 
+          email, 
+          password, 
+          checkPassword
+         })
+         }
       }
     }

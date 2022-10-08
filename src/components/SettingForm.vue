@@ -1,8 +1,9 @@
 <template>
   <form
+    id="Form"
     class="form d-flex flex-column align-items-center"
     autocomplete="off"
-    v-on:submit.prevent="handleForm"
+    @submit.prevent="handleForm"
   >
     <div class="form-control d-flex flex-column">
       <label for="account" class="form-label">帳號</label>
@@ -17,8 +18,8 @@
         autofocus
         v-model="UserData.account"
       />
-    </div>    
-    <p class="error-handler" v-if="countName>50">字數不能超過50個字</p>
+    </div>
+    <p class="error-handler" v-if="countName > 50">字數不能超過50個字</p>
     <div class="form-control d-flex flex-column">
       <label for="name" class="form-label">名稱</label>
       <input
@@ -28,12 +29,12 @@
         class="form-input"
         placeholder="請輸入使用者名稱"
         autocomplete="name"
-        maxlength=10
+        maxlength="10"
         required
         v-model="UserData.name"
-      />     
+      />
     </div>
-    
+
     <div class="form-control d-flex flex-column">
       <label for="email" class="form-label">Email</label>
       <input
@@ -133,26 +134,28 @@ export default {
           title: "請填入確認密碼",
         });
         return;
-      }else if (this.UserData.checkPassword!==this.UserData.password) {
-        this.UserData.checkPassword=''
-        this.UserData.password=''
+      } else if (this.UserData.checkPassword !== this.UserData.password) {
+        this.UserData.checkPassword = "";
+        this.UserData.password = "";
         Toast.fire({
           icon: "warning",
           title: "請再次確認密碼",
         });
-       
+
         return;
       }
       const formData = this.UserData;
+
       //將表單資料傳到父層 ，由父層傳到API
       this.$emit("afterSubmit", formData);
     },
   },
-  computed:{
-    countName (){
-      return this.UserData.name.length
-    }
-  }
+
+  computed: {
+    countName() {
+      return this.UserData.name.length;
+    },
+  },
 };
 </script>
 
@@ -160,8 +163,8 @@ export default {
 .form {
   margin: 24px 23px 0 23px;
 }
-.error-handler{
-  color: var(--error-color);  
-  width:100%;
+.error-handler {
+  color: var(--error-color);
+  width: 100%;
 }
 </style>

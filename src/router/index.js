@@ -8,44 +8,36 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/main",
-    name: "home",
-    component: () => import("../views/Home"),
+
+    path: '/main',
+    name: 'home',
+    component: () => import('../views/Home')
   },
   {
-    path: "/user/self",
-    name: "user-self",
-    component: () => import("../views/UserInformation"),
+    path: '/user/:id',
+    name: 'user-information',
+    component: () => import('../views/UserInformation')
   },
   {
-    path: "/user/other/:id",
-    name: "user-other",
-    component: () => import("../views/UserOther"),
+    path: '/user/:id/follower',
+    name: 'user-follower',
+    component: () => import('../views/UserFollower')
   },
   {
-    path: "/tweets/:id",
-    name: "replyList",
-    component: () => import("../views/ReplyList"),
+    path: '/user/:id/following',
+    name: 'user-following',
+    component: () => import('../views/UserFollowing')
   },
   {
-    path: "/admin/users",
-    name: "admin-users",
-    component: () => import("../views/AdminUserList"),
+    path: '/tweets/:id',
+    name: 'replyList',
+    component: () => import('../views/ReplyList')
   },
   {
-    path: "/logIn",
-    name: "logIn",
-    component: LogIn,
-  },
-  {
-    path: "/signup",
-    name: "signup",
-    component: () => import("../views/SignUp.vue"),
-  },
-  {
-    path: "/setting",
-    name: "setting",
-    component: () => import("../views/Setting.vue"),
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('../views/AdminUserList')
+
   },
   {
     path: "/admin/login",
@@ -53,14 +45,20 @@ const routes = [
     component: () => import("../views/AdminLogin.vue"),
   },
   {
-    path: "/admin/main",
-    name: "adminTweetPage",
-    component: () => import("../views/AdminTweetPage.vue"),
+    path: '/signup',
+    name: 'signup',
+    component: () => import('../views/SignUp.vue')
   },
   {
-    path: "*",
-    name: "NotFound",
-    component: NotFound,
+    path: '/setting',
+    name: 'setting',
+    component: () => import('../views/Setting.vue')
+  }
+  , {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+
   },
 ];
 

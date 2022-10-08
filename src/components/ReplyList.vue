@@ -1,7 +1,7 @@
 <template>
   <div class="tweet-card">
     <div class="tweet-card__panel d-flex">
-      <router-link to="/user/other/1">
+      <router-link :to="{name:'user-information', params:user.id}">
         <img
           src="./../assets/icon/user-none.png"
           alt=""
@@ -60,3 +60,16 @@
   }
 }
 </style>
+
+
+<script>
+export default {
+  data(){
+    return {
+      user:{
+        id:1
+      }
+    }
+  }
+}
+</script>

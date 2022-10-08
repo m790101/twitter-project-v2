@@ -3,10 +3,12 @@
     <div class="card">
       <div class="card__body">
         <div class="d-flex card__body__account">
+          <router-link :to="{name:'user-information', params:user.id}">
           <img
             src="./../assets/icon/user-none.png"
             class="card__body__account__avatar"
           />
+          </router-link>
           <div class="card__body__account__info">
             <p class="fw-bold">username</p>
             <p class="fs-14 card__body__account__info__id">@userid</p>
@@ -62,6 +64,9 @@ import ReplyModal from "../components/ReplyModal.vue";
 export default {
   data() {
     return {
+      user:{
+        id:1
+      },
       isLiked: false,
       isReplying:false
     };

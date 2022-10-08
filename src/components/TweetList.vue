@@ -2,7 +2,7 @@
   <section>
     <div class="tweet-card">
       <div class="tweet-card__panel d-flex">
-        <router-link to="/user/other/1">
+        <router-link :to="{name:'user-information', params:user.id}">
           <img
             src="./../assets/icon/user-none.png"
             alt=""
@@ -145,6 +145,9 @@ import ReplyModal from "./ReplyModal.vue";
 export default {
   data() {
     return {
+      user:{
+        id:1
+      },
       isLiked: false,
       isReplying: false,
     };

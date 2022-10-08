@@ -29,7 +29,7 @@
       </div>
       <div class="menu__function">
         <router-link
-          to="/user/self"
+          :to="{name:'user-information', params:user.id}"
           class="text-center d-flex link align-items-center"
         >
           <img
@@ -172,6 +172,9 @@ import NewTweetModal from '../components/NewTweetModal.vue'
 export default {
   data() {
     return {
+      user:{
+        id:1
+      },
       isEditing: false,
     };
   },

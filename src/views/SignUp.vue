@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="container" v-show="!isLoading">
     <div class="title d-flex flex-column align-items-center mb-6">
       <img class="title__image" src="./../image/logo.png" alt="logo" />
       <h3 class="title__word">建立你的帳號</h3>
@@ -25,6 +25,8 @@
 
 <script>
 import SettingForm from "./../components/SettingForm.vue";
+import signUpAPI from "./../apis/signUp";
+import { Toast } from "./../utils/helpers";
 
 export default {
   components: {
@@ -32,11 +34,12 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       userData: {
         id: -1,
         account: "",
         name: "",
-        Email: "",
+        email: "",
         password: "",
         checkPassword: "",
       },
@@ -44,15 +47,26 @@ export default {
   },
   methods: {
     // 呼叫子元件的handleForm方法
-    getData() {      
+    getData() {
       this.$refs.formRef.handleForm();
     },
     //子元件傳入
-    handleAfterSubmit(formData) {
-      this.userData = { ...formData };
-      
+    async handleAfterSubmit(formData) {      
+    console.log(formData)
+      try {  
+       const { data } = await signUpAPI.register.create({
+          formData,
+        });
+        console.log(data)
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        // STEP 4: 成功的話則轉址到 登入頁面
+        this.$router.push({ name: "logIn" });
+      } catch (error) {}
     },
-    // -->待傳入API
+    
   },
 };
 </script>

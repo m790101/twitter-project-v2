@@ -10,7 +10,7 @@ const routes = [
   { //根目錄轉址
     path: '/',
     name: 'root',
-    redirect:'/signin'
+    redirect:'/logIn'
   
   }, 
   {

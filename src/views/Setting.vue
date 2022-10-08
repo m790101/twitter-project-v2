@@ -1,24 +1,27 @@
 <template>
   <main class="container d-flex">
-    
-    <div class="container__left ">
+    <div class="container__left">
       <Navbar />
     </div>
-    <div class="container__right  d-flex">
+    <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">帳號設定</h4>
-        <SettingForm :initialUserSetting="userData" @afterSubmit="handleafterSubmit"></SettingForm>
+        <SettingForm
+          ref="formRef"
+          :initialUserSetting="userData"
+          @afterSubmit="handleAfterSubmit"
+        ></SettingForm>
         <div class="d-flex justify-content-end">
           <button
             class="btn btn-main btn-main:hover btn-main:active"
             type="submit"
+            v-on:click="getData"
           >
             儲存
           </button>
         </div>
-      
+      </div>
     </div>
-</div>
   </main>
 </template>
 
@@ -26,13 +29,12 @@
 import SettingForm from "./../components/SettingForm.vue";
 import Navbar from "./../components/Navbar.vue";
 
-
 const dummyData = {
   userData: {
     id: 1,
-    account: 'aaa',
-    name: 'aa',
-    Email:'aa@gmail.com',
+    account: "aaa",
+    name: "aa",
+    Email: "aa@gmail.com",
     password: "123456",
     checkPassword: "123456",
   },
@@ -43,15 +45,21 @@ export default {
     Navbar,
     SettingForm,
   },
-  data () {
+  data() {
     return {
-        userData:{...dummyData.userData}
-    }
+      userData: { ...dummyData.userData },
+    };
   },
   methods: {
-    handleafterSubmit (playLoad) {
-        console.log(playLoad)
-    }
+    // 呼叫子元件的handleForm方法
+    getData() {
+      this.$refs.formRef.handleForm();
+    },
+    //子元件傳入
+    handleAfterSubmit(formData) {
+      this.userData = { ...formData };
+    },
+    // -->待傳入API
   },
 };
 </script>
@@ -70,10 +78,8 @@ export default {
   border-bottom: 1px solid #e6ecf0;
 }
 
-.btn {  
-  margin:8px 23px 25px 0px;
+.btn {
+  margin: 8px 23px 25px 0px;
   padding: 8px 24px;
 }
-
-
 </style>

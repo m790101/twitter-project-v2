@@ -1,14 +1,14 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 //import Home from '../views/Home.vue'
-import NotFound from '../views/NotFound.vue'
-import LogIn from '../views/LogIn.vue'
+import NotFound from "../views/NotFound.vue";
+import LogIn from "../views/LogIn.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
-
   {
+
     path: '/main',
     name: 'home',
     component: () => import('../views/Home')
@@ -37,11 +37,12 @@ const routes = [
     path: '/admin/users',
     name: 'admin-users',
     component: () => import('../views/AdminUserList')
+
   },
   {
-    path: '/logIn',
-    name: 'logIn',
-    component: LogIn
+    path: "/admin/login",
+    name: "adminLogin",
+    component: () => import("../views/AdminLogin.vue"),
   },
   {
     path: '/signup',
@@ -57,11 +58,12 @@ const routes = [
     path: '*',
     name: 'NotFound',
     component: NotFound
+
   },
-]
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

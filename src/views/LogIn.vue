@@ -6,15 +6,15 @@
     </div>
 
     <form class="form d-flex flex-column align-items-center" autocomplete="off" v-on:submit.prevent="handleSubmit" >
-      <div class="form__control d-flex flex-column">
-        <label for="account" class="form__label ">帳號</label>
-        <input id="account" name="account" type="text" class="form__input " placeholder="請輸入帳號" autocomplete="username"
+      <div class="form-control d-flex flex-column">
+        <label for="account" class="form-label ">帳號</label>
+        <input id="account" name="account" type="text" class="form-input " placeholder="請輸入帳號" autocomplete="username"
           required autofocus v-model="account" />
       </div>
 
-      <div class="form__control  d-flex flex-column">
-        <label for="password" class="form__label ">密碼</label>
-        <input id="password" name="password" type="password" class="form__input " placeholder="請輸入密碼"
+      <div class="form-control  d-flex flex-column">
+        <label for="password" class="form-label ">密碼</label>
+        <input id="password" name="password" type="password" class="form-input " placeholder="請輸入密碼"
           autocomplete="current-password" required v-model="password" />
       </div>
     </form>
@@ -28,9 +28,9 @@
         <span>註冊 </span>
       </router-link>
       <span class="footer__dot">•</span>
-      <a href="#" class="footer__connect ">
+      <router-link to="/admin/login" class="footer__connect ">
         <span>後台登入</span>
-      </a>
+      </router-link>
     </div>
   </div>
 </template>
@@ -75,43 +75,8 @@ export default {
 }
 
 .form {
-  &__control {
-    width: 356px;
-    border-bottom: 2px solid var(--formline-gray);
-    background-color: var(--formbg-gray);
-    padding: 2px 10.55px;
-    margin-bottom: 32px;
-  }
+  width: 356px;
 
-  &__label {
-    color: var(--7-gray);
-    line-height: 22px;   
-    font-size: 14px;
-  }
-
-  &__input {
-   border: 0px;      
-   background-color: var(--formbg-gray);   
-
-   //更改input自動填入時的背景色
-   &:-webkit-autofill {
-     -webkit-box-shadow: 0 0 0px 1000px var(--formbg-gray) inset;
-   }
-  //預設文字樣式
-  &::placeholder{
-    color: var(--5-gray);
-    line-height: 26px;
-    font-size: 16px; 
-  }
-
-  //輸入文字樣式
-  &[placeholder] {
-   color: var(--8-gray);      
-   line-height: 26px;
-   font-size: 16px;    
- }
-
- }
 
 }
 

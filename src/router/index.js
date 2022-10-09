@@ -7,6 +7,12 @@ import LogIn from "../views/LogIn.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  { //根目錄轉址
+    path: '/',
+    name: 'root',
+    redirect:'/logIn'
+  
+  }, 
   {
 
     path: '/main',

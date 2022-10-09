@@ -12,6 +12,7 @@
         class="footer__btn btn-main btn-main:hover btn-main:active"
         type="submit"
         v-on:click="getData"
+        :disabled="isProcessing"
       >
         註冊
       </button>
@@ -35,6 +36,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isProcessing:false,
       userData: {
         id: -1,
         account: "",
@@ -52,6 +54,7 @@ export default {
     },
     //子元件傳入
     async handleAfterSubmit() {
+      this.isProcessing = true
       try {
         console.log("1");
         const response = await signUpAPI.register.create({
@@ -72,6 +75,7 @@ export default {
           this.$router.push({ name: "logIn" });
         }
       } catch (error) {
+        this.isProcessing = false
         console.log("error", error);
       }
     },

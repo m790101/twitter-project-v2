@@ -12,9 +12,13 @@ const routes = [
     name: 'root',
     redirect:'/logIn'
   
+  },
+  {
+    path: "/logIn",
+    name: "logIn",
+    component: LogIn,
   }, 
   {
-
     path: '/main',
     name: 'home',
     component: () => import('../views/Home')

@@ -29,7 +29,7 @@
         class="form-input"
         placeholder="請輸入使用者名稱"
         autocomplete="name"
-        maxlength="10"
+        maxlength="50"
         required
         v-model="UserData.name"
       />
@@ -113,7 +113,13 @@ export default {
       } else if (!this.UserData.name) {
         Toast.fire({
           icon: "warning",
-          title: "請填入名稱",
+          title: "請填入名稱 ",
+        });
+        return;
+      }else if (this.UserData.name.length>50) {
+        Toast.fire({
+          icon: "warning",
+          title: "名稱不能大於50個字",
         });
         return;
       } else if (!this.UserData.email) {

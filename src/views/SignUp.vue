@@ -26,7 +26,7 @@
 <script>
 import SettingForm from "./../components/SettingForm.vue";
 import signUpAPI from "./../apis/signUp";
-import { Toast } from "./../utils/helpers";
+
 
 export default {
   components: {

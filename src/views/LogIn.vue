@@ -49,7 +49,7 @@ export default {
     };
   },
   methods: {
-    async handleSubmit(e) {
+    async handleSubmit() {
       try{
 
       if (!this.account || !this.password) {
@@ -86,7 +86,7 @@ export default {
           
           this.isProcessing = false
           console.log("error", error);
-        };
+        }
     },
   },
 };

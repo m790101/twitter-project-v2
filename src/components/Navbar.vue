@@ -29,7 +29,7 @@
       </div>
       <div class="menu__function">
         <router-link
-          :to="{name:'user-information', params:user.id}"
+          :to="{name:'user-information', params:{id:user.id}}"
           class="text-center d-flex link align-items-center"
         >
           <img

@@ -1,7 +1,7 @@
 <template>
   <div class="tweet-card">
-    <div class="tweet-card__panel d-flex">
-      <router-link :to="{name:'user-information', params:user.id}">
+    <div class="tweet-card__panel d-flex" v-for="reply in replies" :key="reply.id">
+      <router-link :to="{name:'user-information', params:{id:user.id}}">
         <img
           src="./../assets/icon/user-none.png"
           alt=""
@@ -10,15 +10,13 @@
       </router-link>
       <div class="tweet-card__panel__content">
         <div class="tweet-card__panel__content__title d-flex  d-flex align-items-center">
-          <p class="fw-bold fs-16">Apple</p>
-          <p class="ms-1 fs-14 tweet-card__panel__content__title__id">@apple．<span>time</span></p>
+          <p class="fw-bold fs-16">{{reply.user.name}}</p>
+          <p class="ms-1 fs-14 tweet-card__panel__content__title__id">@{{reply.user.account}}．<span>{{reply.createdAt | fromNow}}</span></p>
         </div>
         <div class="tweet-card__panel__content__text ">
-            <p class="fs-14 mb-2 tweet-card__panel__content__text__reply">回覆 <span class="tweet-card__panel__content__text__reply-to">@apple</span></p>
+            <p class="fs-14 mb-2 tweet-card__panel__content__text__reply">回覆 <span class="tweet-card__panel__content__text__reply-to">@{{reply.user.account}}</span></p>
           <p>
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-            cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-            reprehenderit elit laborum.
+           {{reply.comment}}
           </p>
         </div>
       </div>
@@ -32,20 +30,8 @@
   width:634px;
   height:121px;
   font-size:15px;
-  margin-top:10px;
-}
-
-.tweet-card__panel__content__text{
-  &__reply{
-    margin-top:8px;
-    color: var(--secondary-color);
-  }
-  &__reply-to{
-    color: var(--brand-color);
-    }
-}
-
-.tweet-card__panel {
+  &__panel {
+      margin-top:10px;
   padding: 0px 0 17px 24px;
   border-bottom: 1px solid #e6ecf0;
    &__content {
@@ -59,17 +45,43 @@
     color: var(--secondary-color);
   }
 }
+}
+
+.tweet-card__panel__content__text{
+  &__reply{
+    margin-top:8px;
+    color: var(--secondary-color);
+  }
+  &__reply-to{
+    color: var(--brand-color);
+    }
+}
+
 </style>
 
 
 <script>
+import {fromNowFilter} from './../utils/mixins'
 export default {
+  props:{
+    initialReplies:{
+      type:Array,
+      required:true
+    }
+  },
   data(){
     return {
       user:{
-        id:1
-      }
+        id:1,
+      },
+       replies:this.initialReplies
     }
-  }
+  },
+  watch:{
+    initialReplies(){
+      this.replies = this.initialReplies
+    }
+  },
+  mixins:[fromNowFilter]
 }
 </script>

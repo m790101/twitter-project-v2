@@ -1,11 +1,6 @@
 <template>
   <section>
     <div class="create-tweet">
-      <NewTweetModal
-        v-if="isEditing"
-        @afterCloseModal="handleAfterCloseModal"
-      />
-      <div class="modal-bg" :class="{ active: isEditing }"></div>
       <div class="create-tweet__body">
         <div class="d-flex align-items-center">
           <img
@@ -68,6 +63,7 @@
 
 .modal-bg {
   position: fixed;
+  z-index:1;
   background-color: rgba(0, 0, 0, 0.4);
   width: 100vw;
   height: 100vh;
@@ -81,7 +77,6 @@
 </style>
 
 <script>
-import NewTweetModal from "./NewTweetModal.vue";
 export default {
   props: {
     navIsEditing: {
@@ -96,14 +91,13 @@ export default {
   },
   methods: {
     callModal() {
-      this.isEditing = true;
+      this.$emit('afterCallModal');
     },
     handleAfterCloseModal() {
       this.isEditing = false;
     },
   },
   components: {
-    NewTweetModal,
   },
   watch: {
     navIsEditing(newValue) {

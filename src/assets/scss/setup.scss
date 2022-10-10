@@ -241,7 +241,9 @@ textarea {
   color: white;
   border-radius: 50px;
   height: 46px;
-
+  &:disabled{
+    background-color: var(--4-gray);
+  }
 }
 
 .btn-main:hover {

@@ -12,7 +12,6 @@
         </div>
         <div class="modal-body">
           <div class="modal-body__panel d-flex">
-              <div class="modal-body__panel__line"></div>
               <img
                 src="./../assets/icon/user-none.png"
                 alt=""
@@ -22,19 +21,17 @@
               <div
                 class="modal-body__panel__content__title d-flex "
               >
-                <p class="fw-bold modal-body__panel__content__title__name">Apple</p>
-                <p class="fs-14 modal-body__panel__content__title__id">@apple．<span>3小時</span></p>
+                <p class="fw-bold modal-body__panel__content__title__name">{{tweet.user.name}}</p>
+                <p class="fs-14 modal-body__panel__content__title__id">@{{tweet.user.account}}．<span>{{tweet.createdAt | fromNow}}</span></p>
               </div>
               <div class="modal-body__panel__content__description">
                 <p>
-                  Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
-                  ullamco cillum dolor. Voluptate exercitation incididunt
-                  aliquip deserunt reprehenderit elit laborum.
+                  {{tweet.description}}
                 </p>
                 <p class="fs-14 modal-body__panel__content__description__reply-to">
                   回覆給
                   <span class=" modal-body__panel__content__description__reply-to__id"
-                    >@apple</span
+                    >@{{tweet.user.account}}</span
                   >
                 </p>
               </div>
@@ -54,19 +51,21 @@
                 rows="5"
                 placeholder="推你的回覆"
                 class="modal-body__textarea pt-2"
+                v-model="comment"
               >
               </textarea>
             </div>
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-end align-items-center">
-          <div class="error-handler">內容不可為空白!</div>
-          <button type="button" class="btn-main" style="width: 66px">
+          <div class="error-handler" v-if="comment.length <= 0">內容不可為空白!</div>
+          <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing">
             推文
           </button>
         </div>
       </div>
     </div>
+
   </section>
 </template>
 
@@ -107,12 +106,14 @@
   padding-left: 24px;
   &__panel {
       position: relative;
-      &__line{
+      &::before{
+          content:'';
           position:absolute;
           top:calc(50px + 16px);
           left:25px;
+          transform: translate(-50%,0);
           width:2px;
-          height:86px;
+          height:calc(100% - 32px);
           background-color:#CCD6DD;
       }
     &__avatar {
@@ -166,14 +167,36 @@
   font-size: 12px;
   color: var(--error-color);
 }
+
+
+
 </style>
 
 
 <script>
+import {fromNowFilter} from './../utils/mixins'
+import tweetApi from "./../apis/tweets";
+import { Toast } from "./../utils/helpers";
+
 export default {
-  data() {
-    return {};
+  props:{
+    initialTweet:{
+      type:Object,
+      required:true
+    },
+    initialReplying:{
+      type:Boolean,
+      required:true
+    }
   },
+  data() {
+    return {
+      tweet:this.initialTweet,
+      comment:'',
+      isProcessing:false
+    };
+  },
+  mixins:[fromNowFilter],
   methods: {
     callModal() {
       this.isEditing = true;
@@ -181,6 +204,27 @@ export default {
     closeModal() {
       this.$emit("closeReplyModal");
     },
+    createReply(id){
+      try{
+        this.isProcessing = true
+              const response = tweetApi.createReply({comment:this.comment,tweet_id:id})
+              console.log(response)
+              this.$emit("closeReplyModal");
+              this.$emit("afterCreateReply",{
+                comment:this.comment,
+                user:this.tweet.user,
+                createdAt:new Date
+              });
+              this.isProcessing = false
+          }
+          catch(error){
+            this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法新增推文",
+        });
+    }
   },
+  }
 };
 </script>

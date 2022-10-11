@@ -5,7 +5,7 @@
         <div>
           <img v-if="tweet.user.image"
             :src="tweet.user.image"
-            alt="使用者圖片"
+            alt="使用者照片"
             class="tweet-list__panel__avatar"
           />
           <img v-else
@@ -21,13 +21,13 @@
           >
             <p class="fw-bold fs-16">{{ tweet.user.name }}</p>
             <p class="ms-2 fs-14 tweet-list__panel__content__title__id">
-              @{{ tweet.user.account }}．<span>{{ tweet.createdAt }}</span>
+              @{{ tweet.user.account }}．<span>{{ tweet.createdAt |changeTime}}</span>
             </p>
           </div>
 
           <div class="tweet-list__panel__content__text">
             <p>
-              {{ tweet.description }}
+              {{ tweet.description |changeDes }}
             </p>
           </div>
         </div>
@@ -50,16 +50,33 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   props: {
     tweet: {
-      type: Array,
+      type: Object,
       require: true,
     },
   },
   methods:{
-    handleDeleteButton (tweetId) {        
+    handleDeleteButton (tweetId) {            
         this.$emit('deleteTweet',tweetId)
+    }
+  },
+  filters:{
+    changeDes (description){
+      if(description.length>=50){
+        return description.substring(0,49)+"..."
+      } 
+      return description
+    },
+    changeTime (createdTime){
+      if(!createdTime){
+        return '-'
+      }
+      return moment(createdTime).fromNow()
+
     }
   }
 };

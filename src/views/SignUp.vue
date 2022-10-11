@@ -1,7 +1,7 @@
 <template>
   <main class="container" v-show="!isLoading">
     <div class="title d-flex flex-column align-items-center mb-6">
-      <img class="title__image" src="./../image/logo.png" alt="logo" />
+      <img class="title__image" src="./../assets/logo.png" alt="logo" />
       <h3 class="title__word">建立你的帳號</h3>
     </div>
 
@@ -50,20 +50,22 @@ export default {
   methods: {
     // 呼叫子元件的handleForm方法
     getData() {
-      this.$refs.formRef.handleForm();
+      this.$refs.formRef.handleForm();      
+
     },
     //子元件傳入
-    async handleAfterSubmit() {
+    async handleAfterSubmit(formData) {
+      this.userData = {...formData}
+      console.log('this.uerData',this.userData)
       this.isProcessing = true
-      try {
-        console.log("1");
-        const response = await signUpAPI.register.create({
-          account: this.account,
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          checkPassword: this.checkPassword,
-        });
+      try {        
+        const response = await signUpAPI.create({
+          account: this.userData.account,
+          name: this.userData.name,
+          email: this.userData.email,
+          password: this.userData.password,
+          checkPassword: this.userData.checkPassword,
+        });       
         const { data } = response;
         console.log(data.status);
 

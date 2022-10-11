@@ -21,27 +21,7 @@ import AdminTweetList from "./../components/AdminTweetList.vue";
 import adminAPI from "./../apis/admin";
 import { Toast } from "./../utils/helpers"
 
-const dummyData = {
-  tweets: [
-    {
-      id: 1,
-      name: "Nina",
-      account: "@Nina",
-      image: "",
-      description: "hellooooooooooooooooooo",
-      createdAt: "5天前",
-    },
-    {
-      id: 2,
-      name: "Apple",
-      account: "@Apple",
-      image: "",
-      description:
-        "Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.",
-      createdAt: "3天前",
-    },
-  ],
-};
+
 
 export default {
   data() {
@@ -67,13 +47,35 @@ export default {
    } catch (error) {
       console.log('error',error)
    }
-      //this.tweet = dummyData.tweets;
+      
     },
 
-    afterDeleteTweet(tweetId) {
-      this.tweet = this.tweet.filter((item) => item.id !== tweetId);
+   async afterDeleteTweet(tweetId) {
+      try{
+        const { data } = await adminAPI.admin.deleteTweets({ tweetId })
+        console.log(data)
+        if (data.status === 'error') {
+          throw new Error(data.message)
+       
+        }else{
+          Toast.fire({
+          icon: 'error',
+          title: '已移除推文'
+        })
+        this.fetchTweet()
+        }
+     
+      } catch (error) {
+        console.log(error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法移除推文，請稍後再試'
+        })
+      }
+
     },
   },
+
 };
 </script>
 

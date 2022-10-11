@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex flex-column justify-content-center align-items-center">
     <div class="title d-flex flex-column align-items-center mb-6">
-      <img class="title__image" src="./../image/logo.png" alt="logo" />
+      <img class="title__image" src="./../assets/logo.png" alt="logo" />
       <h3 class="title__word">登入Alphitter</h3>
     </div>
 

@@ -59,7 +59,7 @@
         </div>
         <div class="modal-footer d-flex justify-content-end align-items-center">
           <div class="error-handler" v-if="comment.length <= 0">內容不可為空白!</div>
-          <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing">
+          <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing || comment.length <= 0">
             推文
           </button>
         </div>

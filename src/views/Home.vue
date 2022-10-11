@@ -2,6 +2,7 @@
   <main class="container d-flex">
     <div class="container__left">
       <Navbar
+      @navCreateTweet="handleAfterCreatedTweet"
       />
     </div>
     <div class="container__right d-flex">
@@ -68,6 +69,7 @@ export default {
       this.isEditing = false
       this.tweets.unshift({
         ...playLoad,
+        UserId:2,
         isLiked:false,
         likeNum:0,
         replyNum:0,
@@ -100,6 +102,7 @@ export default {
 
 <style lang="scss" scoped>
 .section {
+  position:relative;
   border: 1px solid #e6ecf0;
   margin-left: 24px;
   height:100vh;

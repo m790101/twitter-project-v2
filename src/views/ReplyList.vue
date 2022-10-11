@@ -24,7 +24,6 @@
         />
         <ReplyModal
         :initial-tweet="tweet"
-        :initial-replying="isReplying"
         v-if="isReplying"
         @closeReplyModal="handleCloseReplyModal"
         @afterCreateReply="handleAfterCreateReply"

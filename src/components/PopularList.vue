@@ -2,7 +2,7 @@
   <section>
     <h4 class="title">推薦跟隨</h4>
     <div class="section__panel">
-      <div class="section__panel__account d-flex">
+      <div class="section__panel__account d-flex" v-for="user in users" :key="user.id">
         <img
           src="./../assets/icon/user-none.png"
           alt=""
@@ -17,13 +17,13 @@
               justify-content-start
             "
           >
-            <p class="fw-bold truncate">Pizza Hut</p>
+            <p class="fw-bold truncate">{{user.name}}</p>
             <p class="section__panel__account__content__title__id fs-14">
-              @userid
+              @{{user.account}}
             </p>
           </div>
           <div class="section__panel__account__content__btn-section d-flex">
-            <button class="btn-main" style="width: 96px" v-if="isfollowed">
+            <button class="btn-main" style="width: 96px" v-if="user.isFollowing">
               正在追蹤
             </button>
             <button class="btn-white" v-else>跟隨</button>
@@ -35,12 +35,31 @@
 </template>
 
 <script>
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
 export default {
   data() {
     return {
-      isfollowed: true,
+      users:[]
     };
   },
+  methods:{
+    async fetchData(){
+      try{
+        const {data} = await userApi.getUserTop()
+        this.users = data
+      }
+      catch(error){
+          Toast.fire({
+          icon: "warning",
+          title: "無法讀取使用者",
+        });
+      }
+    }
+  },
+  created(){
+    this.fetchData()
+  }
 };
 </script>
 
@@ -58,10 +77,10 @@ section {
   border-bottom: 1px solid #e6ecf0;
 }
 .section__panel {
-  padding: 0 16px;
+  padding: 16px 16px 0 16px;
   border-top: 1px solid var(--1-gray);
-  & &__account {
-    padding-top: 1rem;
+   &__account {
+    margin-bottom:32px;
     &__avatar {
       width: 50px;
       height: 50px;

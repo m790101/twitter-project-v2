@@ -184,10 +184,6 @@ export default {
       type:Object,
       required:true
     },
-    initialReplying:{
-      type:Boolean,
-      required:true
-    }
   },
   data() {
     return {
@@ -211,6 +207,7 @@ export default {
               console.log(response)
               this.$emit("closeReplyModal");
               this.$emit("afterCreateReply",{
+                id,
                 comment:this.comment,
                 user:this.tweet.user,
                 createdAt:new Date
@@ -228,3 +225,6 @@ export default {
   }
 };
 </script>
+
+
+

@@ -1,7 +1,9 @@
 <template>
   <nav class="d-flex flex-column justify-content-between">
     <div  class="nav-tweet-modal">
-        <NewTweetModal  v-if="isEditing" @afterCloseModal="handleAfterCloseModal" />
+        <NewTweetModal  
+         @afterCreatedTweet="handleAfterCreatedTweet"
+        v-if="isEditing" @afterCloseModal="handleAfterCloseModal" />
     <div class="modal-bg" :class="{ active: isEditing }"></div>
     </div>
 
@@ -184,6 +186,11 @@ export default {
     },
     handleAfterCloseModal(){
       this.isEditing = false;
+    },
+    handleAfterCreatedTweet(playLoad){
+      this.isEditing = false
+      console.log(playLoad)
+      this.$emit('navCreateTweet',playLoad)
     }
   },
   components:{

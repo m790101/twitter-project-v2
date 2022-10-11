@@ -9,7 +9,7 @@
         @click="$router.back()"
       />
       <div class="header__text">
-        <h5 class="">John Doe</h5>
+        <h5 class="">{{user.name}}</h5>
         <p class="header__text__info"><span>25</span> 推文</p>
       </div>
     </div>
@@ -42,11 +42,10 @@
             <button class="btn-white" style="width:96px;" v-else>跟隨</button>
           </div>
           <div class="card__body__text">
-            <h5 class="">John Doe</h5>
-            <span class="font-14 card__body__text__account">@heyjohn</span>
+            <h5 class="">{{user.name}}</h5>
+            <span class="font-14 card__body__text__account">@{{user.account}}</span>
             <p class="font-14 mt-2">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint.
+              {{user.introduction}}
             </p>
           </div>
         </div>
@@ -144,10 +143,23 @@
 
 <script>
 export default {
+  props:{
+    initialUser:{
+      type:Object,
+      required:true
+    }
+  },
   data(){
     return {
       user:{
         id:1,
+        account:'',
+        backgroundImage:'',
+        email:'',
+        image:'',
+        introduction:'',
+        name:'',
+        role:'',
         isNotificated:false,
         isfollowed:true
 
@@ -160,6 +172,14 @@ export default {
     },
     toggleNoti(){
       this.user.isNotificated = !this.user.isNotificated
+    }
+  },
+  watch:{
+    initialUser(){
+      this.user={
+        ...this.user,
+        ...this.initialUser
+      }
     }
   }
 }

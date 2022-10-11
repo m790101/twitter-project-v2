@@ -40,7 +40,7 @@
                 align-items-center
                 cursor-pointer
               "
-              @click="callReplyModal"
+              @click="callReplyModal(tweet)"
             >
               <img src="./../assets/icon/comments.png" alt="" class="icon" />
               <span
@@ -80,7 +80,9 @@
       </div>
     </div>
     <ReplyModal 
+    :initialTweet="tweetEditing"
     @closeReplyModal="handleCloseReplyModal"
+    @afterCreateReply="handleAfterCreateReply" 
     v-if="isReplying"
     />
     <div class="modal-bg" :class="{ active: isReplying }"></div>
@@ -168,6 +170,7 @@ export default {
       },
       isLiked: false,
       isReplying: false,
+      tweetEditing:{}
     };
   },
   mixins:[fromNowFilter,emptyImageFilter],
@@ -175,11 +178,25 @@ export default {
     ReplyModal,
   },
   methods: {
-    callReplyModal() {
+    callReplyModal(tweet) {
       this.isReplying = true;
+      this.tweetEditing = {
+        ...tweet
+      }
     },
     handleCloseReplyModal() {
       this.isReplying = false;
+    },
+    handleAfterCreateReply(playLoad){
+      this.tweets = this.tweets.map(tweet=>{
+          if(tweet.id === playLoad.id){
+            return {
+              ...tweet,
+              replyNum: tweet.replyNum + 1
+            }
+          }
+          return tweet
+      })
     },
     async like(id) {
       try {

@@ -1,7 +1,7 @@
 <template>
   <form
     id="Form"
-    class="form d-flex flex-column align-items-center"
+    class="form  d-flex flex-column align-items-center"
     autocomplete="off"
     @submit.prevent="handleForm"
   >
@@ -11,7 +11,7 @@
         id="account"
         name="account"
         type="text"
-        class="form-input"
+        class="form-input form:hover"
         placeholder="請輸入帳號"
         autocomplete="account"
         required
@@ -19,7 +19,7 @@
         v-model="UserData.account"
       />
     </div>
-    <p class="error-handler" v-if="countName > 50">字數不能超過50個字</p>
+    
     <div class="form-control d-flex flex-column">
       <label for="name" class="form-label">名稱</label>
       <input
@@ -34,6 +34,7 @@
         v-model="UserData.name"
       />
     </div>
+    <p class="error-handler" v-if="countName > 50">字數不能超過50個字</p>
 
     <div class="form-control d-flex flex-column">
       <label for="email" class="form-label">Email</label>
@@ -167,8 +168,9 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  margin: 24px 23px 0 23px;
+  margin:0px 23px;
 }
+
 .error-handler {
   color: var(--error-color);
   width: 100%;

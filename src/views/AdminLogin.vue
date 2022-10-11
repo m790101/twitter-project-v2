@@ -2,7 +2,7 @@
   <div
     class="container d-flex flex-column justify-content-center align-items-center"
   >
-    <div class="title d-flex flex-column align-items-center mb-6">
+    <div class="title d-flex flex-column align-items-center ">
       <img class="title__image" src="./../image/logo.png" alt="logo" />
       <h3 class="title__word">後台登入</h3>
     </div>
@@ -12,7 +12,7 @@
       autocomplete="off"
       v-on:submit.prevent="handleSubmit"
     >
-      <div class="form__control d-flex flex-column">
+      <div class="form-control d-flex flex-column">
         <label for="account" class="form-label">帳號</label>
         <input
           id="account"
@@ -27,7 +27,7 @@
         />
       </div>
 
-      <div class="form__control d-flex flex-column">
+      <div class="form-control d-flex flex-column">
         <label for="password" class="form-label">密碼</label>
         <input
           id="password"
@@ -113,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 .title {
   margin-top: 64px;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
   &__image {
     width: 50px;
     height: 50px;
@@ -127,19 +127,13 @@ export default {
   }
 }
 
-.form {
-  &__control {
-    width: 356px;
-    border-bottom: 2px solid var(--formline-gray);
-    background-color: var(--formbg-gray);
-    padding: 2px 10.55px;
-    margin-bottom: 32px;
+.form{  
+   width: 356px;     
   }
-}
 
 .btn {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;

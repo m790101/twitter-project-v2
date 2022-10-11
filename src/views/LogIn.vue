@@ -72,6 +72,7 @@ export default {
           }else {
             console.log(response);
             localStorage.setItem("token", data.data.token);
+            this.$store.commit('setCurrentUser',data.data.user)
             this.$router.push("/main")
           }
          

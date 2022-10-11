@@ -2,21 +2,26 @@
   <div class="tweet-list">
     <div class="tweet-list__panel d-flex justify-content-between">
       <div class="d-flex">
-        <router-link to="/user/other/1">
-          <img
-            src="./../assets/icon/user-none.png"
-            alt=""
+        <div>
+          <img v-if="tweet.user.image"
+            :src="tweet.user.image"
+            alt="使用者圖片"
             class="tweet-list__panel__avatar"
           />
-        </router-link>
+          <img v-else
+            src="./../assets/icon/user-none.png"
+            alt="替代圖片"
+            class="tweet-list__panel__avatar"
+          />
+        </div>
 
         <div class="tweet-list__panel__content">
           <div
             class="tweet-list__panel__content__title d-flex align-items-center"
           >
-            <p class="fw-bold fs-16">{{ tweet.name }}</p>
+            <p class="fw-bold fs-16">{{ tweet.user.name }}</p>
             <p class="ms-2 fs-14 tweet-list__panel__content__title__id">
-              {{ tweet.account }}．<span>{{ tweet.createdAt }}</span>
+              @{{ tweet.user.account }}．<span>{{ tweet.createdAt }}</span>
             </p>
           </div>
 

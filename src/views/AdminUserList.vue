@@ -4,7 +4,7 @@
       <AdminNavbar />
     </div>
     <div class="container__right">
-      <h4 class="title">首頁</h4>
+      <h4 class="title">使用者列表</h4>
       <AdminUserCard/>
     </div>
   </main>

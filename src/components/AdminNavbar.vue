@@ -6,7 +6,7 @@
       </div>
       <div class="menu__function">
         <router-link
-          to="/admin/main"
+          to="/admin/tweets"
           class="text-center d-flex link align-items-center"
         >
           <img
@@ -43,7 +43,7 @@
     </div>
 
     <div class="logout d-flex flex-column justify-contnet-center">
-      <router-link to="/logout" class="d-flex link align-items-center">
+      <router-link to="/admin/logIn" class="d-flex link align-items-center">
         <img
           src="./../assets/icon/logout.png"
           alt=""

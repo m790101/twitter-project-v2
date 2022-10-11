@@ -42,7 +42,7 @@
       </div>
     </form>
 
-    <button class="btn btn-main btn-main:hover btn-main:active" type="submit">
+    <button class="btn btn-main btn-main:hover btn-main:active" type="submit"  v-on:click.prevent="handleSubmit">
       登入
     </button>
 
@@ -55,6 +55,10 @@
 </template>
 
 <script>
+import authorizationAPI from "./../apis/authorization";
+import { Toast } from "./../utils/helpers";
+
+
 export default {
   data() {
     return {
@@ -63,8 +67,44 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      //等待API -->要記得做提示文字toast
+    async handleSubmit(e) {
+      try{
+
+      if (!this.account || !this.password) {
+        Toast.fire({
+          icon: "warning",
+          title: "請填入帳號和密碼",
+        });
+        return;
+      }
+      this.isProcessing = true
+      const response = await authorizationAPI.adminSignIn({
+          account: this.account,
+          password: this.password,
+        })        
+         
+          const { data } = response;
+
+          if (data.status !== "success") {
+            throw new Error(data.message);
+          }else {
+            console.log(response);
+            localStorage.setItem("token", data.data.token);
+            this.$router.push("/admin/tweets")
+          }
+         
+        
+      } catch (error) {
+          this.account = "";
+          this.password = "";
+          Toast.fire({
+            icon: "warning",
+            title: "請確認您輸入了正確的帳號密碼",
+          });
+          
+          this.isProcessing = false
+          console.log("error", error);
+        };
     },
   },
 };

@@ -18,6 +18,8 @@
 <script>
 import AdminNavbar from "./../components/AdminNavbar.vue";
 import AdminTweetList from "./../components/AdminTweetList.vue";
+import adminAPI from "./../apis/admin";
+import { Toast } from "./../utils/helpers"
 
 const dummyData = {
   tweets: [
@@ -53,12 +55,21 @@ export default {
     AdminTweetList,
   },
   created() {
-    this.fetchTweet();
+    this.fetchTweet ();
   },
   methods: {
-    fetchTweet() {
-      this.tweet = dummyData.tweets;
+   async fetchTweet () {
+   try {
+    const {data} = await adminAPI.admin.getTweets( ) 
+    console.log(data)   
+    this.tweet = data
+
+   } catch (error) {
+      console.log('error',error)
+   }
+      //this.tweet = dummyData.tweets;
     },
+
     afterDeleteTweet(tweetId) {
       this.tweet = this.tweet.filter((item) => item.id !== tweetId);
     },

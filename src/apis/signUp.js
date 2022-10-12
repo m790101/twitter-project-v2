@@ -1,17 +1,16 @@
 import { apiHelper } from "../utils/helpers";
 
 
-export default {
+export default { 
+    create ({ account, name, email, password, checkPassword }) {
+      return apiHelper.post('/users', {
+        account,
+        name,
+        email,
+        password,
+        checkPassword,
+      });
+    },
+  
+};
 
-    register:{
-      create({account, name, email, password, checkPassord }) {
-        return apiHelper.post('/users',{ 
-          account, 
-          name, 
-          email, 
-          password, 
-          checkPassord
-         })
-         }
-      }
-    }

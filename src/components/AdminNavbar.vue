@@ -1,12 +1,12 @@
 <template>
-  <nav class="d-flex flex-column justify-content-between">
+  <nav class="d-flex flex-column justify-content-between ">
     <div class="menu d-flex flex-column">
       <div>
         <img src="./../assets/logo.png" alt="" class="menu__logo" />
       </div>
       <div class="menu__function">
         <router-link
-          to="/admin/main"
+          to="/admin/tweets"
           class="text-center d-flex link align-items-center"
         >
           <img
@@ -42,8 +42,8 @@
       </div>
     </div>
 
-    <div class="logout d-flex flex-column justify-contnet-center">
-      <router-link to="/logout" class="d-flex link align-items-center">
+    <div class=" d-flex flex-column justify-contnet-center">
+      <router-link to="/admin/logIn" class="d-flex link align-items-center">
         <img
           src="./../assets/icon/logout.png"
           alt=""
@@ -64,8 +64,9 @@
 <style scoped lang="scss">
 nav {
   width: 178px;
-  height: 100vh;
+  height: 100%;
   position:relative;
+  padding-bottom: 16px;
 }
 .menu {
   flex: 1;
@@ -91,9 +92,7 @@ nav {
   }
 }
 
-.logout {
-  margin-bottom: 16px;
-}
+
 
 .link {
   color: var(--8-gray);

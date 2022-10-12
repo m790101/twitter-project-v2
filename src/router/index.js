@@ -51,9 +51,20 @@ const routes = [
 
   },
   {
-    path: "/admin/login",
+    path: '/admin/tweets',
+    name: 'admin-tweet',
+    component: () => import('../views/AdminTweetPage')
+
+  },
+  {
+    path: "/admin/logIn",
     name: "adminLogin",
     component: () => import("../views/AdminLogin.vue"),
+  },
+  {
+    path: "/admin*",
+    name: "admin",
+    redirect:'admin/logIn',
   },
   {
     path: '/signup',

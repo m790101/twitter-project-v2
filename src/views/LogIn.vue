@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex flex-column justify-content-center align-items-center">
-    <div class="title d-flex flex-column align-items-center mb-6">
-      <img class="title__image" src="./../image/logo.png" alt="logo" />
+    <div class="title d-flex flex-column align-items-center ">
+      <img class="title__image" src="./../assets/logo.png" alt="logo" />
       <h3 class="title__word">登入Alphitter</h3>
     </div>
 
@@ -63,15 +63,14 @@ export default {
       const response = await authorizationAPI.signIn({
           account: this.account,
           password: this.password,
-        })        
+        })       
          
-          const { data } = response;
+          const { data } = response;          
+        
+          if (data.status !== "success") {          
+            throw new Error(response.statusText);            
+          }else {           
 
-          if (data.status !== "success") {
-            throw new Error(data.message);
-          }else {
-            console.log(response);
-            console.log(data.data.user)
             localStorage.setItem("token", data.data.token);
             this.$store.commit('setCurrentUser',data.data.user)
             this.$router.push("/main")
@@ -86,9 +85,11 @@ export default {
             title: "請確認您輸入了正確的帳號密碼",
           });
           
-          this.isProcessing = false
-          console.log("error", error);
-        }
+
+          this.isProcessing = false         
+          console.log("error:",error);
+        };
+
     },
   },
 };
@@ -97,7 +98,8 @@ export default {
 <style lang="scss" scoped>
 .title {
   margin-top: 64px;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
+ 
 
   &__image {
     width: 50px;
@@ -117,7 +119,7 @@ export default {
 
 .btn {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;

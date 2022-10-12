@@ -291,8 +291,12 @@ textarea {
   border-radius: 2px;
   background-color: var(--formbg-gray);
   padding: 2px 10.55px;
-  margin-bottom: 32px;
+  margin-top: 32px;
+  &:focus-within {
+    box-shadow: 1px -1px 1px 4px rgba(247, 133, 40, 0.884)
+  }
 }
+
 
 .form-label {
   color: var(--7-gray);

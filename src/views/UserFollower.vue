@@ -26,7 +26,9 @@
             <li class="nav-item cursor-pointer">正在追隨</li>
           </router-link>
         </ul>
-        <Account />
+        <Account
+        :initial-data="followers"
+         />
       </div>
     </div>
     <PopularList />
@@ -43,8 +45,9 @@ export default {
   data() {
     return {
           user:{
-            id:1
-          }
+            id:-1
+          },
+          followers:[]
     };
   },
   methods: {
@@ -60,7 +63,7 @@ export default {
     async getFollowers(id){
       try{
         const {data} = await userApi.getFollowers(id)
-        console.log(data)
+        this.followers = data
       }
       catch(error){
           Toast.fire({

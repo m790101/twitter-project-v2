@@ -74,8 +74,8 @@
 .modal {
   width: 100%;
   height: 100vh;
-  position: absolute;
-  left: 0;
+  position: fixed;
+  left: 27%;
   top: 74px;
   z-index: 999;
   &.active {

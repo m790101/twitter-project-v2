@@ -15,6 +15,7 @@
           <UserEditModal
             @closeUserEditModal="handleCloseUserEditModal"
             v-if="isEditing"
+            :initial-user="user"
           />
           <div class="modal-bg" :class="{ active: isEditing }"></div>
           <NavTab @afterPage="handleAfterPage" />
@@ -68,23 +69,18 @@ export default {
         const { data } = await userApi.getUser({ id });
         const tweet = await userApi.getTweets({ id });
         const replies = await userApi.getRepliedTweets({ id });
-       /*const likes = await userApi.getLikes({ id })
-        this.likes = likes.data.map((like) => {
-          return {
-            ...like.tweet,
-            isLiked: like.isLiked,
-            user: {
-              account: like.account,
-              image: like.image,
-              name: like.name,
-            },
-          };
-        });*/
+        const likes = await userApi.getLikes({ id });
+        const follower = await userApi.getFollowers(id);
+        const followings = await userApi.getFollowings( id )
+        console.log(follower.data, followings.data)
+        this.likes = likes.data;
 
         this.tweets = tweet.data;
         this.replies = replies.data;
         this.user = {
           ...data,
+          followingNum:followings.data.length,
+          followerNum:follower.data.length
         };
         this.isProcessing = false;
       } catch (error) {

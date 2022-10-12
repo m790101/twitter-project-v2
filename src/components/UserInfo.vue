@@ -53,13 +53,13 @@
       <div class="d-flex card__follow mx-3 pb-3 font-14">
         <p>
           <router-link :to="{name:'user-following',params:{id:user.id}}">
-          <span class="num-font">34 個</span
+          <span class="num-font">{{user.followingNum}} 個</span
           ><span class="card__follow__font-light">跟隨中</span>
           </router-link>
         </p>
         <p class="ms-4">
           <router-link :to="{name:'user-follower',params:{id:user.id}}">
-          <span class="num-font">59 位</span
+          <span class="num-font">{{user.followerNum}} 位</span
           ><span class="card__follow__font-light">跟隨者</span>
           </router-link>
         </p>

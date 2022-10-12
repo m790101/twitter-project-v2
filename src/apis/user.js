@@ -27,5 +27,8 @@ export default {
     },
     removeFollowing(id){
         return apiHelper.delete(`/followships/${id}`)
+    },
+    getCurrentUser(){
+        return apiHelper.get(`/users/current_user`)
     }
 }

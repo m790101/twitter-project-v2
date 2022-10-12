@@ -1,8 +1,11 @@
 import { apiHelper } from "@/utils/helpers";
+const getToken = () => localStorage.getItem('token')
+
 
 export default {
     getUser({ id }) {
-        return apiHelper.get(`/users/${id}`)
+        return apiHelper.get(`/users/${id}`,{
+            headers: { Authorization: `Bearer ${getToken()}` } })
     },
     getTweets({ id }) {
         return apiHelper.get(`/users/${id}/tweets`)
@@ -30,5 +33,8 @@ export default {
     },
     getCurrentUser(){
         return apiHelper.get(`/users/current_user`)
+    },
+    pushUserData({id}){
+        return apiHelper.push(`/users/${id}`)
     }
 }

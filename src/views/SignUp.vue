@@ -69,12 +69,18 @@ export default {
         });       
         const { data } = response;        
      
-        if (data.status !== "success") {         
+        if (data.status !== "success") {
+                   
           throw new Error(response.statusText);
         } else {         
 
           // 成功的話則轉址到 登入頁面
+          Toast.fire({
+            icon: "success",
+            title: "註冊成功、請先登入",
+          });
           this.$router.push({ name: "logIn" });
+
         }
       } catch (error) {
         this.isProcessing = false
@@ -82,7 +88,7 @@ export default {
             icon: "warning",
             title: "帳號或email已重複註冊",
           });
-        console.log("error", error);
+        console.log("error:", error);
       }
     },
   },

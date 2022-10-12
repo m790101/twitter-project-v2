@@ -49,9 +49,9 @@ export default {
     };
   },
   methods: {
-    async handleSubmit() {
+    async handleSubmit(e) {
       try{
-
+      console.log('1')
       if (!this.account || !this.password) {
         Toast.fire({
           icon: "warning",
@@ -59,18 +59,22 @@ export default {
         });
         return;
       }
+      console.log('2')
       this.isProcessing = true
+      console.log('3')
       const response = await authorizationAPI.signIn({
           account: this.account,
           password: this.password,
-        })       
-         
-          const { data } = response;          
-        
-          if (data.status !== "success") {          
-            throw new Error(response.statusText);            
-          }else {           
+        })  
+        console.log('4') 
+         const { data } = response;          
+         console.log('response:',response.statusText)        
 
+          if (data.status == "error") {         
+            console.log('5') 
+            throw new Error(response.statusText);            
+          }else {   
+            console.log('6')        
             localStorage.setItem("token", data.data.token);
             this.$store.commit('setCurrentUser',data.data.user)
             this.$router.push("/main")
@@ -78,18 +82,19 @@ export default {
          
         
       } catch(error) {
+        console.log('er')
+        
           this.account = "";
           this.password = "";
           Toast.fire({
             icon: "warning",
-            title: "請確認您輸入了正確的帳號密碼",
+            title: "請確認您輸入正確的帳號密碼",
           });
           
-
-          this.isProcessing = false         
-          console.log("error:",error);
+          this.isProcessing = false     
+          console.log('error2',error)    
+          console.log("error2:",error.message);
         };
-
     },
   },
 };

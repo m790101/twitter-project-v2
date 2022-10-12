@@ -66,7 +66,7 @@ export default {
     async fetchData(id) {
       try {
         this.isProcessing = true;
-        const { data } = await userApi.getUser({ id });
+        const { data } = await userApi.getUser({ id });        
         const tweet = await userApi.getTweets({ id });
         const replies = await userApi.getRepliedTweets({ id });
         const likes = await userApi.getLikes({ id });

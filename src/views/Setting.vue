@@ -6,11 +6,13 @@
     <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">帳號設定</h4>
+        <!--
         <SettingForm
           ref="formRef"
           :initialUserSetting="userData"
           @afterSubmit="handleAfterSubmit"
         ></SettingForm>
+        -->
         <div class="d-flex justify-content-end">
           <button
             class="btn btn-main btn-main:hover btn-main:active"
@@ -26,31 +28,42 @@
 </template>
 
 <script>
-import SettingForm from "./../components/SettingForm.vue";
+//import SettingForm from "./../components/SettingForm.vue";
 import Navbar from "./../components/Navbar.vue";
-
-const dummyData = {
-  userData: {
-    id: 1,
-    account: "aaa",
-    name: "aa",
-    Email: "aa@gmail.com",
-    password: "123456",
-    checkPassword: "123456",
-  },
-};
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
 
 export default {
   components: {
     Navbar,
-    SettingForm,
+   // SettingForm,
   },
   data() {
     return {
-      userData: { ...dummyData.userData },
+      userData: {},
+      isProcessing: false,
     };
   },
+  created() {
+    const { id } = this.$route.params;
+    console.log(id);
+    this.fetchData(Number(id));
+  },
   methods: {
+    async fetchData(userId) {
+      try {
+        const { data } = await userApi.getUser({ userId });
+        console.log(data);
+        this.userData = { ...data };
+      } catch (error) {
+        console.log(error);
+        Toast.fire({
+          icon: "warning",
+          title: "無法讀取使用者",
+        });
+      }
+    },
+
     // 呼叫子元件的handleForm方法
     getData() {
       this.$refs.formRef.handleForm();
@@ -58,6 +71,10 @@ export default {
     //子元件傳入
     handleAfterSubmit(formData) {
       this.userData = { ...formData };
+      try {
+      } catch (error) {
+        console.log(error);
+      }
     },
     // -->待傳入API
   },

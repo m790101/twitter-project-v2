@@ -72,7 +72,7 @@ const routes = [
     component: () => import('../views/SignUp.vue')
   },
   {
-    path: '/setting',
+    path: '/user/:id/setting',
     name: 'setting',
     component: () => import('../views/Setting.vue')
   }

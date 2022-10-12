@@ -2,7 +2,7 @@
   <div
     class="container d-flex flex-column justify-content-center align-items-center"
   >
-    <div class="title d-flex flex-column align-items-center mb-6">
+    <div class="title d-flex flex-column align-items-center ">
       <img class="title__image" src="./../image/logo.png" alt="logo" />
       <h3 class="title__word">後台登入</h3>
     </div>
@@ -12,7 +12,7 @@
       autocomplete="off"
       v-on:submit.prevent="handleSubmit"
     >
-      <div class="form__control d-flex flex-column">
+      <div class="form-control d-flex flex-column">
         <label for="account" class="form-label">帳號</label>
         <input
           id="account"
@@ -27,7 +27,7 @@
         />
       </div>
 
-      <div class="form__control d-flex flex-column">
+      <div class="form-control d-flex flex-column">
         <label for="password" class="form-label">密碼</label>
         <input
           id="password"
@@ -42,7 +42,7 @@
       </div>
     </form>
 
-    <button class="btn btn-main btn-main:hover btn-main:active" type="submit">
+    <button class="btn btn-main btn-main:hover btn-main:active" type="submit"  v-on:click.prevent="handleSubmit">
       登入
     </button>
 
@@ -55,6 +55,10 @@
 </template>
 
 <script>
+import authorizationAPI from "./../apis/authorization";
+import { Toast } from "./../utils/helpers";
+
+
 export default {
   data() {
     return {
@@ -63,8 +67,44 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
-      //等待API -->要記得做提示文字toast
+    async handleSubmit(e) {
+      try{
+
+      if (!this.account || !this.password) {
+        Toast.fire({
+          icon: "warning",
+          title: "請填入帳號和密碼",
+        });
+        return;
+      }
+      this.isProcessing = true
+      const response = await authorizationAPI.adminSignIn({
+          account: this.account,
+          password: this.password,
+        })        
+         
+          const { data } = response;
+
+          if (data.status !== "success") {
+            throw new Error(data.message);
+          }else {
+            console.log(response);
+            localStorage.setItem("token", data.data.token);
+            this.$router.push("/admin/tweets")
+          }
+         
+        
+      } catch (error) {
+          this.account = "";
+          this.password = "";
+          Toast.fire({
+            icon: "warning",
+            title: "請確認您輸入了正確的帳號密碼",
+          });
+          
+          this.isProcessing = false
+          console.log("error", error);
+        };
     },
   },
 };
@@ -73,7 +113,7 @@ export default {
 <style lang="scss" scoped>
 .title {
   margin-top: 64px;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
   &__image {
     width: 50px;
     height: 50px;
@@ -87,19 +127,13 @@ export default {
   }
 }
 
-.form {
-  &__control {
-    width: 356px;
-    border-bottom: 2px solid var(--formline-gray);
-    background-color: var(--formbg-gray);
-    padding: 2px 10.55px;
-    margin-bottom: 32px;
+.form{  
+   width: 356px;     
   }
-}
 
 .btn {
   text-align: center;
-  margin-top: 8px;
+  margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
   line-height: 30px;

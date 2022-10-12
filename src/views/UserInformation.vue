@@ -72,7 +72,6 @@ export default {
         const likes = await userApi.getLikes({ id });
         const follower = await userApi.getFollowers(id);
         const followings = await userApi.getFollowings( id )
-        console.log(follower.data, followings.data)
         this.likes = likes.data;
 
         this.tweets = tweet.data;
@@ -107,6 +106,11 @@ export default {
     const { id } = this.$route.params;
     this.fetchData(Number(id));
   },
+  beforeRouteUpdate(to,from,next){
+    const {id } = to.params
+    this.fetchData(Number(id));
+    next()
+  }
 };
 </script>
 

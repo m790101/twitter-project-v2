@@ -78,8 +78,8 @@ const router = new VueRouter({
 });
 
 
-/*router.beforeEach(async(to, from, next) => {
-  const tokenInStorage = localStorage.getItem('token')
+router.beforeEach(async(to, from, next) => {
+  /*const tokenInStorage = localStorage.getItem('token')
   const tokenInStore = store.state.token 
   let isAuthenticated = store.state.isAuthenticated
   if (tokenInStorage && tokenInStorage !== tokenInStore) {
@@ -95,10 +95,10 @@ const router = new VueRouter({
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
     next('/login')
     return
-  }
+  }*/
+
   store.dispatch('fetchCurrentUser')
 
   next()
-})*/
-
+})
 export default router;

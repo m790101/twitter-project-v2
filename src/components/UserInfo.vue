@@ -24,7 +24,7 @@
         </div>
 
         <div class="card__body pb-2 mx-3">
-          <div class="d-flex justify-content-end card__body__function-self" v-if="user.id === 2">
+          <div class="d-flex justify-content-end card__body__function-self" v-if="user.id === currentUser.id">
             <button
               class="btn-white"
               style="width: 128px"
@@ -146,6 +146,8 @@
 </style>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   props:{
     initialUser:{
@@ -189,6 +191,9 @@ export default {
         ...this.initialUser
       }
     }
+  },
+  computed:{
+    ...mapState(['currentUser','isAuthenticated'])
   }
 }
 </script>

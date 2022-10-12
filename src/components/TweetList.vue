@@ -6,7 +6,7 @@
           :to="{ name: 'user-information', params: { id: tweet.UserId } }"
         >
           <img
-            src='./../assets/icon/user-none.png'
+            src='https://i.imgur.com/mVOT0IN.png'
             alt=""
             class="tweet-card__panel__avatar"
           />

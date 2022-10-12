@@ -5,6 +5,10 @@
     </div>
     <div class="container__right d-flex">
       <div class="section">
+                <Spinner
+        v-if="isProcessing"
+        />
+        <template v-else>
         <div class="header d-flex align-items-center title">
           <img
             src="./../assets/icon/arrow.png"
@@ -14,7 +18,7 @@
             @click="$router.back()"
           />
           <div class="header__text">
-            <h5 class="">John Doe</h5>
+            <h5 class="">{{user.name}}</h5>
             <p class="header__text__info"><span>25</span> 推文</p>
           </div>
         </div>
@@ -26,9 +30,8 @@
             <li class="nav-item cursor-pointer active">正在追隨</li>
           </router-link>
   </ul>
-        <Spinner
-        v-if="isProcessing"
-        />
+        </template>
+
         <Account 
         :initial-data="followings"
         />
@@ -50,10 +53,11 @@ export default {
   data() {
     return {
         user:{
-            id:1
+            id:-1
           },
           followings:[],
-          isProcessing:false
+          isProcessing:false,
+          tweetNum:null
     };
   },
   methods:{
@@ -71,7 +75,24 @@ export default {
           title: "無法讀取正在追蹤者",
         });
       }
-    }
+    },
+        async getData(id){
+       try{
+        const user = await userApi.getUser({id})
+        const tweet = await userApi.getTweets({ id });
+        this.user = {
+          ...this.user,
+          ...user.data
+        }
+        this.tweetNum = tweet.data.length
+      }
+      catch(error){
+          Toast.fire({
+          icon: "warning",
+          title: "無法讀取帳號",
+        });
+      }
+    } 
   },
   components: {
     Navbar,
@@ -82,11 +103,13 @@ export default {
   created(){
     const{id} = this.$route.params
     this.getFollowing(Number(id))
+    this.getData(Number(id))
     this.user.id = Number(id)
   },
   beforeRouteUpdate(from, to ,next){
       const { id } = to.params
     this.getFollowing(Number(id))
+    this.getData(Number(id))
     next()
   }
 };

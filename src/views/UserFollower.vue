@@ -5,6 +5,10 @@
     </div>
     <div class="container__right d-flex">
       <div class="section">
+        <Spinner
+        v-if="isProcessing"
+        />
+        <template v-else>
         <div class="header d-flex align-items-center title">
           <img
             src="./../assets/icon/arrow.png"
@@ -14,8 +18,8 @@
             @click="$router.back()"
           />
           <div class="header__text">
-            <h5 class="">John Doe</h5>
-            <p class="header__text__info"><span>25</span> 推文</p>
+            <h5 class="">{{user.name}}</h5>
+            <p class="header__text__info"><span>{{tweetNum}}</span> 推文</p>
           </div>
         </div>
         <ul class="d-flex nav-pill">
@@ -26,6 +30,7 @@
             <li class="nav-item cursor-pointer">正在追隨</li>
           </router-link>
         </ul>
+        </template>
         <Account
         :initial-data="followers"
          />
@@ -41,13 +46,16 @@ import PopularList from "../components/PopularList.vue";
 import Account from "../components/Account.vue";
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
+import Spinner from './../components/Spinner.vue'
 export default {
   data() {
     return {
           user:{
             id:-1
           },
-          followers:[]
+          followers:[],
+          isProcessing:false,
+          tweetNum: null
     };
   },
   methods: {
@@ -62,25 +70,50 @@ export default {
     },
     async getFollowers(id){
       try{
+        this.isProcessing = true
         const {data} = await userApi.getFollowers(id)
         this.followers = data
+        this.isProcessing = false
       }
       catch(error){
+        this.isProcessing = false
           Toast.fire({
           icon: "warning",
           title: "無法讀取正在追隨者",
         });
       }
-    }
+    },
+    async getData(id){
+       try{
+         this.isProcessing = true
+        const user = await userApi.getUser({id})
+        const tweet = await userApi.getTweets({ id });
+        this.user = {
+          ...this.user,
+          ...user.data
+        }
+        this.tweetNum = tweet.data.length
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法讀取帳號",
+        });
+      }
+    } 
   },
   components: {
     Navbar,
     Account,
     PopularList,
+    Spinner
   },
   created(){
     const{id} = this.$route.params
     this.getFollowers(Number(id))
+    this.getData(Number(id))
     this.user.id = Number(id)
   }
 };

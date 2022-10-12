@@ -16,8 +16,8 @@
         />
       </div>
       <div class="card-panel__card__header__name mb-3">
-        <p class="fw-bold">{{user.name}}</p>
-        <p class="color-second">@{{user.account}}</p>
+        <p class="fw-bold word-break-keep">{{user.name}}</p>
+        <p class="color-second word-break-keep">@{{user.account}}</p>
       </div>
       <div class="d-flex justify-content-center card-panel__card__icons mb-2">
         <div class="d-flex">
@@ -92,6 +92,9 @@ export default {
       &__name {
         margin-top: 32px;
         text-align: center;
+        p{          
+          margin:0px 10px;
+        }
       }
     }
     &__icons{

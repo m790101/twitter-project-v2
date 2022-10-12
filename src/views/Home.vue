@@ -81,6 +81,18 @@ export default {
         this.isProcessing = true
         const { data } = await tweetsAPI.getTweets()
         this.tweets = data
+      this.tweets = this.tweets.map(tweet=>{
+          if(!tweet.user.image){
+            return {
+              ...tweet,
+              user:{
+                ...tweet.user,
+                image:'https://i.imgur.com/mVOT0IN.png'
+              }
+            }
+          }
+          return tweet
+        })
         this.isProcessing= false
       }
       catch(error){

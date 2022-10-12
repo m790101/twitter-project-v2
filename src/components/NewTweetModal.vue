@@ -12,7 +12,7 @@
         <div class="modal-body">
           <div class="d-flex">
             <img
-              src="./../assets/icon/user.png"
+              :src="currentUser.image"
               alt=""
               class="modal-body__avatar"
             />
@@ -96,6 +96,7 @@
 <script>
 import tweetApi from "./../apis/tweets";
 import { Toast } from "./../utils/helpers";
+import {mapState} from 'vuex'
 
 export default {
   data(){
@@ -117,9 +118,10 @@ export default {
                 description:this.description,
                 createdAt:new Date,
                 user:{
-                  account:'user1',
-                  image: null,
-                  name:'user1'
+                  UserId:this.currentUser.id,
+                  account:this.currentUser.account,
+                  image: this.currentUser.image,
+                  name: this.currentUser.name
                 }
               })
               this.isProcessing = false
@@ -132,6 +134,9 @@ export default {
         });
           }
         }
+    },
+    computed:{
+      ...mapState(['currentUser','isAuthenticated'])
     }
 }
 </script>

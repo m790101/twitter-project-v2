@@ -19,7 +19,7 @@
           />
           <div class="header__text">
             <h5 class="">{{user.name}}</h5>
-            <p class="header__text__info"><span>25</span> 推文</p>
+            <p class="header__text__info"><span>{{tweetNum}}</span> 推文</p>
           </div>
         </div>
         <ul class="d-flex nav-pill">

@@ -14,6 +14,7 @@
           />
           <UserEditModal
             @closeUserEditModal="handleCloseUserEditModal"
+            @afterHandleSubmit="handleAfterHandleSubmit"
             v-if="isEditing"
             :initial-user="user"
           />
@@ -40,6 +41,7 @@ import UserEditModal from "../components/UserEditModal.vue";
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
 import Spinner from "./../components/Spinner.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -67,19 +69,63 @@ export default {
       try {
         this.isProcessing = true;
         const { data } = await userApi.getUser({ id });
-        const tweet = await userApi.getTweets({ id });
+        const tweets = await userApi.getTweets({ id });
         const replies = await userApi.getRepliedTweets({ id });
         const likes = await userApi.getLikes({ id });
         const follower = await userApi.getFollowers(id);
-        const followings = await userApi.getFollowings( id )
+        const followings = await userApi.getFollowings(id);
         this.likes = likes.data;
+        this.likes = this.likes.map((like) => {
+          if (!like.user.image) {
+            return {
+              ...like,
+              user: {
+                ...like.user,
+                image: like.user.image
+                  ? like.user.image
+                  : "https://i.imgur.com/mVOT0IN.png",
+              },
+            };
+          }
+          return like;
+        });
 
-        this.tweets = tweet.data;
+        this.tweets = tweets.data;
+        this.tweets = this.tweets.map((tweet) => {
+          if (!tweet.user.image) {
+            return {
+              ...tweet,
+              user: {
+                ...tweet.user,
+                image: tweet.user.image
+                  ? tweet.user.image
+                  : "https://i.imgur.com/mVOT0IN.png",
+              },
+            };
+          }
+          return tweet;
+        });
         this.replies = replies.data;
+        this.replies = this.replies.map((reply) => {
+          if (!reply.user.image) {
+            return {
+              ...reply,
+              user: {
+                ...reply.user,
+                image: reply.user.image || "https://i.imgur.com/mVOT0IN.png",
+              },
+            };
+          }
+          return reply;
+        });
+
         this.user = {
           ...data,
-          followingNum:followings.data.length,
-          followerNum:follower.data.length
+          image: data.image || this.currentUser.image,
+          backgroundImage:
+            data.backgroundImage || "https://i.imgur.com/PvPmJH3.png",
+          followingNum: followings.data.length,
+          followerNum: follower.data.length,
         };
         this.isProcessing = false;
       } catch (error) {
@@ -90,6 +136,46 @@ export default {
           title: "無法讀取使用者",
         });
       }
+    },
+    handleAfterHandleSubmit(playLoad) {
+      this.user = {
+        ...this.user,
+        image: playLoad.image,
+        backgroundImage: playLoad.backgroundImage,
+      };
+      this.tweets = this.tweets.map((tweet) => {
+        return {
+          ...tweet,
+          user: {
+            account: tweet.user.account,
+            image: playLoad.image,
+            name: tweet.user.name,
+          },
+        };
+      });
+      this.replies = this.replies.map((reply) => {
+        return {
+          ...reply,
+          user: {
+            account: reply.user.account,
+            image: playLoad.image,
+            name: reply.user.name,
+          },
+        };
+      });
+      this.likes = this.likes.map((like) => {
+        if (like.user.name === this.currentUser.name) {
+          return {
+            ...like,
+            user: {
+              account: like.user.account,
+              image: playLoad.image,
+              name: like.user.name,
+            },
+          };
+        }
+        return like;
+      });
     },
   },
   components: {
@@ -106,11 +192,14 @@ export default {
     const { id } = this.$route.params;
     this.fetchData(Number(id));
   },
-  beforeRouteUpdate(to,from,next){
-    const {id } = to.params
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params;
     this.fetchData(Number(id));
-    next()
-  }
+    next();
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
+  },
 };
 </script>
 

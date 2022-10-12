@@ -4,7 +4,7 @@
       <div class="create-tweet__body">
         <div class="d-flex align-items-center">
           <img
-            src="./../assets/icon/user.png"
+            :src="currentUser.image | emptyImage"
             alt=""
             class="create-tweet__body__avater"
           />
@@ -77,6 +77,8 @@
 </style>
 
 <script>
+import {emptyImageFilter} from './../utils/mixins'
+import {mapState} from 'vuex'
 export default {
   props: {
     navIsEditing: {
@@ -104,5 +106,9 @@ export default {
       this.isEditing = newValue;
     },
   },
+  mixins:[emptyImageFilter],
+  computed:{
+    ...mapState(['currentUser','isAuthenticated'])
+  }
 };
 </script>

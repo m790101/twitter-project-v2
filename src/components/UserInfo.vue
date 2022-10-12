@@ -15,9 +15,9 @@
     </div>
     <div class="card">
       <div>
-        <div class="d-flex card__profile-pic-section mb-3">
+        <div class="d-flex card__profile-pic-section mb-3" :style="{backgroundImage:`url(${user.backgroundImage})`}">
           <img
-            src="./../assets/icon/user.png"
+            :src="user.image"
             alt=""
             class="card__profile-pic-section_avatar"
           />
@@ -104,7 +104,6 @@
   & &__profile-pic-section {
     position: relative;
     height: 200px;
-    background-image: url("./../assets/profile-background.png");
     background-size: cover;
     background-position: center;
     & img {

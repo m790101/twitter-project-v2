@@ -23,7 +23,7 @@
 
       <div class="modal-body">
         <!--background-pic-->
-        <div class="modal-body__background-image" :style="{backgroundImage:`url(${user.backgroundImage})`}">
+        <div class="modal-body__background-image" :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${user.backgroundImage})`}">
           <div class="d-flex modal-body__background-image__icon-section gap-5">
             <input type="file" id="background-image" class="d-none" name="backgroundImage"
             @change="handleBackgroundChange"
@@ -44,7 +44,7 @@
               class="modal-body__background-image__icon-section__icon ms-5"
             />
           </div>
-          <div class="modal-body__background-image__avatar" :style="{backgroundImage:`url(${user.image})`}">
+          <div class="modal-body__background-image__avatar" :style="{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${user.image}')`}">
             <input
               type="file"
               id="avatar"

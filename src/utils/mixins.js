@@ -13,7 +13,7 @@ export const fromNowFilter = {
 export const emptyImageFilter = {
     filters: {
       emptyImage (src) {
-        return src || './../assets/icon/user-none.png'
+        return src || 'https://i.imgur.com/mVOT0IN.png'
       }
     }
   }

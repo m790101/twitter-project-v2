@@ -6,7 +6,7 @@
           :to="{ name: 'user-information', params: { id: tweet.UserId } }"
         >
           <img
-            src='./../assets/icon/user-none.png'
+            :src="tweet.user.image | emptyImage"
             alt=""
             class="tweet-card__panel__avatar"
           />
@@ -21,7 +21,7 @@
               @{{ tweet.user.account }}．<span>{{tweet.createdAt | fromNow}}</span>
             </p>
           </div>
-          <router-link :to="{ name: 'replyList', params: { id: tweet.id } }">
+          <router-link :to="{ name:'replyList', params: { id: tweet.id } }">
             <div class="tweet-card__panel__content__text">
               {{ tweet.description }}
             </div>

@@ -18,7 +18,7 @@
           <p class="card__body__text">
             {{tweet.description}}
           </p>
-          <span class="fs-14 card__body__time">上午 10:05・2021年11月10日</span>
+          <span class="fs-14 card__body__time">{{tweet.createdAt | date}}</span>
         </div>
       </div>
       <div class="d-flex card__reply-like">
@@ -50,20 +50,13 @@
           />
       </div>
     </div>
-    <!--
-    <ReplyModal
-        @closeReplyModal="handleCloseReplyModal" v-if="isReplying" 
-        :initial-tweet="tweet"
-        />
-        <div class="modal-bg" :class="{ active: isReplying }"></div>
-        -->
   </section>
 </template>
 
 <script>
-import ReplyModal from "../components/ReplyModal.vue";
 import tweetApi from "./../apis/tweets";
 import { Toast } from "./../utils/helpers";
+import moment from 'moment'
 
 export default {
   props:{
@@ -127,7 +120,12 @@ export default {
     initialTweet(){
       this.tweet = this.initialTweet
     }
-  }
+  },
+      filters:{
+        date(dateTime){
+                return moment(dateTime).format("a h:mm・YYYYMMMMDo")
+        }
+    }
 };
 </script>
 

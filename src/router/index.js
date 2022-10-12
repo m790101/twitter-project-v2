@@ -75,8 +75,8 @@ const routes = [
     path: '/setting',
     name: 'setting',
     component: () => import('../views/Setting.vue')
-  }
-  , {
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: NotFound
@@ -89,7 +89,7 @@ const router = new VueRouter({
 });
 
 
-/*router.beforeEach(async(to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   const tokenInStorage = localStorage.getItem('token')
   const tokenInStore = store.state.token 
   let isAuthenticated = store.state.isAuthenticated
@@ -97,19 +97,18 @@ const router = new VueRouter({
     isAuthenticated = await store.dispatch('fetchCurrentUser')
   }
 
-  const pathsWithoutAuthentication = ['signup', 'login']
+  const pathsWithoutAuthentication = ['signup', 'logIn']
   
   if(isAuthenticated && pathsWithoutAuthentication.includes(to.name)){
     next('/main')
     return
   }
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
-    next('/login')
+    next('/logIn')
     return
   }
-  store.dispatch('fetchCurrentUser')
+
 
   next()
-})*/
-
+})
 export default router;

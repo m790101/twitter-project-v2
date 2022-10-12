@@ -69,7 +69,7 @@
     </div>
 
     <div class="logout d-flex flex-column justify-contnet-center">
-      <router-link to="/logout" class="d-flex link align-items-center">
+      <div class="d-flex link align-items-center cursor-pointer">
         <img
           src="./../assets/icon/logout.png"
           alt=""
@@ -80,8 +80,8 @@
           alt=""
           class="menu__function__icon__active"
         />
-        <span>登出</span>
-      </router-link>
+        <span @click="logout">登出</span>
+      </div>
     </div>
 
   </nav>
@@ -192,6 +192,10 @@ export default {
       this.isEditing = false
       console.log(playLoad)
       this.$emit('navCreateTweet',playLoad)
+    },
+    logout(){
+      localStorage.removeItem('token')
+      this.$router.push('/')
     }
   },
   components:{

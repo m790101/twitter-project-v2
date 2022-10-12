@@ -30,5 +30,8 @@ export default {
     },
     getCurrentUser(){
         return apiHelper.get(`/users/current_user`)
+    },
+    putUser(formData,{id}){
+        return apiHelper.put(`/users/${id}`,formData)
     }
 }

@@ -3,7 +3,7 @@
     <div class="tweet-card__panel d-flex" v-for="reply in replies" :key="reply.id">
       <router-link :to="{name:'user-information', params:{id:user.id}}">
         <img
-          src="./../assets/icon/user-none.png"
+          :src="reply.user.image || emptyImage"
           alt=""
           class="tweet-card__panel__avatar"
         />
@@ -61,7 +61,7 @@
 
 
 <script>
-import {fromNowFilter} from './../utils/mixins'
+import {fromNowFilter,emptyImageFilter} from './../utils/mixins'
 export default {
   props:{
     initialReplies:{
@@ -82,6 +82,6 @@ export default {
       this.replies = this.initialReplies
     }
   },
-  mixins:[fromNowFilter]
+  mixins:[fromNowFilter,emptyImageFilter]
 }
 </script>

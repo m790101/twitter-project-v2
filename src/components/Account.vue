@@ -17,7 +17,7 @@
             "
           >
             <p class="fw-bold">{{ account.name }}</p>
-            <div class="">
+            <div class="" v-if="account.id !== currentUser.id">
               <button
                 class="btn-main btn-following"
                 v-if="account.isFollowing"
@@ -78,6 +78,7 @@
 <script>
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
+import {mapState} from 'vuex'
 export default {
   props: {
     initialData: {
@@ -137,6 +138,9 @@ export default {
       }
     },
   },
+  computed:{
+    ...mapState(['currentUser','isAuthenticated'])
+  }
 };
 </script>
 

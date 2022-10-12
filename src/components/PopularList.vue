@@ -4,7 +4,7 @@
     <div class="section__panel">
       <div class="section__panel__account d-flex align-items-center" v-for="user in users" :key="user.id">
         <img
-          src="./../assets/icon/user-none.png"
+          :src="user.image| emptyImage"
           alt=""
           class="section__panel__account__avatar"
         />
@@ -37,6 +37,7 @@
 <script>
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
+import{emptyImageFilter} from './../utils/mixins'
 export default {
   data() {
     return {
@@ -108,7 +109,8 @@ export default {
   },
   created(){
     this.fetchData()
-  }
+  },
+  mixins:[emptyImageFilter]
 };
 </script>
 

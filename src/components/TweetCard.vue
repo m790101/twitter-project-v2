@@ -3,87 +3,130 @@
     <div class="card">
       <div class="card__body">
         <div class="d-flex card__body__account">
-          <router-link :to="{name:'user-information', params:user.id}">
+          <router-link :to="{name:'user-information', params:{id:user.id}}">
           <img
             src="./../assets/icon/user-none.png"
             class="card__body__account__avatar"
           />
           </router-link>
           <div class="card__body__account__info">
-            <p class="fw-bold">username</p>
-            <p class="fs-14 card__body__account__info__id">@userid</p>
+            <p class="fw-bold">{{tweet.user.name}}</p>
+            <p class="fs-14 card__body__account__info__id">@{{tweet.user.account}}</p>
           </div>
         </div>
         <div class="">
           <p class="card__body__text">
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-            cillum dolor. Voluptate exercitation incididunt aliquip deserunt.
+            {{tweet.description}}
           </p>
           <span class="fs-14 card__body__time">上午 10:05・2021年11月10日</span>
         </div>
       </div>
       <div class="d-flex card__reply-like">
         <p>
-          <span class="fw-bold num-font">34</span
+          <span class="fw-bold num-font">{{tweet.replyNum}}</span
           ><span class="color-second ms-1">回覆</span>
         </p>
         <p class="ms-4">
-          <span class="fw-bold num-font">808</span
+          <span class="fw-bold num-font">{{tweet.likeNum}}</span
           ><span class="color-second ms-1">喜歡次數</span>
         </p>
       </div>
 
       <div class="d-flex card__icons">
-        <img src="./../assets/icon/comments.png" class="icon cursor-pointer" @click="callRepltModal"/>
+        <img src="./../assets/icon/comments.png" class="icon cursor-pointer" @click="callReplyModal"/>
           <img
             src="./../assets/icon/like-active.png"
             alt=""
             class="icon card__like-icon cursor-pointer"
-            v-if="isLiked"
-            @click="toggleIsLiked" 
+            v-if="tweet.isLiked"
+            @click="unLike(tweet.id)"
           />
           <img
             src="./../assets/icon/like.png"
             alt=""
             class="icon card__like-icon cursor-pointer"
-            @click="toggleIsLiked" 
+             @click="like(tweet.id)"
             v-else
           />
       </div>
     </div>
+    <!--
     <ReplyModal
         @closeReplyModal="handleCloseReplyModal" v-if="isReplying" 
+        :initial-tweet="tweet"
         />
         <div class="modal-bg" :class="{ active: isReplying }"></div>
+        -->
   </section>
 </template>
 
 <script>
 import ReplyModal from "../components/ReplyModal.vue";
+import tweetApi from "./../apis/tweets";
+import { Toast } from "./../utils/helpers";
 
 export default {
+  props:{
+    initialTweet:{
+      type:Object,
+      required:true
+    }
+  },
   data() {
     return {
       user:{
         id:1
       },
-      isLiked: false,
-      isReplying:false
+      isReplying:false,
+      tweet:this.initialTweet
     };
   },
   components:{
-      ReplyModal
   },
   methods:{
-      toggleIsLiked(){
-          this.isLiked = !this.isLiked
-      },
-      callRepltModal(){
-          this.isReplying = true
+    async like(id) {
+      try {
+        const { data } = await tweetApi.like({ id });
+        if(data.status !== 'success')return new Error
+          this.tweet={
+            ...this.tweet,
+            isLiked:true
+          }
+
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法喜愛推文",
+        });
+      }
+    },
+    async unLike(id) {
+      try {
+        const { data } = await tweetApi.unLike({ id });
+         if(data.status !== 'success')return new Error
+            this.tweet={
+            ...this.tweet,
+            isLiked:false
+          }
+        
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取消喜愛推文",
+        });
+      }
+    },
+      callReplyModal(){
+          this.$emit('afterCallReplyModal')
       },
       handleCloseReplyModal(){
           this.isReplying = false
       }
+  },
+  watch:{
+    initialTweet(){
+      this.tweet = this.initialTweet
+    }
   }
 };
 </script>

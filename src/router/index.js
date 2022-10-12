@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 //import Home from '../views/Home.vue'
 import NotFound from "../views/NotFound.vue";
 import LogIn from "../views/LogIn.vue";
+import store from './../store'
 
 Vue.use(VueRouter);
 
@@ -86,5 +87,29 @@ const routes = [
 const router = new VueRouter({
   routes,
 });
+
+
+/*router.beforeEach(async(to, from, next) => {
+  const tokenInStorage = localStorage.getItem('token')
+  const tokenInStore = store.state.token 
+  let isAuthenticated = store.state.isAuthenticated
+  if (tokenInStorage && tokenInStorage !== tokenInStore) {
+    isAuthenticated = await store.dispatch('fetchCurrentUser')
+  }
+
+  const pathsWithoutAuthentication = ['signup', 'login']
+  
+  if(isAuthenticated && pathsWithoutAuthentication.includes(to.name)){
+    next('/main')
+    return
+  }
+  if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
+    next('/login')
+    return
+  }
+  store.dispatch('fetchCurrentUser')
+
+  next()
+})*/
 
 export default router;

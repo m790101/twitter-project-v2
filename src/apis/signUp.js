@@ -1,4 +1,5 @@
-import { apiHelper } from "@/utils/helpers";
+import { apiHelper } from "../utils/helpers";
+
 
 export default { 
     create ({ account, name, email, password, checkPassword }) {
@@ -12,3 +13,4 @@ export default {
     },
   
 };
+

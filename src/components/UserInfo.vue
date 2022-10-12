@@ -9,8 +9,8 @@
         @click="$router.back()"
       />
       <div class="header__text">
-        <h5 class="">John Doe</h5>
-        <p class="header__text__info"><span>25</span> 推文</p>
+        <h5 class="">{{user.name}}</h5>
+        <p class="header__text__info"><span>{{initialTweetsNum}}</span> 推文</p>
       </div>
     </div>
     <div class="card">
@@ -42,23 +42,26 @@
             <button class="btn-white" style="width:96px;" v-else>跟隨</button>
           </div>
           <div class="card__body__text">
-            <h5 class="">John Doe</h5>
-            <span class="font-14 card__body__text__account">@heyjohn</span>
+            <h5 class="">{{user.name}}</h5>
+            <span class="font-14 card__body__text__account">@{{user.account}}</span>
             <p class="font-14 mt-2">
-              Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-              amet sint.
+              {{user.introduction}}
             </p>
           </div>
         </div>
       </div>
       <div class="d-flex card__follow mx-3 pb-3 font-14">
         <p>
-          <span class="num-font">34 個</span
+          <router-link :to="{name:'user-following',params:{id:user.id}}">
+          <span class="num-font">{{user.followingNum}} 個</span
           ><span class="card__follow__font-light">跟隨中</span>
+          </router-link>
         </p>
         <p class="ms-4">
-          <span class="num-font">59 位</span
+          <router-link :to="{name:'user-follower',params:{id:user.id}}">
+          <span class="num-font">{{user.followerNum}} 位</span
           ><span class="card__follow__font-light">跟隨者</span>
+          </router-link>
         </p>
       </div>
     </div>
@@ -144,10 +147,27 @@
 
 <script>
 export default {
+  props:{
+    initialUser:{
+      type:Object,
+      required:true
+    },
+    initialTweetsNum:{
+      type:Number,
+      required:true
+    }
+  },
   data(){
     return {
       user:{
         id:1,
+        account:'',
+        backgroundImage:'',
+        email:'',
+        image:'',
+        introduction:'',
+        name:'',
+        role:'',
         isNotificated:false,
         isfollowed:true
 
@@ -160,6 +180,14 @@ export default {
     },
     toggleNoti(){
       this.user.isNotificated = !this.user.isNotificated
+    }
+  },
+  watch:{
+    initialUser(){
+      this.user={
+        ...this.user,
+        ...this.initialUser
+      }
     }
   }
 }

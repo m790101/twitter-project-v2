@@ -1,36 +1,48 @@
 <template>
-  <div class="tweet-card">
-    <div class="tweet-card__panel d-flex">
-      <img
-        src="./../assets/icon/user-none.png"
-        alt=""
-        class="tweet-card__panel__avatar"
-      />
-      <div class="tweet-card__panel__content">
-        <div
-          class="
-            tweet-card__panel__content__title
-            d-flex d-flex
-            align-items-center
-            justify-content-between
-          "
-        >
-          <p class="fw-bold">Apple</p>
-          <div class="">
-            <button class="btn-main btn-following" v-if="isfollowing">正在跟隨</button>
-            <button class="btn-white btn-follow" v-else>追隨</button>
+  <section>
+    <div class="tweet-card" v-for="account in accounts" :key="account.id">
+      <div class="tweet-card__panel d-flex">
+        <img
+          src="./../assets/icon/user-none.png"
+          alt=""
+          class="tweet-card__panel__avatar"
+        />
+        <div class="tweet-card__panel__content">
+          <div
+            class="
+              tweet-card__panel__content__title
+              d-flex d-flex
+              align-items-center
+              justify-content-between
+            "
+          >
+            <p class="fw-bold">{{ account.name }}</p>
+            <div class="">
+              <button
+                class="btn-main btn-following"
+                v-if="account.isFollowing"
+                @click="removeFollowing(account.followingId)"
+              >
+                正在跟隨
+              </button>
+              <button
+                class="btn-white btn-follow"
+                v-else
+                @click="addFollowing(account.followingId)"
+              >
+                追隨
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="tweet-card__panel__content__text ">
-          <p>
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-            cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-            reprehenderit elit laborum.
-          </p>
+          <div class="tweet-card__panel__content__text">
+            <p>
+              {{ account.introduction }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 
@@ -46,30 +58,86 @@
     }
     &__content {
       margin-left: 8px;
-      padding-right:30px;
-      &__text{
-          margin-top:8px;
+      padding-right: 30px;
+      flex: 1;
+      &__text {
+        margin-top: 8px;
       }
     }
   }
 }
 
-.btn-following{
-    width:96px;
+.btn-following {
+  width: 96px;
 }
-.btn-follow{
-    width:64px;
+.btn-follow {
+  width: 64px;
 }
 </style>
 
 <script>
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
 export default {
-    data(){
-        return {
-            isfollowing:false
-        }
-    }
-}
+  props: {
+    initialData: {
+      type: Array,
+    },
+  },
+  data() {
+    return {
+      isfollowing: false,
+      accounts: [],
+    };
+  },
+  watch: {
+    initialData() {
+      this.accounts = this.initialData;
+    },
+  },
+  methods: {
+    async removeFollowing(id) {
+      try {
+        const { data } = await userApi.removeFollowing(id);
+        if (data.status !== "success") return new Error();
+        this.accounts = this.accounts.map((account) => {
+          if (account.followingId === id) {
+            return {
+              ...account,
+              isFollowing: false,
+            };
+          }
+          return account;
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取消追蹤使用者",
+        });
+      }
+    },
+    async addFollowing(id) {
+      try {
+        const { data } = await userApi.addFollowing({ id });
+        if (data.status !== "success") return new Error();
+        this.accounts = this.accounts.map((account) => {
+          if (account.followingId === id) {
+            return {
+              ...account,
+              isFollowing: true,
+            };
+          }
+          return account;
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法追蹤使用者",
+        });
+      }
+    },
+  },
+};
 </script>
 
 

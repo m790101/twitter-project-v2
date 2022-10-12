@@ -241,7 +241,9 @@ textarea {
   color: white;
   border-radius: 50px;
   height: 46px;
-
+  &:disabled{
+    background-color: var(--3-gray);
+  }
 }
 
 .btn-main:hover {
@@ -261,6 +263,11 @@ textarea {
   border-radius: 50px;
   width: 64px;
   height: 46px;
+  &:disabled{
+    background-color: var(--3-gray);
+    color:var(--white);
+    border: 1px solid var(--3-gray);
+  }
 }
 
 

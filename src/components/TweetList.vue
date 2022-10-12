@@ -1,10 +1,12 @@
 <template>
   <section>
-    <div class="tweet-card">
+    <div class="tweet-card" v-for="tweet in tweets" :key="tweet.id">
       <div class="tweet-card__panel d-flex">
-        <router-link :to="{name:'user-information', params:user.id}">
+        <router-link
+          :to="{ name: 'user-information', params: { id: tweet.UserId } }"
+        >
           <img
-            src="./../assets/icon/user-none.png"
+            src='./../assets/icon/user-none.png'
             alt=""
             class="tweet-card__panel__avatar"
           />
@@ -12,16 +14,16 @@
 
         <div class="tweet-card__panel__content">
           <div class="tweet-card__panel__content__title d-flex">
-            <p class="tweet-card__panel__content__title__name">Apple</p>
+            <p class="tweet-card__panel__content__title__name">
+              {{ tweet.user.name }}
+            </p>
             <p class="tweet-card__panel__content__title__info">
-              @apple．<span>3小時</span>
+              @{{ tweet.user.account }}．<span>{{tweet.createdAt | fromNow}}</span>
             </p>
           </div>
-          <router-link to="/tweets/1">
+          <router-link :to="{ name: 'replyList', params: { id: tweet.id } }">
             <div class="tweet-card__panel__content__text">
-              Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
-              ullamco cillum dolor. Voluptate exercitation incididunt aliquip
-              deserunt reprehenderit elit laborum.
+              {{ tweet.description }}
             </div>
           </router-link>
           <div
@@ -38,11 +40,12 @@
                 align-items-center
                 cursor-pointer
               "
-              @click="callReplyModal"
+              @click="callReplyModal(tweet)"
             >
               <img src="./../assets/icon/comments.png" alt="" class="icon" />
-              <span class="tweet-card__panel__content__icons-panel__icon__num"
-                >13</span
+              <span
+                class="tweet-card__panel__content__icons-panel__icon__num"
+                >{{ tweet.replyNum }}</span
               >
             </div>
             <div
@@ -52,29 +55,36 @@
                 align-items-center
                 cursor-pointer
               "
-              @click="toggleLike"
             >
-                <img
-                  src="./../assets/icon/like.png"
-                  alt=""
-                  class="icon"
-                  v-if="!isLiked"
-                />
-                <img
-                  src="./../assets/icon/like-active.png"
-                  alt=""
-                  class="icon "
-                  v-else
-                />
-                <span class="tweet-card__panel__content__icons-panel__icon__num"
-                  >13</span
-                >
+              <img
+                src="./../assets/icon/like.png"
+                alt=""
+                class="icon"
+                @click="like(tweet.id)"
+                v-if="!tweet.isLiked"
+              />
+              <img
+                src="./../assets/icon/like-active.png"
+                alt=""
+                class="icon"
+                @click="unLike(tweet.id)"
+                v-else
+              />
+              <span
+                class="tweet-card__panel__content__icons-panel__icon__num"
+                >{{ tweet.likeNum }}</span
+              >
             </div>
           </div>
         </div>
       </div>
     </div>
-    <ReplyModal @closeReplyModal="handleCloseReplyModal" v-if="isReplying" />
+    <ReplyModal 
+    :initialTweet="tweetEditing"
+    @closeReplyModal="handleCloseReplyModal"
+    @afterCreateReply="handleAfterCreateReply" 
+    v-if="isReplying"
+    />
     <div class="modal-bg" :class="{ active: isReplying }"></div>
   </section>
 </template>
@@ -85,8 +95,7 @@
 .tweet-card {
   position: relative;
   width: 639px;
-  height: 136px;
-  margin-top: 10px;
+  margin-top: 16px;
   font-size: 15px;
 }
 .tweet-card__panel {
@@ -110,7 +119,7 @@
       }
     }
     &__text {
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
     &__icons-panel__icon {
       margin-right: 41px;
@@ -142,29 +151,100 @@
 
 <script>
 import ReplyModal from "./ReplyModal.vue";
+import tweetApi from "./../apis/tweets";
+import { Toast } from "./../utils/helpers";
+import {fromNowFilter, emptyImageFilter} from './../utils/mixins'
+
 export default {
+  props: {
+    initialTweets: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      user:{
-        id:1
+      tweets: this.initialTweets,
+      user: {
+        id: 1,
       },
       isLiked: false,
       isReplying: false,
+      tweetEditing:{}
     };
   },
+  mixins:[fromNowFilter,emptyImageFilter],
   components: {
     ReplyModal,
   },
   methods: {
-    callReplyModal() {
+    callReplyModal(tweet) {
       this.isReplying = true;
+      this.tweetEditing = {
+        ...tweet
+      }
     },
     handleCloseReplyModal() {
       this.isReplying = false;
     },
-    toggleLike(){
-      this.isLiked = !this.isLiked
-    }
+    handleAfterCreateReply(playLoad){
+      this.tweets = this.tweets.map(tweet=>{
+          if(tweet.id === playLoad.id){
+            return {
+              ...tweet,
+              replyNum: tweet.replyNum + 1
+            }
+          }
+          return tweet
+      })
+    },
+    async like(id) {
+      try {
+        const { data } = await tweetApi.like({ id });
+        if(data.status !== 'success')return new Error
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            return (tweet = {
+              ...tweet,
+              isLiked: true,
+              likeNum: tweet.likeNum + 1,
+            });
+          }
+          return tweet;
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法喜愛推文",
+        });
+      }
+    },
+    async unLike(id) {
+      try {
+        const { data } = await tweetApi.unLike({ id });
+         if(data.status !== 'success')return new Error
+        this.tweets = this.tweets.map((tweet) => {
+          if (tweet.id === id) {
+            return (tweet = {
+              ...tweet,
+              isLiked: false,
+              likeNum: tweet.likeNum - 1,
+            });
+          }
+          return tweet;
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取消喜愛推文",
+        });
+      }
+    },
+  },
+  watch: {
+    initialTweets: function () {
+      this.tweets = this.initialTweets;
+    },
   },
 };
 </script>

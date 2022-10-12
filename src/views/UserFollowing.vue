@@ -26,7 +26,12 @@
             <li class="nav-item cursor-pointer active">正在追隨</li>
           </router-link>
   </ul>
-        <Account />
+        <Spinner
+        v-if="isProcessing"
+        />
+        <Account 
+        :initial-data="followings"
+        />
       </div>
     </div>
     <PopularList />
@@ -35,23 +40,55 @@
 
 <script>
 import Navbar from "../components/Navbar.vue";
-
 import PopularList from "../components/PopularList.vue";
 import Account from "../components/Account.vue";
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
+import Spinner from './../components/Spinner.vue'
 
 export default {
   data() {
     return {
         user:{
             id:1
-          }
+          },
+          followings:[],
+          isProcessing:false
     };
+  },
+  methods:{
+    async getFollowing(id){
+      try{
+        this.isProcessing = true
+        const {data} = await userApi.getFollowings(id)
+        this.followings = data
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法讀取正在追蹤者",
+        });
+      }
+    }
   },
   components: {
     Navbar,
     Account,
     PopularList,
+    Spinner
   },
+  created(){
+    const{id} = this.$route.params
+    this.getFollowing(Number(id))
+    this.user.id = Number(id)
+  },
+  beforeRouteUpdate(from, to ,next){
+      const { id } = to.params
+    this.getFollowing(Number(id))
+    next()
+  }
 };
 </script>
 
@@ -62,6 +99,8 @@ export default {
   position: relative;
   border: 1px solid #e6ecf0;
   margin-left: 24px;
+  height:100vh;
+  overflow: scroll;
 }
 
 .title {

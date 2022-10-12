@@ -24,14 +24,15 @@
                 rows="5"
                 placeholder="有什麼新鮮事"
                 class="modal-body__textarea pt-2"
+                v-model="description"
               >
               </textarea>
             </div>
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-end align-items-center">
-          <div class="error-handler">字數不可超過140字!</div>
-          <button type="button" class="btn-main" style="width: 66px">
+          <div class="error-handler" v-if="description.length > 140">字數不可超過140字!</div>
+          <button type="button" class="btn-main" style="width: 66px" :disabled="description.length > 140 || isProcessing" @click="createdTweet" >
             推文
           </button>
         </div>
@@ -93,10 +94,43 @@
 
 
 <script>
+import tweetApi from "./../apis/tweets";
+import { Toast } from "./../utils/helpers";
+
 export default {
+  data(){
+    return {
+      description:'',
+      isProcessing: false,
+    }
+  },
     methods:{
         closeModal(){
             this.$emit('afterCloseModal')
+        },
+        async createdTweet(){
+          try{
+            this.isProcessing = true
+              const response = tweetApi.create({description:this.description})
+              console.log(response)
+              this.$emit('afterCreatedTweet',{
+                description:this.description,
+                createdAt:new Date,
+                user:{
+                  account:'user1',
+                  image: null,
+                  name:'user1'
+                }
+              })
+              this.isProcessing = false
+          }
+          catch(error){
+            this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法新增推文",
+        });
+          }
         }
     }
 }

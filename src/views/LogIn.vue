@@ -49,7 +49,7 @@ export default {
     };
   },
   methods: {
-    async handleSubmit(e) {
+    async handleSubmit() {
       try{
 
       if (!this.account || !this.password) {
@@ -70,6 +70,7 @@ export default {
           if (data.status !== "success") {          
             throw new Error(response.statusText);            
           }else {           
+
             localStorage.setItem("token", data.data.token);
             this.$store.commit('setCurrentUser',data.data.user)
             this.$router.push("/main")
@@ -84,9 +85,11 @@ export default {
             title: "請確認您輸入了正確的帳號密碼",
           });
           
+
           this.isProcessing = false         
           console.log("error:",error);
         };
+
     },
   },
 };

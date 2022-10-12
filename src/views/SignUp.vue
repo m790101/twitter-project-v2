@@ -58,6 +58,7 @@ export default {
       this.userData = {...formData}
       console.log('this.uerData',this.userData)
       this.isProcessing = true
+
       try {        
         const response = await signUpAPI.create({
           account: this.userData.account,
@@ -71,6 +72,7 @@ export default {
         if (data.status !== "success") {         
           throw new Error(response.statusText);
         } else {         
+
           // 成功的話則轉址到 登入頁面
           this.$router.push({ name: "logIn" });
         }

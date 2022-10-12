@@ -19,6 +19,7 @@
             class="btn btn-main btn-main:hover btn-main:active"
             type="submit"
             v-on:click="getData"
+            :disabled="isProcessing"
           >
             儲存
           </button>
@@ -72,6 +73,7 @@ export default {
     //子元件傳入
     async handleAfterSubmit(formData) {
       this.userData = { ...formData };
+      this.isProcessing = true
       try {       
        const { data } = await userApi.putUser({
         id:this.userData.id,
@@ -86,9 +88,10 @@ export default {
           icon: "success",
           title: "修改成功",
         });
-
+        this.isProcessing = false 
 
       } catch (error) {
+        this.isProcessing = false 
         console.log('pushUser error:',error);
         Toast.fire({
           icon: "warning",

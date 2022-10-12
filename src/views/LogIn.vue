@@ -68,18 +68,18 @@ export default {
         })  
         console.log('4') 
          const { data } = response;          
-         console.log('response:',response.statusText)        
-
-          if (data.status == "error") {         
+         console.log('response:',response.statusText)       
+         console.log('dataStatus:',data.status) 
+         
+          if (data.status === "error") {         
             console.log('5') 
-            throw new Error(response.statusText);            
+            throw new Error(data.statusText);            
           }else {   
             console.log('6')        
             localStorage.setItem("token", data.data.token);
             this.$store.commit('setCurrentUser',data.data.user)
             this.$router.push("/main")
-          }
-         
+          }        
         
       } catch(error) {
         console.log('er')
@@ -92,8 +92,8 @@ export default {
           });
           
           this.isProcessing = false     
-          console.log('error2',error)    
-          console.log("error2:",error.message);
+          console.log('error2:',error)    
+          console.log("error Message2:",error.message);
         };
     },
   },

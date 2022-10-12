@@ -6,13 +6,14 @@
     <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">帳號設定</h4>
-        <!--
-        <SettingForm
+        
+        <SettingForm        
           ref="formRef"
           :initialUserSetting="userData"
           @afterSubmit="handleAfterSubmit"
+          
         ></SettingForm>
-        -->
+        
         <div class="d-flex justify-content-end">
           <button
             class="btn btn-main btn-main:hover btn-main:active"
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-//import SettingForm from "./../components/SettingForm.vue";
+import SettingForm from "./../components/SettingForm.vue";
 import Navbar from "./../components/Navbar.vue";
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
@@ -36,7 +37,7 @@ import { Toast } from "./../utils/helpers";
 export default {
   components: {
     Navbar,
-   // SettingForm,
+    SettingForm,
   },
   data() {
     return {
@@ -50,13 +51,13 @@ export default {
     this.fetchData(Number(id));
   },
   methods: {
-    async fetchData(userId) {
+    async fetchData(id) {
       try {
-        const { data } = await userApi.getUser({ userId });
+        const { data } = await userApi.getUser( {id} ); 
         console.log(data);
         this.userData = { ...data };
       } catch (error) {
-        console.log(error);
+        console.log('getUser error:',error);
         Toast.fire({
           icon: "warning",
           title: "無法讀取使用者",
@@ -69,14 +70,33 @@ export default {
       this.$refs.formRef.handleForm();
     },
     //子元件傳入
-    handleAfterSubmit(formData) {
+    async handleAfterSubmit(formData) {
       this.userData = { ...formData };
-      try {
+      try {       
+       const { data } = await userApi.putUser({
+        id:this.userData.id,
+        account: this.userData.account,
+          name: this.userData.name,
+          email: this.userData.email,
+          password: this.userData.password,
+          checkPassword: this.userData.checkPassword,
+       });        
+       console.log('pushData:',data)
+       Toast.fire({
+          icon: "success",
+          title: "修改成功",
+        });
+
+
       } catch (error) {
-        console.log(error);
+        console.log('pushUser error:',error);
+        Toast.fire({
+          icon: "warning",
+          title: "無法修改請稍後再試",
+        });
       }
     },
-    // -->待傳入API
+    
   },
 };
 </script>

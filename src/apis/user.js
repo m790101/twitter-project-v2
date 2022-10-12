@@ -13,13 +13,19 @@ export default {
     getLikes({ id }) {
         return apiHelper.get(`/users/${id}/likes`)
     },
-    getFollowings({ id }) {
+    getFollowings( id ) {
         return apiHelper.get(`/users/${id}/followings`)
     },
-    getFollowers({ id }) {
+    getFollowers(id ) {
         return apiHelper.get(`/users/${id}/followers`)
     },
     getUserTop(){
         return apiHelper.get(`/users/top`)
+    },
+    addFollowing({id}){
+        return apiHelper.post(`/followships`,{id})
+    },
+    removeFollowing(id){
+        return apiHelper.delete(`/followships/${id}`)
     }
 }

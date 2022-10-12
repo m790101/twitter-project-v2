@@ -10,7 +10,7 @@
       />
       <div class="header__text">
         <h5 class="">{{user.name}}</h5>
-        <p class="header__text__info"><span>25</span> 推文</p>
+        <p class="header__text__info"><span>{{initialTweetsNum}}</span> 推文</p>
       </div>
     </div>
     <div class="card">
@@ -52,12 +52,16 @@
       </div>
       <div class="d-flex card__follow mx-3 pb-3 font-14">
         <p>
+          <router-link :to="{name:'user-following',params:{id:user.id}}">
           <span class="num-font">34 個</span
           ><span class="card__follow__font-light">跟隨中</span>
+          </router-link>
         </p>
         <p class="ms-4">
+          <router-link :to="{name:'user-follower',params:{id:user.id}}">
           <span class="num-font">59 位</span
           ><span class="card__follow__font-light">跟隨者</span>
+          </router-link>
         </p>
       </div>
     </div>
@@ -146,6 +150,10 @@ export default {
   props:{
     initialUser:{
       type:Object,
+      required:true
+    },
+    initialTweetsNum:{
+      type:Number,
       required:true
     }
   },

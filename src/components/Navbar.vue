@@ -31,7 +31,7 @@
       </div>
       <div class="menu__function">
         <router-link
-          :to="{name:'user-information', params:{id:user.id}}"
+          :to="{name:'user-information', params:{id:2}}"
           class="text-center d-flex link align-items-center"
         >
           <img
@@ -171,6 +171,7 @@ nav {
 
 <script>
 import NewTweetModal from '../components/NewTweetModal.vue'
+import{ mapState} from 'vuex'
 export default {
   data() {
     return {
@@ -195,6 +196,9 @@ export default {
   },
   components:{
     NewTweetModal
+  },
+  computed:{
+    ...mapState(['currentUser', 'isAuthenticated'])
   }
 };
 </script>

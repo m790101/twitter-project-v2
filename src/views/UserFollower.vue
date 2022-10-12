@@ -35,10 +35,10 @@
 
 <script>
 import Navbar from "../components/Navbar.vue";
-
 import PopularList from "../components/PopularList.vue";
 import Account from "../components/Account.vue";
-
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
 export default {
   data() {
     return {
@@ -57,12 +57,29 @@ export default {
     handleAfterCallModal() {
       this.isEditing = true;
     },
+    async getFollowers(id){
+      try{
+        const {data} = await userApi.getFollowers(id)
+        console.log(data)
+      }
+      catch(error){
+          Toast.fire({
+          icon: "warning",
+          title: "無法讀取正在追隨者",
+        });
+      }
+    }
   },
   components: {
     Navbar,
     Account,
     PopularList,
   },
+  created(){
+    const{id} = this.$route.params
+    this.getFollowers(Number(id))
+    this.user.id = Number(id)
+  }
 };
 </script>
 
@@ -73,6 +90,8 @@ export default {
   position: relative;
   border: 1px solid #e6ecf0;
   margin-left: 24px;
+  height:100vh;
+  overflow: scroll;
 }
 
 .title {

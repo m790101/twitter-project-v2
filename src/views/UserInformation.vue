@@ -9,6 +9,7 @@
         <div v-show="!isProcessing">
           <UserInfo
             @afterCallModal="handleAfterCallModal"
+            :initial-tweets-num="tweets.length"
             :initial-user="user"
           />
           <UserEditModal
@@ -67,7 +68,7 @@ export default {
         const { data } = await userApi.getUser({ id });
         const tweet = await userApi.getTweets({ id });
         const replies = await userApi.getRepliedTweets({ id });
-        const likes = await userApi.getLikes({ id })
+       /*const likes = await userApi.getLikes({ id })
         this.likes = likes.data.map((like) => {
           return {
             ...like.tweet,
@@ -78,7 +79,7 @@ export default {
               name: like.name,
             },
           };
-        });
+        });*/
 
         this.tweets = tweet.data;
         this.replies = replies.data;

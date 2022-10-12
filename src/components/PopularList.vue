@@ -2,13 +2,13 @@
   <section>
     <h4 class="title">推薦跟隨</h4>
     <div class="section__panel">
-      <div class="section__panel__account d-flex" v-for="user in users" :key="user.id">
+      <div class="section__panel__account d-flex align-items-center" v-for="user in users" :key="user.id">
         <img
           src="./../assets/icon/user-none.png"
           alt=""
           class="section__panel__account__avatar"
         />
-        <div class="section__panel__account__content d-flex align-items-center">
+        <div class="section__panel__account__content d-flex align-items-center justify-content-between">
           <div
             class="
               section__panel__account__content__title
@@ -18,15 +18,15 @@
             "
           >
             <p class="fw-bold truncate">{{user.name}}</p>
-            <p class="section__panel__account__content__title__id fs-14">
+            <p class="section__panel__account__content__title__id fs-14 truncate">
               @{{user.account}}
             </p>
           </div>
           <div class="section__panel__account__content__btn-section d-flex">
-            <button class="btn-main" style="width: 96px" v-if="user.isFollowing">
+            <button class="btn-main" style="width: 96px" v-if="user.isFollowing" @click="removeFollowing(user.id)" :disabled="isProcessing">
               正在追蹤
             </button>
-            <button class="btn-white" v-else>跟隨</button>
+            <button class="btn-white" v-else @click="addFollowing(user.id)" :disabled="isProcessing">跟隨</button>
           </div>
         </div>
       </div>
@@ -40,7 +40,8 @@ import { Toast } from "./../utils/helpers";
 export default {
   data() {
     return {
-      users:[]
+      users:[],
+      isProcessing:false
     };
   },
   methods:{
@@ -53,6 +54,54 @@ export default {
           Toast.fire({
           icon: "warning",
           title: "無法讀取使用者",
+        });
+      }
+    },
+        async addFollowing(id){
+      try{
+       this.isProcessing = true
+        const {data} = await userApi.addFollowing({id})
+        if(data.status !== 'success') return new Error
+        this.users = this.users.map(user=>{
+          if(user.id === id){
+            return {
+              ...user,
+              isFollowing:true
+            }
+          }
+          return user
+        })
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法追蹤使用者",
+        });
+      }
+    },
+  async removeFollowing(id){
+      try{
+        this.isProcessing = true
+        const {data} = await userApi.removeFollowing(id)
+        if(data.status !== 'success') return new Error
+        this.users = this.users.map(user=>{
+          if(user.id === id){
+            return {
+              ...user,
+              isFollowing:false
+            }
+          }
+          return user
+        })
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法追蹤使用者",
         });
       }
     }
@@ -71,6 +120,7 @@ section {
   background-color: var(--1-gray);
   border-radius: 16px;
   width: 273px;
+  height:100%;
 }
 .title {
   padding: 24px 0 24px 24px;
@@ -94,20 +144,11 @@ section {
   &__title__id {
     color: var(--secondary-color);
   }
-  &__btn-section {
-    margin-left: 13px;
-    margin-right:16px;
-  }
 }
 .truncate{
   white-space: nowrap; 
-  width: 80px; 
+  width: 50px; 
   overflow: hidden;
   text-overflow: ellipsis; 
-  /*display: -webkit-box;
-  -webkit-line-clamp: 1;    
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  overflow: hidden;*/
 }
 </style>

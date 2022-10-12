@@ -56,7 +56,6 @@ export default {
     async handleAfterSubmit() {
       this.isProcessing = true
       try {
-        console.log("1");
         const response = await signUpAPI.register.create({
           account: this.account,
           name: this.name,

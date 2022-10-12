@@ -6,16 +6,20 @@
     <div class="container__right d-flex">
       <div class="section">
         <h4 class="title">帳號設定</h4>
-        <SettingForm
+        
+        <SettingForm        
           ref="formRef"
           :initialUserSetting="userData"
           @afterSubmit="handleAfterSubmit"
+          
         ></SettingForm>
+        
         <div class="d-flex justify-content-end">
           <button
             class="btn btn-main btn-main:hover btn-main:active"
             type="submit"
             v-on:click="getData"
+            :disabled="isProcessing"
           >
             儲存
           </button>
@@ -28,17 +32,8 @@
 <script>
 import SettingForm from "./../components/SettingForm.vue";
 import Navbar from "./../components/Navbar.vue";
-
-const dummyData = {
-  userData: {
-    id: 1,
-    account: "aaa",
-    name: "aa",
-    Email: "aa@gmail.com",
-    password: "123456",
-    checkPassword: "123456",
-  },
-};
+import userApi from "./../apis/user";
+import { Toast } from "./../utils/helpers";
 
 export default {
   components: {
@@ -47,19 +42,64 @@ export default {
   },
   data() {
     return {
-      userData: { ...dummyData.userData },
+      userData: {},
+      isProcessing: false,
     };
   },
+  created() {
+    const { id } = this.$route.params;
+    console.log(id);
+    this.fetchData(Number(id));
+  },
   methods: {
+    async fetchData(id) {
+      try {
+        const { data } = await userApi.getUser( {id} ); 
+        console.log(data);
+        this.userData = { ...data };
+      } catch (error) {
+        console.log('getUser error:',error);
+        Toast.fire({
+          icon: "warning",
+          title: "無法讀取使用者",
+        });
+      }
+    },
+
     // 呼叫子元件的handleForm方法
     getData() {
       this.$refs.formRef.handleForm();
     },
     //子元件傳入
-    handleAfterSubmit(formData) {
+    async handleAfterSubmit(formData) {
       this.userData = { ...formData };
+      this.isProcessing = true
+      try {       
+       const { data } = await userApi.putUser({
+        id:this.userData.id,
+        account: this.userData.account,
+          name: this.userData.name,
+          email: this.userData.email,
+          password: this.userData.password,
+          checkPassword: this.userData.checkPassword,
+       });        
+       console.log('pushData:',data)
+       Toast.fire({
+          icon: "success",
+          title: "修改成功",
+        });
+        this.isProcessing = false 
+
+      } catch (error) {
+        this.isProcessing = false 
+        console.log('pushUser error:',error);
+        Toast.fire({
+          icon: "warning",
+          title: "無法修改請稍後再試",
+        });
+      }
     },
-    // -->待傳入API
+    
   },
 };
 </script>

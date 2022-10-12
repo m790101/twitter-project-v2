@@ -49,7 +49,7 @@
       </div>
       <div class="menu__function">
         <router-link
-          to="/setting"
+        :to="{name:'setting', params:{id:currentUser.id}}"
           class="text-center d-flex link align-items-center"
         >
           <img

@@ -34,8 +34,8 @@
         v-model="UserData.name"
       />
     </div>
-    <p class="error-handler" v-if="countName > 50">字數不能超過50個字</p>
-
+    <p class="error-handler fs-12" v-if="countName > 50">字數超出上限!</p>
+     
     <div class="form-control d-flex flex-column">
       <label for="email" class="form-label">Email</label>
       <input
@@ -100,10 +100,17 @@ export default {
   },
   data() {
     return {
-      UserData: { ...this.initialUserSetting },
+      UserData: {}
     };
   },
+  created () {
+    this.fetchUserData()
+  },
+
   methods: {
+    fetchUserData () {      
+     this.UserData = {...this.initialUserSetting}     
+    },
     handleForm() {
       if (!this.UserData.account) {
         Toast.fire({
@@ -157,10 +164,14 @@ export default {
       this.$emit("afterSubmit", formData);
     },
   },
-
+  watch: {
+    initialUserSetting(){      
+      this.UserData ={...this.initialUserSetting}
+    }
+  },
   computed: {
     countName() {
-      return this.UserData.name.length;
+      return this.UserData.name.length
     },
   },
 };
@@ -174,5 +185,7 @@ export default {
 .error-handler {
   color: var(--error-color);
   width: 100%;
+  margin-top: 4px;
+  line-height: 20px;
 }
 </style>

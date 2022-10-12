@@ -74,7 +74,12 @@ export default {
         } else {         
 
           // 成功的話則轉址到 登入頁面
+          Toast.fire({
+          icon: "success",
+          title: "註冊成功，請重新登入",
+        });
           this.$router.push({ name: "logIn" });
+          
         }
       } catch (error) {
         this.isProcessing = false

@@ -5,11 +5,13 @@
     </div>
     <div class="container__right">
       <h4 class="title">推文清單</h4>
+      <Spinner v-if="isProcessing" />
       <AdminTweetList
         v-bind:tweet="tweetItem"
         v-for="tweetItem in tweet"
         :key="tweetItem.id"
         v-on:deleteTweet="afterDeleteTweet"
+        v-else
       ></AdminTweetList>
     </div>
   </main>
@@ -19,63 +21,58 @@
 import AdminNavbar from "./../components/AdminNavbar.vue";
 import AdminTweetList from "./../components/AdminTweetList.vue";
 import adminAPI from "./../apis/admin";
-import { Toast } from "./../utils/helpers"
-
-
+import { Toast } from "./../utils/helpers";
+import Spinner from "./../components/Spinner.vue";
 
 export default {
   data() {
     return {
-      isEditing: false,
+      isProcessing: false,
       tweet: [],
     };
   },
   components: {
     AdminNavbar,
     AdminTweetList,
+    Spinner,
   },
   created() {
-    this.fetchTweet ();
+    this.fetchTweet();
   },
   methods: {
-   async fetchTweet () {
-   try {
-    const {data} = await adminAPI.admin.getTweets( ) 
-    console.log(data)   
-    this.tweet = data
-
-   } catch (error) {
-      console.log('error',error)
-   }
-      
+    async fetchTweet() {
+      try {
+        this.isProcessing = true;
+        const { data } = await adminAPI.admin.getTweets();
+        this.tweet = data;
+        this.isProcessing = false;
+      } catch (error) {
+        this.isProcessing = false;
+        console.log("error", error);
+      }
     },
 
-   async afterDeleteTweet(tweetId) {
-      try{
-        const { data } = await adminAPI.admin.deleteTweets({ tweetId })
-        console.log(data)
-        if (data.status === 'error') {
-          throw new Error(data.message)
-       
-        }else{
+    async afterDeleteTweet(tweetId) {
+      try {
+        const { data } = await adminAPI.admin.deleteTweets({ tweetId });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        } else {
           Toast.fire({
-          icon: 'error',
-          title: '已移除推文'
-        })
-        this.fetchTweet()
+            icon: "error",
+            title: "已移除推文",
+          });
+          this.fetchTweet();
         }
-     
       } catch (error) {
-        console.log(error)
+        console.log(error);
         Toast.fire({
-          icon: 'error',
-          title: '無法移除推文，請稍後再試'
-        })
+          icon: "error",
+          title: "無法移除推文，請稍後再試",
+        });
       }
-
     },
   },
-
 };
 </script>
 
@@ -84,6 +81,8 @@ export default {
   border: 1px solid #e6ecf0;
   max-width: 1067px;
   flex: 1;
+  height: 100vh;
+  overflow: scroll;
 }
 
 .title {

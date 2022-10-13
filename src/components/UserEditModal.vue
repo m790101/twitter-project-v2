@@ -299,7 +299,7 @@ export default {
         this.isProcessing = true
         const file = e.target;
         const formData = new FormData(file);
-        const { data } = await userApi.putUser(formData, { id: this.user.id });
+        const { data } = await userApi.putUserWithImage(formData, { id: this.user.id });
         console.log(data);
         this.$emit("closeUserEditModal");
         this.$emit('afterHandleSubmit',{

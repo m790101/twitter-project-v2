@@ -15,8 +15,8 @@
           class="card-panel__card__header__avatar"
         />
       </div>
-      <div class="card-panel__card__header__name mb-3">
-        <p class="fw-bold word-break-keep">{{user.name}}</p>
+      <div class="card-panel__card__header__name d-flex flex-column align-items-center mb-3">
+        <p class="fw-bold word-break-keep truncate">{{user.name}}</p>
         <p class="color-second word-break-keep">@{{user.account}}</p>
       </div>
       <div class="d-flex justify-content-center card-panel__card__icons mb-2">
@@ -93,7 +93,6 @@ export default {
         margin-top: 32px;
         text-align: center;
         p{          
-          margin:0px 10px;
         }
       }
     }
@@ -107,5 +106,12 @@ export default {
 }
 .icon {
   width: 24px;
+}
+
+.truncate{
+  white-space: nowrap; 
+  width: 60%; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 </style>

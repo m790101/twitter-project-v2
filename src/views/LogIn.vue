@@ -29,7 +29,7 @@
         <span>註冊 </span>
       </router-link>
       <span class="footer__dot">•</span>
-      <router-link to="/admin/login" class="footer__connect">
+      <router-link to="/admin/signin" class="footer__connect">
         <span>後台登入</span>
       </router-link>
     </div>

@@ -121,7 +121,7 @@ export default {
 
         this.user = {
           ...data,
-          image: data.image || this.currentUser.image,
+          image: data.image || "https://i.imgur.com/mVOT0IN.png",
           backgroundImage:
             data.backgroundImage || "https://i.imgur.com/PvPmJH3.png",
           followingNum: followings.data.length,

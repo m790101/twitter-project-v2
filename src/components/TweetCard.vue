@@ -125,7 +125,8 @@ export default {
   },
   filters:{
         date(dateTime){
-                return moment(dateTime).format("a h:mm・YYYYMMMMDo")
+                return moment(dateTime).format("a h:mm・YYYY年MMMDo")
+                //moment(dateTime).format("a h:mm・YYYYMMMMDo")
         }
     },
 };

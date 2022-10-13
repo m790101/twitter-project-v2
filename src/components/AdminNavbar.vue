@@ -43,7 +43,7 @@
     </div>
 
     <div class=" d-flex flex-column justify-contnet-center">
-      <router-link to="/admin/logIn" class="d-flex link align-items-center">
+      <div class="d-flex link align-items-center cursor-pointer" @click="logout">
         <img
           src="./../assets/icon/logout.png"
           alt=""
@@ -54,8 +54,8 @@
           alt=""
           class="menu__function__icon__active"
         />
-        <span>登出</span>
-      </router-link>
+        <span >登出</span>
+      </div>
     </div>
 
   </nav>
@@ -149,15 +149,13 @@ export default {
       isEditing: false,
     };
   },
-  methods: {
-    newTweet() {
-      this.isEditing = true;
-    },
-    handleAfterCloseModal(){
-      this.isEditing = false;
-    }
-  },
   components:{
+  },
+  methods:{
+    logout(){
+      localStorage.removeItem('tokenAdmin')
+      this.$router.push('/admin/signin')
+    }
   }
 };
 </script>

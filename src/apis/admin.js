@@ -1,6 +1,6 @@
 import { apiHelper } from "@/utils/helpers";
 
-const getToken = () => localStorage.getItem("token");
+const getToken = () => localStorage.getItem("tokenAdmin");
 
 export default {
   admin: {

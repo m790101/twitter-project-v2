@@ -1,7 +1,7 @@
 <template>
   <div class="tweet-card">
     <div class="tweet-card__panel d-flex" v-for="reply in replies" :key="reply.id">
-      <router-link :to="{name:'user-information', params:{id:user.id}}">
+      <router-link :to="{name:'user-information', params:{id:reply.UserId}}">
         <img
           :src="reply.user.image | emptyImage"
           alt=""

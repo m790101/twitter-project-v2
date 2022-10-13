@@ -3,7 +3,7 @@
     <div class="tweet-card" v-for="tweet in tweets" :key="tweet.id">
       <div class="tweet-card__panel d-flex">
         <router-link
-          :to="{ name: 'user-information', params: { id: tweet.UserId } }"
+          :to="{ name: 'user-information', params: { id: tweet.user.id || tweet.UserId} }"
         >
           <img
             :src="tweet.user.image | emptyImage"

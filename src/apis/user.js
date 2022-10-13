@@ -40,4 +40,7 @@ export default {
       checkPassword,
     });
   },
+  putUserWithImage(formData,{id}) {
+    return apiHelper.put(`/users/${id}`, formData)
+  }
 };

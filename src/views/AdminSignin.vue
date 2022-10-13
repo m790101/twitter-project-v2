@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import authorizationAPI from "./../apis/authorization";
-import { Toast } from "./../utils/helpers";
+import authorizationAPI from "../apis/authorization";
+import { Toast } from "../utils/helpers";
 
 
 export default {
@@ -88,8 +88,7 @@ export default {
           if (data.status !== "success") {
             throw new Error(data.message);
           }else {
-            console.log(response);
-            localStorage.setItem("token", data.data.token);
+            localStorage.setItem("tokenAdmin", data.data.token);
             this.$router.push("/admin/tweets")
           }
          
@@ -104,7 +103,7 @@ export default {
           
           this.isProcessing = false
           console.log("error", error);
-        };
+        }
     },
   },
 };

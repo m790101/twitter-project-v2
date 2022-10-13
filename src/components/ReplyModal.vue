@@ -13,7 +13,7 @@
         <div class="modal-body">
           <div class="modal-body__panel d-flex">
               <img
-                src="./../assets/icon/user-none.png"
+                :src="tweet.user.image"
                 alt=""
                 class="modal-body__panel__avatar"
               />

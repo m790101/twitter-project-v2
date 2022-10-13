@@ -5,7 +5,7 @@
         <div class="d-flex card__body__account">
           <router-link :to="{name:'user-information', params:{id:user.id}}">
           <img
-            src="./../assets/icon/user-none.png"
+            :src="tweet.user.image | emptyImage"
             class="card__body__account__avatar"
           />
           </router-link>
@@ -57,6 +57,7 @@
 import tweetApi from "./../apis/tweets";
 import { Toast } from "./../utils/helpers";
 import moment from 'moment'
+import {emptyImageFilter} from './../utils/mixins'
 
 export default {
   props:{
@@ -76,6 +77,7 @@ export default {
   },
   components:{
   },
+  mixins:[emptyImageFilter],
   methods:{
     async like(id) {
       try {
@@ -121,11 +123,11 @@ export default {
       this.tweet = this.initialTweet
     }
   },
-      filters:{
+  filters:{
         date(dateTime){
                 return moment(dateTime).format("a h:mm・YYYYMMMMDo")
         }
-    }
+    },
 };
 </script>
 

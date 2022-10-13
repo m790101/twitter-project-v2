@@ -3,7 +3,7 @@
     <div class="tweet-card__panel d-flex" v-for="reply in replies" :key="reply.id">
       <router-link :to="{name:'user-information', params:{id:user.id}}">
         <img
-          :src="reply.user.image || emptyImage"
+          :src="reply.user.image | emptyImage"
           alt=""
           class="tweet-card__panel__avatar"
         />

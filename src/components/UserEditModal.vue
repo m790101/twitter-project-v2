@@ -68,7 +68,7 @@
 
         <div class="modal-body__form px-3">
           <div class="form-label-group">
-            <label for="name" class="font-14 modal-body__form__name"
+            <label for="name" class="font-14 modal-body__form__name "
               >名稱</label
             >
             <input

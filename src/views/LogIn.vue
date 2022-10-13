@@ -94,7 +94,7 @@ export default {
           this.isProcessing = false     
           console.log('error2:',error)    
           console.log("error Message2:",error.message);
-        };
+        }
     },
   },
 };

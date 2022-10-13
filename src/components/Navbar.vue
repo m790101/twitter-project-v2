@@ -194,8 +194,8 @@ export default {
       this.$emit('navCreateTweet',playLoad)
     },
     logout(){
-      localStorage.removeItem('token')
-      this.$router.push('/')
+      this.$store.commit('revokeAuthentication')
+      this.$router.push('/logIn')
     }
   },
   components:{

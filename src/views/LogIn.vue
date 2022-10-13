@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex flex-column justify-content-center align-items-center">
-    <div class="title d-flex flex-column align-items-center ">
+    <div class="title d-flex flex-column align-items-center">
       <img class="title__image" src="./../assets/logo.png" alt="logo" />
       <h3 class="title__word">登入Alphitter</h3>
     </div>
@@ -50,51 +50,41 @@ export default {
   },
   methods: {
     async handleSubmit(e) {
-      try{
-      console.log('1')
-      if (!this.account || !this.password) {
-        Toast.fire({
-          icon: "warning",
-          title: "請填入帳號和密碼",
-        });
-        return;
-      }
-      console.log('2')
-      this.isProcessing = true
-      console.log('3')
-      const response = await authorizationAPI.signIn({
-          account: this.account,
-          password: this.password,
-        })  
-        console.log('4') 
-         const { data } = response;          
-         console.log('response:',response.statusText)       
-         console.log('dataStatus:',data.status) 
-         
-          if (data.status === "error") {         
-            console.log('5') 
-            throw new Error(data.statusText);            
-          }else {   
-            console.log('6')        
-            localStorage.setItem("token", data.data.token);
-            this.$store.commit('setCurrentUser',data.data.user)
-            this.$router.push("/main")
-          }        
-        
-      } catch(error) {
-        console.log('er')
-        
-          this.account = "";
-          this.password = "";
+      try {
+        if (!this.account || !this.password) {
           Toast.fire({
             icon: "warning",
-            title: "請確認您輸入正確的帳號密碼",
+            title: "請填入帳號和密碼",
           });
-          
-          this.isProcessing = false     
-          console.log('error2:',error)    
-          console.log("error Message2:",error.message);
+          return;
         }
+        this.isProcessing = true;
+        const response = await authorizationAPI.signIn({
+          account: this.account,
+          password: this.password,
+        });
+        const { data } = response;       
+        localStorage.setItem("token", data.data.token);
+        this.$store.commit("setCurrentUser", data.data.user);
+        this.$router.push("/main");
+        
+      } catch (error) {
+        this.account = "";
+        this.password = "";
+        this.isProcessing = false;
+        const errorMessage = error.response.data.message;        
+        if (errorMessage === "Error: 尚未註冊") {
+          Toast.fire({
+            icon: "warning",
+            title: "帳號不存在",
+          });
+        } else {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入正確的帳號密碼",
+          });
+        }
+      }
     },
   },
 };
@@ -104,7 +94,6 @@ export default {
 .title {
   margin-top: 64px;
   margin-bottom: 8px;
- 
 
   &__image {
     width: 50px;

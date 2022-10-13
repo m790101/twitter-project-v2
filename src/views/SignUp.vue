@@ -1,6 +1,6 @@
 <template>
   <main class="container" v-show="!isLoading">
-    <div class="title d-flex flex-column align-items-center ">
+    <div class="title d-flex flex-column align-items-center">
       <img class="title__image" src="./../assets/logo.png" alt="logo" />
       <h3 class="title__word">建立你的帳號</h3>
     </div>
@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      isProcessing:false,
+      isProcessing: false,
       userData: {
         id: -1,
         account: "",
@@ -50,44 +50,33 @@ export default {
   methods: {
     // 呼叫子元件的handleForm方法
     getData() {
-      this.$refs.formRef.handleForm();      
-
+      this.$refs.formRef.handleForm();
     },
     //子元件傳入
     async handleAfterSubmit(formData) {
-      this.userData = {...formData}
-      console.log('this.uerData',this.userData)
-      this.isProcessing = true
+      this.userData = { ...formData };      
+      this.isProcessing = true;
 
-      try {        
+      try {
         const response = await signUpAPI.create({
           account: this.userData.account,
           name: this.userData.name,
           email: this.userData.email,
           password: this.userData.password,
           checkPassword: this.userData.checkPassword,
-        });       
-        const { data } = response;        
-     
-        if (data.status !== "success") {         
-          throw new Error(response.statusText);
-        } else {         
-
-          // 成功的話則轉址到 登入頁面
-          Toast.fire({
+        });
+        // 成功的話則轉址到 登入頁面
+        Toast.fire({
           icon: "success",
           title: "註冊成功，請重新登入",
         });
-          this.$router.push({ name: "logIn" });
-          
-        }
+        this.$router.push({ name: "logIn" });
       } catch (error) {
-        this.isProcessing = false
+        this.isProcessing = false;
         Toast.fire({
-            icon: "warning",
-            title: "帳號或email已重複註冊",
-          });
-        console.log("error", error);
+          icon: "warning",
+          title: "帳號或email已重複註冊",
+        });
       }
     },
   },
@@ -100,7 +89,7 @@ export default {
 }
 .title {
   margin-top: 64px;
-  
+
   &__image {
     width: 50px;
     height: 50px;

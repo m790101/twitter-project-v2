@@ -83,7 +83,7 @@ export default {
           password: this.userData.password,
           checkPassword: this.userData.checkPassword,
        });        
-       console.log('pushData:',data)
+       
        Toast.fire({
           icon: "success",
           title: "修改成功",
@@ -91,12 +91,24 @@ export default {
         this.isProcessing = false 
 
       } catch (error) {
-        this.isProcessing = false 
-        console.log('pushUser error:',error);
+        this.isProcessing = false         
+        const errorMessage = error.response.data.message;
+        if (errorMessage === "Error: account 已存在") {
+          Toast.fire({
+            icon: "warning",
+            title: "帳號已存在",
+          });
+        }else if(errorMessage === "Error: email 已存在"){
+          Toast.fire({
+            icon: "warning",
+            title: "Email已存在",
+          });
+        }else {
         Toast.fire({
           icon: "warning",
           title: "無法修改請稍後再試",
-        });
+        })
+      }
       }
     },
     

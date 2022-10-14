@@ -3,11 +3,14 @@
     <h4 class="title">推薦跟隨</h4>
     <div class="section__panel">
       <div class="section__panel__account d-flex align-items-center" v-for="user in users" :key="user.id">
+        <router-link :to="{name:'user-information',params:{id:user.id}}">
         <img
           :src="user.image| emptyImage"
           alt=""
           class="section__panel__account__avatar"
         />
+        </router-link>
+        
         <div class="section__panel__account__content d-flex align-items-center justify-content-between">
           <div
             class="

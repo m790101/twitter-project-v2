@@ -23,7 +23,7 @@
           </div>
           <router-link :to="{ name:'replyList', params: { id: tweet.id } }">
             <div class="tweet-card__panel__content__text">
-              {{ tweet.description }}
+             {{ tweet.description }}
             </div>
           </router-link>
           <div
@@ -119,7 +119,10 @@
       }
     }
     &__text {
+      width:90%;
       margin-bottom: 9px;
+      overflow-wrap: anywhere;
+
     }
     &__icons-panel__icon {
       margin-right: 41px;

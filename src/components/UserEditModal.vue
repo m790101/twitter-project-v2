@@ -15,7 +15,8 @@
           type="submit"
           class="btn-main modal-header__save"
           style="width: 64px"
-          :disabled="isProcessing"
+          :disabled="isProcessing || user.name.length >50 || user.introduction.length > 160"
+
         >
           儲存
         </button>
@@ -83,7 +84,7 @@
           </div>
           <div
             class="d-flex modal-body__form__letter-num mb-2"
-            :class="{ active: user.name.length > 10 }"
+            :class="{ active: user.name.length > 50 }"
           >
             <div class="error-handler" v-if="user.name.length > 50">
               字數超出上限
@@ -97,7 +98,7 @@
             <textarea
               name="introduction"
               id="introduction"
-              cols="70"
+              cols="55"
               rows="2"
               class="modal-body__text__text-area ms-2 fs-16"
               v-model="user.introduction"
@@ -106,9 +107,9 @@
           </div>
           <div
             class="modal-body__form__letter-num mb-2 d-flex"
-            :class="{ active: user.name.length > 10 }"
+            :class="{ active: user.introduction.length > 160 }"
           >
-            <div class="error-handler" v-if="user.name.length > 160">
+            <div class="error-handler" v-if="user.introduction.length > 160">
               字數超出上限
             </div>
             <p class="modal-body__form__letter-num mb-3">
@@ -296,6 +297,12 @@ export default {
     },
     async handleSubmit(e) {
       try {
+        if(this.user.introduction.length === 0 || this.user.name.length === 0){
+          return Toast.fire({
+          icon: "warning",
+          title: "所有內容皆要填寫",
+        });
+        }
         this.isProcessing = true
         const file = e.target;
         const formData = new FormData(file);
@@ -311,7 +318,7 @@ export default {
         this.isProcessing = false
         Toast.fire({
           icon: "warning",
-          title: "無法讀取使用者",
+          title: "無法更改使用者資料",
         });
       }
     },

@@ -39,7 +39,7 @@
           </div>
           <div class="d-flex mt-5">
             <img
-              src="./../assets/icon/user.png"
+              :src="currentUser.image"
               alt=""
               class="modal-body__avatar"
             />
@@ -134,6 +134,8 @@
     &__description{
         margin-top:10px;
         color: var(--black-color);
+        width:90%;
+        overflow-wrap: anywhere;
         &__reply-to{
             margin-top:11px;
             color: var(--secondary-color);
@@ -177,6 +179,7 @@
 import {fromNowFilter} from './../utils/mixins'
 import tweetApi from "./../apis/tweets";
 import { Toast } from "./../utils/helpers";
+import {mapState} from 'vuex'
 
 export default {
   props:{
@@ -200,11 +203,11 @@ export default {
     closeModal() {
       this.$emit("closeReplyModal");
     },
-    createReply(id){
+    async createReply(id){
       try{
         this.isProcessing = true
-              const response = tweetApi.createReply({comment:this.comment,tweet_id:id})
-              console.log(response)
+              const response = await tweetApi.createReply({comment:this.comment,tweet_id:id})
+              if(response.statusText !== 'OK')throw new Error
               this.$emit("closeReplyModal");
               this.$emit("afterCreateReply",{
                 id,
@@ -222,6 +225,9 @@ export default {
         });
     }
   },
+  },
+  computed:{
+    ...mapState(['currentUser','isAuthenticated'])
   }
 };
 </script>

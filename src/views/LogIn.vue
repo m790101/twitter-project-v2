@@ -76,7 +76,7 @@ export default {
         if (errorMessage === "Error: 尚未註冊") {
           Toast.fire({
             icon: "warning",
-            title: "帳號不存在",
+            title: "帳戶不存在",
           });
         } else {
           Toast.fire({

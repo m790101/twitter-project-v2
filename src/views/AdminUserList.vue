@@ -45,8 +45,7 @@ export default {
     async fetchUsers() {
       try {
         this.isProcessing = true;
-        const { data } = await adminAPI.admin.getUsers();
-        console.log(data);
+        const { data } = await adminAPI.admin.getUsers();        
         this.users = data;
         this.users = this.users.map((user) => {
           if (!user.backgroundImage) {
@@ -61,7 +60,7 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log("error", error);
+        console.log("error", error.response.data);
       }
     },
   },

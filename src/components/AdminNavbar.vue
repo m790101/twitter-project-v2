@@ -54,12 +54,31 @@
           alt=""
           class="menu__function__icon__active"
         />
-        <span >登出</span>
+        <span  @click="logout">登出</span>
       </div>
     </div>
 
   </nav>
 </template>
+
+
+
+<script>
+export default {
+  data() {
+    return {
+      isEditing: false,
+    };
+  },
+ 
+  methods:{
+    logout(){
+      localStorage.removeItem('tokenAdmin')
+      this.$router.push('/admin/signin')
+    }
+  }
+};
+</script>
 
 <style scoped lang="scss">
 nav {
@@ -91,9 +110,6 @@ nav {
     margin-left: 18px;
   }
 }
-
-
-
 .link {
   color: var(--8-gray);
   font-weight: 700;
@@ -141,21 +157,3 @@ nav {
   }
 }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      isEditing: false,
-    };
-  },
-  components:{
-  },
-  methods:{
-    logout(){
-      localStorage.removeItem('tokenAdmin')
-      this.$router.push('/admin/signin')
-    }
-  }
-};
-</script>

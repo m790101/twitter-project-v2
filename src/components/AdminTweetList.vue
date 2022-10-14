@@ -25,7 +25,7 @@
             </p>
           </div>
 
-          <div class="tweet-list__panel__content__text">
+          <div class="tweet-list__panel__content__text word-break-keep">
             <p>
               {{ tweet.description |changeDes }}
             </p>

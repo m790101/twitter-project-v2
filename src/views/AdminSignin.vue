@@ -81,28 +81,19 @@ export default {
       const response = await authorizationAPI.adminSignIn({
           account: this.account,
           password: this.password,
-        })        
-         
-          const { data } = response;
-
-          if (data.status !== "success") {
-            throw new Error(data.message);
-          }else {
-            localStorage.setItem("tokenAdmin", data.data.token);
-            this.$router.push("/admin/tweets")
-          }
-         
-        
-      } catch (error) {
+        })      
+         const { data } = response;
+         localStorage.setItem("tokenAdmin", data.data.token);
+         this.$router.push("/admin/tweets")       
+         } catch (error) {
           this.account = "";
           this.password = "";
           Toast.fire({
             icon: "warning",
-            title: "請確認您輸入了正確的帳號密碼",
-          });
-          
+            title: "請輸入正確的帳號密碼",
+          });          
           this.isProcessing = false
-          console.log("error", error);
+          console.log("error", error.response.data);
         }
     },
   },

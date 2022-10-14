@@ -73,9 +73,10 @@ export default {
         this.$router.push({ name: "logIn" });
       } catch (error) {
         this.isProcessing = false;
+        console.log("errorMess",error.response.data)
         Toast.fire({
           icon: "warning",
-          title: "帳號或email已重複註冊",
+          title: "account 或 email 已重複註冊！",
         });
       }
     },

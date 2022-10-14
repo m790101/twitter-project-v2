@@ -96,12 +96,12 @@ export default {
         if (errorMessage === "Error: account 已存在") {
           Toast.fire({
             icon: "warning",
-            title: "帳號已存在",
+            title: "account 或 email 已重複註冊！",
           });
         }else if(errorMessage === "Error: email 已存在"){
           Toast.fire({
             icon: "warning",
-            title: "Email已存在",
+            title: "account 或 email 已重複註冊！",
           });
         }else {
         Toast.fire({

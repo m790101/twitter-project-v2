@@ -54,18 +54,15 @@ export default {
 
     async afterDeleteTweet(tweetId) {
       try {
-        const { data } = await adminAPI.admin.deleteTweets({ tweetId });
-        if (data.status === "error") {
-          throw new Error(data.message);
-        } else {
+        const response = await adminAPI.admin.deleteTweets({ tweetId });        
           Toast.fire({
-            icon: "error",
+            icon: "success",
             title: "已移除推文",
           });
           this.fetchTweet();
-        }
+        
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
         Toast.fire({
           icon: "error",
           title: "無法移除推文，請稍後再試",

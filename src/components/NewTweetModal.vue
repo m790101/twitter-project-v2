@@ -112,8 +112,8 @@ export default {
         async createdTweet(){
           try{
             this.isProcessing = true
-              const response = tweetApi.create({description:this.description})
-              console.log(response)
+              const response = await tweetApi.create({description:this.description})
+              if(response.statusText !== 'OK')throw new Error
               this.$emit('afterCreatedTweet',{
                 description:this.description,
                 createdAt:new Date,

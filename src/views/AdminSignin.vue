@@ -93,7 +93,7 @@ export default {
             title: "請輸入正確的帳號密碼",
           });          
           this.isProcessing = false
-          console.log("error", error.response.data);
+          console.log("error", error.response);
         }
     },
   },

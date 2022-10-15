@@ -120,6 +120,9 @@ export default {
     margin-right: 5px;
   }
 }
+.tweet-list__panel__avatar{  
+  border-radius: 50%;
+}
 .link {
   &:hover,
   &:active {

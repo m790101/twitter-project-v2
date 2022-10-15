@@ -1,7 +1,7 @@
 <template>
   <form
     id="Form"
-    class="form  d-flex flex-column align-items-center"
+    class="form d-flex flex-column align-items-center"
     autocomplete="off"
     @submit.prevent="handleForm"
   >
@@ -19,7 +19,7 @@
         v-model="UserData.account"
       />
     </div>
-    
+
     <div class="form-control d-flex flex-column">
       <label for="name" class="form-label">名稱</label>
       <input
@@ -29,13 +29,15 @@
         class="form-input"
         placeholder="請輸入使用者名稱"
         autocomplete="name"
-        maxlength="50"
         required
         v-model="UserData.name"
       />
     </div>
-    <p class="error-handler fs-12" v-if="countName > 50">字數超出上限!</p>
-     
+    <div class="d-flex justify-content-between w-100">
+      <p class="error-handler fs-12" v-if="countName > 50">字數超出上限!</p>
+      <p class="fs-12" v-if="countName > 50">{{ countName }}/50</p>
+    </div>
+
     <div class="form-control d-flex flex-column">
       <label for="email" class="form-label">Email</label>
       <input
@@ -100,31 +102,31 @@ export default {
   },
   data() {
     return {
-      UserData: {}
+      UserData: {},
     };
   },
-  created () {
-    this.fetchUserData()
+  created() {
+    this.fetchUserData();
   },
 
   methods: {
-    fetchUserData () {      
-     this.UserData = {...this.initialUserSetting}     
+    fetchUserData() {
+      this.UserData = { ...this.initialUserSetting };
     },
     handleForm() {
-      if (!this.UserData.account) {
+      if (!this.UserData.account|| this.UserData.account.trim().length <= 0 ) {
         Toast.fire({
           icon: "warning",
           title: "請填入帳號",
         });
         return;
-      } else if (!this.UserData.name) {
+      } else if (!this.UserData.name|| this.UserData.name.trim().length <= 0) {
         Toast.fire({
           icon: "warning",
           title: "請填入名稱 ",
         });
         return;
-      }else if (this.UserData.name.length>50) {
+      } else if (this.UserData.name.length > 50) {
         Toast.fire({
           icon: "warning",
           title: "名稱不能大於50個字",
@@ -165,13 +167,13 @@ export default {
     },
   },
   watch: {
-    initialUserSetting(){      
-      this.UserData ={...this.initialUserSetting}
-    }
+    initialUserSetting() {
+      this.UserData = { ...this.initialUserSetting };
+    },
   },
   computed: {
     countName() {
-      return this.UserData.name.length
+      return this.UserData.name.length;
     },
   },
 };
@@ -179,7 +181,7 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  margin:0px 23px;
+  margin: 0px 23px;
 }
 
 .error-handler {

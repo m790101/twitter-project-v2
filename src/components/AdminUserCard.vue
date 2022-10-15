@@ -107,7 +107,9 @@ export default {
 .icon {
   width: 24px;
 }
-
+.card-panel__card__header__avatar{
+  border-radius: 50%;
+}
 .truncate{
   white-space: nowrap; 
   width: 60%; 

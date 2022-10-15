@@ -1,6 +1,6 @@
 # Simple Twitter 專案
 ## 介紹:
-Alphitter 網站連結
+[Alphitter 網站連結](https://m790101.github.io/twitter-project-v1-/#/logIn)
 
 此專案為前後分離開發模式的前端部分。
 
@@ -13,7 +13,7 @@ Alphitter 網站連結
 5. 非同步串接後端 API，針對回傳的 status 做不同處理<br>
 6. 前端驗證：像是錯誤處理的訊息提示，或是使用者輸入了不符期待的資料時會阻擋，直到接收到正確資料再傳送給後端<br>
 
-### 技術層面：
+### 專案內容：
 
 Simple Twitter 平台，是讓使用者可以隨時發表推文及與其他使用者可以相互留言的社群平台。<br>
 網站有兩種使用角色：一般使用者 (以下稱 user)及管理員 (以下稱 admin)<br>

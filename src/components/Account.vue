@@ -4,7 +4,7 @@
       <div class="tweet-card__panel d-flex">
         <router-link :to="{name:'user-information',params:{id:account.id}}">
         <img
-          src="./../assets/icon/user-none.png"
+          :src="account.image | emptyImage"
           alt=""
           class="tweet-card__panel__avatar"
         />
@@ -92,6 +92,7 @@
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
 import {mapState} from 'vuex'
+import {emptyImageFilter} from './../utils/mixins'
 export default {
   props: {
     initialData: {
@@ -153,7 +154,8 @@ export default {
   },
   computed:{
     ...mapState(['currentUser','isAuthenticated'])
-  }
+  },
+  mixins:[emptyImageFilter]
 };
 </script>
 

@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import NotFound from "../views/NotFound.vue";
 import LogIn from "../views/LogIn.vue";
 import store from './../store'
+import { Toast } from "./../utils/helpers";
 
 Vue.use(VueRouter);
 
@@ -105,6 +106,10 @@ router.beforeEach(async(to, from, next) => {
   }
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
     next('/logIn')
+    Toast.fire({
+      icon: "warning",
+      title: "尚未授權，請先登入",
+    });
     return
   }
 

@@ -10,7 +10,7 @@
       </router-link>
       <div class="tweet-card__panel__content">
         <div class="tweet-card__panel__content__title d-flex  d-flex align-items-center">
-          <p class="fw-bold fs-16">{{reply.user.name}}</p>
+          <p class="fw-bold fs-16 truncate">{{reply.user.name}}</p>
           <p class="ms-1 fs-14 tweet-card__panel__content__title__id">@{{reply.user.account}}．<span>{{reply.createdAt | fromNow}}</span></p>
         </div>
         <div class="tweet-card__panel__content__text ">
@@ -56,12 +56,19 @@
     color: var(--brand-color);
     }
 }
+.truncate{
+  white-space: nowrap; 
+  max-width: 200px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 
 </style>
 
 
 <script>
 import {fromNowFilter,emptyImageFilter} from './../utils/mixins'
+import {mapState} from 'vuex'
 export default {
   props:{
     initialReplies:{
@@ -82,6 +89,9 @@ export default {
       this.replies = this.initialReplies
     }
   },
-  mixins:[fromNowFilter,emptyImageFilter]
+  mixins:[fromNowFilter,emptyImageFilter],
+  computed:{
+    ...mapState(['currentUser','isAuthenticated'])
+  }
 }
 </script>

@@ -297,7 +297,7 @@ export default {
     },
     async handleSubmit(e) {
       try {
-        if(this.user.introduction.length === 0 || this.user.name.length === 0){
+        if(this.user.introduction.trim().length === 0 || this.user.name.trim().length === 0){
           return Toast.fire({
           icon: "warning",
           title: "所有內容皆要填寫",

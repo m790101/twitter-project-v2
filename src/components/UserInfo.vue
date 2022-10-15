@@ -38,13 +38,13 @@
               <img src="./../assets/icon/btn-msg.png"  class="icon cursor-pointer">
               <img src="./../assets/icon/btn-notfi.png"  v-if="!user.isNotificated" class="icon cursor-pointer" @click="toggleNoti">
               <img src="./../assets/icon/btn-notfi-active.png" v-else class="icon cursor-pointer" @click="toggleNoti">
-            <button class="btn-main" style="width:96px;" v-if="user.isfollowed">正在跟隨</button>
-            <button class="btn-white" style="width:96px;" v-else>跟隨</button>
+            <button class="btn-main" style="width:96px;" v-if="user.isfollowed" @click="removeFollowing(user.id)">正在跟隨</button>
+            <button class="btn-white" style="width:96px;" v-else @click="addFollowing(user.id)">跟隨</button>
           </div>
           <div class="card__body__text">
             <h5 class="">{{user.name}}</h5>
             <span class="font-14 card__body__text__account">@{{user.account}}</span>
-            <p class="font-14 mt-2">
+            <p class="font-14 mt-2 card__body__text__introduction">
               {{user.introduction}}
             </p>
           </div>
@@ -95,7 +95,6 @@
 
 .card {
   width: 100%;
-  height: 375px;
   border-left: 0;
   border-right: 0;
   border-bottom: 0;
@@ -128,6 +127,9 @@
       &__account{
           color: var(--secondary-color);
       }
+      &__introduction{
+      overflow-wrap: anywhere;
+      }
   }
   &__follow {
     font-size: 14px;
@@ -146,6 +148,8 @@
 
 <script>
 import {mapState} from 'vuex'
+import { Toast } from "./../utils/helpers";
+import userApi from "./../apis/user";
 
 export default {
   props:{
@@ -181,6 +185,38 @@ export default {
     },
     toggleNoti(){
       this.user.isNotificated = !this.user.isNotificated
+    },
+    async addFollowing(id){
+      try{
+       this.isProcessing = true
+        const {data} = await userApi.addFollowing({id})
+        if(data.status !== 'success') return new Error
+        this.user.isfollowed = true
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法追蹤使用者",
+        });
+      }
+    },
+  async removeFollowing(id){
+      try{
+        this.isProcessing = true
+        const {data} = await userApi.removeFollowing(id)
+        if(data.status !== 'success') return new Error
+         this.user.isfollowed = false
+        this.isProcessing = false
+      }
+      catch(error){
+        this.isProcessing = false
+          Toast.fire({
+          icon: "warning",
+          title: "無法追蹤使用者",
+        });
+      }
     }
   },
   watch:{

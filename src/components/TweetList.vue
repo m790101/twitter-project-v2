@@ -14,7 +14,7 @@
 
         <div class="tweet-card__panel__content">
           <div class="tweet-card__panel__content__title d-flex">
-            <p class="tweet-card__panel__content__title__name">
+            <p class="tweet-card__panel__content__title__name truncate">
               {{ tweet.user.name }}
             </p>
             <p class="tweet-card__panel__content__title__info">
@@ -148,6 +148,12 @@
   &.active {
     display: initial;
   }
+}
+.truncate{
+  white-space: nowrap; 
+  max-width: 80px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 </style>
 

@@ -2,11 +2,14 @@
   <section>
     <div class="tweet-card" v-for="account in accounts" :key="account.id">
       <div class="tweet-card__panel d-flex">
+        <router-link :to="{name:'user-information',params:{id:account.id}}">
         <img
-          src="./../assets/icon/user-none.png"
+          :src="account.image | emptyImage"
           alt=""
           class="tweet-card__panel__avatar"
         />
+        </router-link>
+
         <div class="tweet-card__panel__content">
           <div
             class="
@@ -16,7 +19,7 @@
               justify-content-between
             "
           >
-            <p class="fw-bold">{{ account.name }}</p>
+            <p class="fw-bold truncate">{{ account.name }}</p>
             <div class="" v-if="account.id !== currentUser.id">
               <button
                 class="btn-main btn-following"
@@ -62,6 +65,8 @@
       flex: 1;
       &__text {
         margin-top: 8px;
+        width:90%;
+         overflow-wrap: anywhere;
       }
     }
   }
@@ -73,12 +78,21 @@
 .btn-follow {
   width: 64px;
 }
+
+.truncate{
+  white-space: nowrap; 
+  width: 300px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
 </style>
 
 <script>
 import userApi from "./../apis/user";
 import { Toast } from "./../utils/helpers";
 import {mapState} from 'vuex'
+import {emptyImageFilter} from './../utils/mixins'
 export default {
   props: {
     initialData: {
@@ -140,7 +154,8 @@ export default {
   },
   computed:{
     ...mapState(['currentUser','isAuthenticated'])
-  }
+  },
+  mixins:[emptyImageFilter]
 };
 </script>
 

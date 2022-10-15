@@ -21,7 +21,7 @@
               <div
                 class="modal-body__panel__content__title d-flex "
               >
-                <p class="fw-bold modal-body__panel__content__title__name">{{tweet.user.name}}</p>
+                <p class="fw-bold modal-body__panel__content__title__name truncate">{{tweet.user.name}}</p>
                 <p class="fs-14 modal-body__panel__content__title__id">@{{tweet.user.account}}．<span>{{tweet.createdAt | fromNow}}</span></p>
               </div>
               <div class="modal-body__panel__content__description">
@@ -58,8 +58,8 @@
           </div>
         </div>
         <div class="modal-footer d-flex justify-content-end align-items-center">
-          <div class="error-handler" v-if="comment.length <= 0">內容不可為空白!</div>
-          <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing || comment.length <= 0">
+          <div class="error-handler" v-if="comment.trim().length <= 0">內容不可為空白!</div>
+          <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing || comment.trim().length <= 0">
             推文
           </button>
         </div>
@@ -170,7 +170,12 @@
   color: var(--error-color);
 }
 
-
+.truncate{
+  white-space: nowrap; 
+  width: 300px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 
 </style>
 
@@ -209,10 +214,15 @@ export default {
               const response = await tweetApi.createReply({comment:this.comment,tweet_id:id})
               if(response.statusText !== 'OK')throw new Error
               this.$emit("closeReplyModal");
+              console.log(response)
               this.$emit("afterCreateReply",{
-                id,
+                id:response.data.id,
                 comment:this.comment,
-                user:this.tweet.user,
+                user:{
+                  account:this.currentUser.account,
+                  image:this.currentUser.image,
+                  name:this.currentUser.name
+                },
                 createdAt:new Date
               });
               this.isProcessing = false

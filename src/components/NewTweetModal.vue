@@ -114,7 +114,7 @@ export default {
     },
     async createdTweet() {
       try {
-        if (this.description.length === 0) {
+        if (this.description.trim().length === 0) {
           return Toast.fire({
             icon: "warning",
             title: "內容不可為空白",

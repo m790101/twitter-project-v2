@@ -85,6 +85,7 @@ export default {
         if(data.status !== 'success')return new Error
           this.tweet={
             ...this.tweet,
+            likeNum: this.tweet.likeNum + 1,
             isLiked:true
           }
 
@@ -101,6 +102,7 @@ export default {
          if(data.status !== 'success')return new Error
             this.tweet={
             ...this.tweet,
+            likeNum: this.tweet.likeNum - 1,
             isLiked:false
           }
         
@@ -126,7 +128,6 @@ export default {
   filters:{
         date(dateTime){
                 return moment(dateTime).format("a h:mm・YYYY年MMMDo")
-                //moment(dateTime).format("a h:mm・YYYYMMMMDo")
         }
     },
 };

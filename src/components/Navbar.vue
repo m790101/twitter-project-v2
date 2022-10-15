@@ -69,7 +69,7 @@
     </div>
 
     <div class="logout d-flex flex-column justify-contnet-center">
-      <div class="d-flex link align-items-center cursor-pointer">
+      <div class="d-flex link align-items-center cursor-pointer" @click="logout">
         <img
           src="./../assets/icon/logout.png"
           alt=""
@@ -80,7 +80,7 @@
           alt=""
           class="menu__function__icon__active"
         />
-        <span @click="logout">登出</span>
+        <span >登出</span>
       </div>
     </div>
 

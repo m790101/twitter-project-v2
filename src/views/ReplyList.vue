@@ -75,6 +75,7 @@ export default {
       this.isReplying = true
     },
     handleAfterCreateReply(playLoad){
+      console.log(playLoad)
       this.replies.unshift({
         ...playLoad
 

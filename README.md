@@ -51,14 +51,23 @@ git clone https://github.com/m790101/twitter-project-v1-.git<br>
 
 
 ### 測試
-【前台測試帳密】<br>
-account：user1<br>
-password: 12345678<br>
-【後台測試帳密】<br>
-account：root<br>
-password：12345678<br>
+ 【前台測試帳密】<br>
+   account：user1<br>
+   password: 12345678<br>
+ 【後台測試帳密】<br>
+   account：root<br>
+   password：12345678<br>
 
 
+## 使用工具及版本:
+"vue": 2.6.14<br>
+"vue-router": "3.5.1"<br>
+"vuex": "3.6.2"<br>
+"axios": "0.19.2"<br>
+"bootstrap": "5.2.2,<br>
+"core-js": "3.8.3"<br>
+"moment": "2.29.4"<br>
+"sweetalert2": "9.8.2"<br>
+      
 
-```
 

@@ -13,7 +13,7 @@
         <div class="modal-body">
           <div class="modal-body__panel d-flex">
               <img
-                :src="tweet.user.image"
+                :src="tweet.user.image | emptyImage"
                 alt=""
                 class="modal-body__panel__avatar"
               />
@@ -60,7 +60,7 @@
         <div class="modal-footer d-flex justify-content-end align-items-center">
           <div class="error-handler" v-if="comment.trim().length <= 0">內容不可為空白!</div>
           <button type="button" class="btn-main" style="width: 66px" @click="createReply(tweet.id)" :disabled="isProcessing || comment.trim().length <= 0">
-            推文
+            回覆
           </button>
         </div>
       </div>
@@ -172,7 +172,7 @@
 
 .truncate{
   white-space: nowrap; 
-  width: 300px; 
+  max-width: 300px; 
   overflow: hidden;
   text-overflow: ellipsis; 
 }
@@ -185,6 +185,7 @@ import {fromNowFilter} from './../utils/mixins'
 import tweetApi from "./../apis/tweets";
 import { Toast } from "./../utils/helpers";
 import {mapState} from 'vuex'
+import {emptyImageFilter} from './../utils/mixins'
 
 export default {
   props:{
@@ -200,7 +201,7 @@ export default {
       isProcessing:false
     };
   },
-  mixins:[fromNowFilter],
+  mixins:[fromNowFilter, emptyImageFilter],
   methods: {
     callModal() {
       this.isEditing = true;

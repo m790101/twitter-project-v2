@@ -43,6 +43,10 @@ Simple Twitter 平台，是讓使用者可以隨時發表推文及與其他使�
 
 ## 使用方式:
 ### 下載
+1.	開啟終端機 clone 此專案至本地<br>
+git clone https://github.com/m790101/twitter-project-v1-.git<br>
+2.	npm install<br>
+3.	npm run serve<br>
 
 
 
@@ -58,25 +62,3 @@ password：12345678<br>
 
 ```
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

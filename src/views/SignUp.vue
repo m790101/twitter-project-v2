@@ -59,9 +59,9 @@ export default {
 
       try {
         const response = await signUpAPI.create({
-          account: this.userData.account,
-          name: this.userData.name,
-          email: this.userData.email,
+          account: this.userData.account.trim(),
+          name: this.userData.name.trim(),
+          email: this.userData.email.trim(),
           password: this.userData.password,
           checkPassword: this.userData.checkPassword,
         });
@@ -80,12 +80,12 @@ export default {
           icon: "warning",
           title: "所有欄位皆須填寫",
         });
-        }else if(errorMessage === "Error: account 已存在"){
+        }else if(errorMessage === "Error: account 已重複註冊！"){
           Toast.fire({
             icon: "warning",
             title: "account 已重複註冊！",
           })
-        }else if(errorMessage === "Error: email 已存在"){
+        }else if(errorMessage === "Error: email 已重複註冊！"){
           Toast.fire({
             icon: "warning",
             title: "email 已重複註冊！",

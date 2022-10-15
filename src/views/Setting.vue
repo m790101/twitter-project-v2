@@ -77,9 +77,9 @@ export default {
       try {       
        const { data } = await userApi.putUser({
         id:this.userData.id,
-        account: this.userData.account,
-          name: this.userData.name,
-          email: this.userData.email,
+        account: this.userData.account.trim(),
+          name: this.userData.name.trim(),
+          email: this.userData.email.trim(),
           password: this.userData.password,
           checkPassword: this.userData.checkPassword,
        });        
@@ -91,8 +91,9 @@ export default {
         this.isProcessing = false 
 
       } catch (error) {
-        this.isProcessing = false         
+        this.isProcessing = false               
         const errorMessage = error.response.data.message;
+        console.log( error.response.data.message)
         if (errorMessage === "Error: account 已存在") {
           Toast.fire({
             icon: "warning",
@@ -102,6 +103,11 @@ export default {
           Toast.fire({
             icon: "warning",
             title: "email 已重複註冊！",
+          });
+        }else if(errorMessage === "Error: 所有欄位皆須填寫"){
+          Toast.fire({
+            icon: "warning",
+            title: "所有欄位皆須填寫！",
           });
         }else {
         Toast.fire({

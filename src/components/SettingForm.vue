@@ -33,8 +33,8 @@
         v-model="UserData.name"
       />
     </div>
-    <div class="d-flex justify-content-between w-100">
-      <p class="error-handler fs-12" v-if="countName > 50">字數超出上限!</p>
+    <div class="error__section d-flex justify-content-between w-100">
+      <p class="error__section__handler fs-12" v-if="countName > 50">字數超出上限!</p>
       <p class="fs-12" v-if="countName > 50">{{ countName }}/50</p>
     </div>
 
@@ -114,19 +114,26 @@ export default {
       this.UserData = { ...this.initialUserSetting };
     },
     handleForm() {
-      if (!this.UserData.account|| this.UserData.account.trim().length <= 0 ) {
+      if (!this.UserData.account ) {
         Toast.fire({
           icon: "warning",
           title: "請填入帳號",
         });
         return;
-      } else if (!this.UserData.name|| this.UserData.name.trim().length <= 0) {
+      } else if (!this.UserData.name) {
         Toast.fire({
           icon: "warning",
           title: "請填入名稱 ",
         });
         return;
-      } else if (this.UserData.name.length > 50) {
+      }else if(this.UserData.account.trim().length <= 0 ||this.UserData.name.trim().length <= 0 ){
+        Toast.fire({
+          icon: "warning",
+          title: "所有欄位皆須填寫",
+        })
+        return
+        }
+       else if (this.UserData.name.length > 50) {
         Toast.fire({
           icon: "warning",
           title: "名稱不能大於50個字",
@@ -183,11 +190,13 @@ export default {
 .form {
   margin: 0px 23px;
 }
-
-.error-handler {
-  color: var(--error-color);
-  width: 100%;
+.error__section{
   margin-top: 4px;
+} 
+.error__section__handler {
+  color: var(--error-color);
+  width: 100%;  
   line-height: 20px;
 }
+
 </style>

@@ -67,7 +67,7 @@ export default {
   filters:{
     changeDes (description){
       if(description.length>=50){
-        return description.substring(0,49)+"..."
+        return description.substring(0,50)+"..."
       } 
       return description
     },

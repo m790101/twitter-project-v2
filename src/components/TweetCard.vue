@@ -160,6 +160,7 @@ section {
       margin-top: 8px;
       font-size: 24px;
       margin-bottom: 8px;
+            overflow-wrap: anywhere;
     }
     &__time {
       color: var(--secondary-color);

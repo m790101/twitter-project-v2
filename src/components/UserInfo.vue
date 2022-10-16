@@ -38,7 +38,7 @@
               <img src="./../assets/icon/btn-msg.png"  class="icon cursor-pointer">
               <img src="./../assets/icon/btn-notfi.png"  v-if="!user.isNotificated" class="icon cursor-pointer" @click="toggleNoti">
               <img src="./../assets/icon/btn-notfi-active.png" v-else class="icon cursor-pointer" @click="toggleNoti">
-            <button class="btn-main" style="width:96px;" v-if="user.isfollowed" @click="removeFollowing(user.id)">正在跟隨</button>
+            <button class="btn-main" style="width:96px;" v-if="user.isFollowing" @click="removeFollowing(user.id)">正在跟隨</button>
             <button class="btn-white" style="width:96px;" v-else @click="addFollowing(user.id)">跟隨</button>
           </div>
           <div class="card__body__text">
@@ -174,7 +174,7 @@ export default {
         name:'',
         role:'',
         isNotificated:false,
-        isfollowed:true
+        isFollowing:''
 
       }
     }
@@ -191,7 +191,7 @@ export default {
        this.isProcessing = true
         const {data} = await userApi.addFollowing({id})
         if(data.status !== 'success') return new Error
-        this.user.isfollowed = true
+        this.user.isFollowing = true
         this.isProcessing = false
       }
       catch(error){
@@ -207,7 +207,7 @@ export default {
         this.isProcessing = true
         const {data} = await userApi.removeFollowing(id)
         if(data.status !== 'success') return new Error
-         this.user.isfollowed = false
+         this.user.isFollowing = false
         this.isProcessing = false
       }
       catch(error){

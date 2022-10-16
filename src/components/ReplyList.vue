@@ -48,6 +48,7 @@
 }
 
 .tweet-card__panel__content__text{
+        overflow-wrap: anywhere;
   &__reply{
     margin-top:8px;
     color: var(--secondary-color);

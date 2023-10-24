@@ -4,7 +4,7 @@
   >
     <div class="title d-flex flex-column align-items-center ">
       <img class="title__image" src="./../image/logo.png" alt="logo" />
-      <h3 class="title__word">後台登入</h3>
+      <h3 class="title__word">後台登入123</h3>
     </div>
 
     <form
